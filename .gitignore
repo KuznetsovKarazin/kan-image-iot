@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Model checkpoints and experimental data
+experiment_data/
+*.pt
+*.pth
+
+# Dataset files
+data/raw/
+data/processed/
+
+# Logs
+logs/
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Personal configuration files with sensitive info
+.env
+secrets.json
+
+# Don't ignore critical model files
+!models/*.py
