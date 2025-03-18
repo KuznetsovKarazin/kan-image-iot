@@ -102,7 +102,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact
 
 - Oleksandr Kuznetsov - oleksandr.o.kuznetsov@gmail.com
-- Project Link: https://github.com/KuznetsovKarazin/kan-dos-detection
+- Project Link: https://github.com/KuznetsovKarazin/kan-image-iot
 
 ## Acknowledgments
 
