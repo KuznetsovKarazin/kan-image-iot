@@ -1,0 +1,10 @@
+{
+  "subset_name": "val",
+  "image_size": 128,
+  "person_count": 2415,
+  "no_person_count": 2415,
+  "total_count": 4830,
+  "balanced": true,
+  "date_created": "2025-03-12 22:14:53.456037",
+  "random_seed": 42
+}

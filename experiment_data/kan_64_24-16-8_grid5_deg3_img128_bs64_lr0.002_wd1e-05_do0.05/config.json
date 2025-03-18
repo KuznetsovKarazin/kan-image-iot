@@ -1,0 +1,100 @@
+{
+  "dataset_config": {
+    "dataset_name": "vww",
+    "raw_data_dir": "d:\\kan-image-iot-Final\\data\\raw\\coco",
+    "processed_data_dir": "d:\\kan-image-iot-Final\\data\\processed",
+    "subset_dir": "d:\\kan-image-iot-Final\\data\\processed\\vww_subset",
+    "img_size": 128,
+    "train_samples_per_class": 50000,
+    "val_samples_per_class": 5000,
+    "test_samples_per_class": 2000,
+    "balanced": true,
+    "random_seed": 42
+  },
+  "augmentation_config": {
+    "horizontal_flip_prob": 0.5,
+    "rotation_degrees": 10,
+    "translate": [
+      0.1,
+      0.1
+    ],
+    "scale": [
+      0.95,
+      1.05
+    ],
+    "brightness": 0.1,
+    "contrast": 0.1,
+    "saturation": 0.1,
+    "hue": 0.01,
+    "random_erase_prob": 0.05,
+    "random_erase_scale": [
+      0.02,
+      0.1
+    ],
+    "enable_color_jitter": false,
+    "enable_random_affine": false,
+    "enable_random_perspective": false,
+    "enable_random_grayscale": false,
+    "mixup_alpha": 0.2,
+    "mixup_prob": 0.2,
+    "cutmix_alpha": 0.1,
+    "cutmix_prob": 0.1
+  },
+  "preprocessor_config": {
+    "input_channels": 3,
+    "output_features": 64,
+    "conv_channels": [
+      16,
+      24,
+      32
+    ],
+    "kernel_size": [
+      3,
+      3,
+      1
+    ],
+    "pool_kernel_size": 2,
+    "final_pool_size": 4,
+    "use_batch_norm": true,
+    "dropout_rate": 0.05,
+    "l2_regularization": 1e-05,
+    "stochastic_depth_rate": 0.1
+  },
+  "kan_config": {
+    "feature_dim": 64,
+    "hidden_dims": [
+      24,
+      16,
+      8
+    ],
+    "grid": 5,
+    "degree": 3,
+    "seed": 42,
+    "dropout_rate": 0.05,
+    "weight_decay": 1e-05,
+    "activation_l1": 1e-05,
+    "use_batchnorm": true
+  },
+  "training_config": {
+    "batch_size": 64,
+    "val_batch_size": 64,
+    "epochs": 50,
+    "learning_rate": 0.002,
+    "weight_decay": 1e-05,
+    "lr_scheduler": "cosine",
+    "lr_patience": 3,
+    "lr_factor": 0.5,
+    "early_stopping_patience": 15,
+    "optimizer": "adamw",
+    "num_workers": 12,
+    "save_checkpoints": true,
+    "checkpoint_interval": 50,
+    "gradient_clip_val": 1.0,
+    "ema_decay": 0.99,
+    "label_smoothing": 0.1,
+    "enable_mixup": false,
+    "enable_cutmix": false,
+    "cross_validation_folds": 0,
+    "precision": "float32"
+  }
+}
