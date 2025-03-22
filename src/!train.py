@@ -884,7 +884,8 @@ def main():
                         help='Learning rate (overrides config)')
     
     parser.add_argument('--resume_from', type=str, default=None,
-                        help='Path to checkpoint to resume training from')parser.add_argument('--batch_size', type=int, default=None,
+                        help='Path to checkpoint to resume training from')
+    parser.add_argument('--batch_size', type=int, default=None,
                         help='Batch size (overrides config)')
     # Add GPU-specific arguments
     parser.add_argument('--device', type=str, default=None,
@@ -1092,11 +1093,14 @@ def main():
         weight=class_weights.to(device),
         label_smoothing=label_smoothing
     )
-    
-    # Optimizer
+    # Оптимизатор
     optimizer = get_optimizer(
         TRAINING_CONFIG['optimizer'],
-        model.parameters()
+        model.parameters(),
+        TRAINING_CONFIG['learning_rate'],
+        TRAINING_CONFIG['weight_decay']
+    )
+
     # Загрузить модель из чекпоинта, если указан параметр resume_from
     if args.resume_from and os.path.exists(args.resume_from):
         print(f'Resuming from checkpoint: {args.resume_from}')
@@ -1105,11 +1109,8 @@ def main():
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         best_val_acc = checkpoint.get('val_acc', 0)
         print(f'Loaded model with validation accuracy: {best_val_acc:.2f}%')
-    ,
-        TRAINING_CONFIG['learning_rate'],
-        TRAINING_CONFIG['weight_decay']
-    )
     
+   
     # Cross-validation setup
     n_folds = TRAINING_CONFIG.get('cross_validation_folds', 0)
     if args.cross_val:
