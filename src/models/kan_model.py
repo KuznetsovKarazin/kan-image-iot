@@ -77,6 +77,184 @@ class MobileNetV2Preprocessor(nn.Module):
         # features should be [batch, 1280]
         return self.projector(features)
 
+class MobileNetV3LitePreprocessor(nn.Module):
+    """
+    Preprocessing module using MobileNetV3 Lite to convert image features to format suitable for KAN.
+    Leverages pretrained MobileNetV3 Lite for efficient feature extraction.
+    """
+    def __init__(self, output_features=48,  
+                 pretrained=True, freeze_mobilenet=True):
+        super(MobileNetV3LitePreprocessor, self).__init__()
+        
+        # Load pretrained MobileNetV3 model
+        # self.mobilenet = torchvision.models.mobilenet_v2(pretrained=pretrained)        
+        self.mobilenet = torchvision.models.mobilenet_v3_small(pretrained=pretrained)
+        self.mobilenet.classifier = nn.Sequential()  # Rimuove il classificatore
+
+        # Freeze MobileNetV3 parameters if specified
+        if freeze_mobilenet:
+            for param in self.mobilenet.parameters():
+                param.requires_grad = False
+        
+        # Final feature dimension after MobileNetV3
+        mobilenet_output_dim = 576  # MobileNetV3 Lite final feature dimension
+        
+        # Linear projection to desired output feature size
+        self.projector = nn.Sequential(
+            nn.Linear(mobilenet_output_dim, output_features),
+            nn.BatchNorm1d(output_features),
+            nn.ReLU(inplace=True)
+        )
+        
+    def forward(self, x):
+        # MobileNetV2 expects 3 channels, but input might be 1 or 3.
+        # If input_channels is 1, we need to convert to 3 channels.
+        if x.size(1) == 1:
+            # Convert grayscale to RGB
+            x = x.repeat(1, 3, 1, 1)
+        features = self.mobilenet(x)
+        # features should be [batch, 1280]
+        return self.projector(features)
+
+class MobileNetV3LitePreprocessorQuantized(nn.Module):
+    """
+    Preprocessing module using MobileNetV3 Lite to convert image features to format suitable for KAN.
+    Leverages pretrained MobileNetV3 Lite for efficient feature extraction.
+    """
+    def __init__(self, output_features=48,  
+                 pretrained=True, freeze_mobilenet=True):
+        super(MobileNetV3LitePreprocessorQuantized, self).__init__()
+        
+        # Load pretrained MobileNetV3 model
+        # self.mobilenet = torchvision.models.mobilenet_v2(pretrained=pretrained)        
+        self.mobilenet = torchvision.models.mobilenet_v3_small(pretrained=pretrained)
+        self.mobilenet.classifier = nn.Sequential()  # Rimuove il classificatore
+
+        # Strato di dequantizzazione per l'interfaccia ibrida
+        self.dequant = torch.quantization.DeQuantStub()
+
+        # Final feature dimension after MobileNetV3
+        mobilenet_output_dim = 576  # MobileNetV3 Lite final feature dimension
+        
+        # Linear projection to desired output feature size
+        self.projector = nn.Sequential(
+            nn.Linear(mobilenet_output_dim, output_features),
+            nn.BatchNorm1d(output_features),
+            nn.ReLU(inplace=True)
+        )
+
+        # Quantizzazione dinamica
+        #self.mobilenet = torch.quantization.quantize_dynamic(
+        #    mobilenet_fp32, {torch.nn.Linear}, dtype=torch.qint8
+        #)
+
+        self.freeze_mobilenet = freeze_mobilenet
+        self.is_qat_prepared = False
+
+        # Freeze MobileNetV3 parameters if specified
+        #if freeze_mobilenet:
+        #    for param in self.mobilenet.parameters():
+        #        param.requires_grad = False
+        
+        
+    def forward(self, x):
+        # MobileNetV2 expects 3 channels, but input might be 1 or 3.
+        # If input_channels is 1, we need to convert to 3 channels.
+        if x.size(1) == 1:
+            # Convert grayscale to RGB
+            x = x.repeat(1, 3, 1, 1)
+        features = self.mobilenet(x)
+        # features should be [batch, 1280]
+        return self.projector(features)
+    
+    def prepare_for_qat(self):
+        """Prepara MobileNetV3 per la Quantization-Aware Training (QAT) e la congela."""
+        if self.is_qat_prepared:
+            print("Il modello è già preparato per QAT.")
+            return
+
+        # 1. Fusione degli strati (Cruciale per la quantizzazione)
+        # MobileNetV3 ha un metodo 'fuse_model'
+        self.mobilenet.fuse_model()
+        
+        # 2. Imposta il qconfig QAT (per qint8)
+        qconfig_qat = torch.quantization.get_default_qat_qconfig('fbgemm')
+        
+        # 3. Assegna i qconfig: MobileNet per QAT, Proiettore escluso
+        self.mobilenet.qconfig = qconfig_qat
+        # Il qconfig è None per default per i moduli senza, ma lo impostiamo qui per chiarezza
+        self.projector.qconfig = None 
+        
+        # 4. Applica la preparazione QAT al modulo completo
+        torch.quantization.prepare_qat(self, inplace=True)
+        self.is_qat_prepared = True
+
+        # 5. Congelamento dei parametri QAT di MobileNetV3
+        if self.freeze_mobilenet:
+            self.freeze_mobilenet_parameters()
+            
+        print("Modello preparato per QAT ibrido. Pronto per l'addestramento.")
+        
+    def freeze_mobilenet_parameters(self):
+        """Congela i pesi di MobileNetV3 per l'addestramento ibrido."""
+        if self.is_qat_prepared:
+            for name, param in self.mobilenet.named_parameters():
+                param.requires_grad = False
+            print("Parametri MobileNetV3 (QAT) congelati. Solo il Proiettore è addestrabile.")
+        else:
+            print("Prima devi chiamare prepare_for_qat().")
+
+    def convert_to_quantized(self):
+        """Converte il modello QAT addestrato nella versione finale quantizzata (qint8)."""
+        if not self.is_qat_prepared:
+             raise RuntimeError("Prima devi chiamare prepare_for_qat() e addestrare il modello.")
+
+        # Imposta la modalità valutazione (necessaria per convert)
+        self.eval() 
+        
+        # Converti il modello. Gli strati con qconfig=None rimangono FP32
+        torch.quantization.convert(self, inplace=True)
+        self.is_qat_prepared = False
+        
+        print("Conversione finale in MobileNetV3 (qint8) + Proiettore (FP32) completata.")
+
+    def quantize_mobilenet_ptq(calibration_dataloader, pretrained=True):
+        """
+        Esegue la Quantizzazione Post-Addestramento (PTQ) su MobileNetV3 Small.
+        """
+        print("Inizio PTQ per MobileNetV3 Small...")
+        
+        # 1. Carica il modello FP32 base
+        mobilenet_fp32 = torchvision.models.mobilenet_v3_small(pretrained=pretrained)
+        mobilenet_fp32.classifier = nn.Sequential() # Rimuove il classificatore
+        mobilenet_fp32.eval()
+        
+        # 2. Fusione e Preparazione
+        mobilenet_fp32.fuse_model()
+        qconfig = torch.quantization.get_default_qconfig('fbgemm') # qint8 per CPU
+        mobilenet_fp32.qconfig = qconfig
+        
+        model_prepared = torch.quantization.prepare(mobilenet_fp32, inplace=False)
+        
+        # 3. Calibrazione
+        print("Inizio Calibrazione...")
+        with torch.no_grad():
+            for inputs in calibration_dataloader:
+                # Assicurati che l'input sia nel formato corretto [B, C, H, W]
+                # Assumiamo che il dataloader fornisca il tensore di input direttamente o come primo elemento.
+                if isinstance(inputs, (tuple, list)):
+                    input_tensor = inputs[0] 
+                else:
+                    input_tensor = inputs
+                _ = model_prepared(input_tensor)
+        print("Calibrazione completata.")
+    
+        # 4. Conversione finale a qint8
+        model_quantized = torch.quantization.convert(model_prepared, inplace=False)
+        print("PTQ completata. MobileNetV3 convertita in qint8.")
+    
+        return model_quantized
+
 """
 class ImagePreprocessor(nn.Module):
     ""
@@ -254,10 +432,17 @@ class KANImageClassifier(nn.Module):
         # If input_channels is not 3, we handle it in forward
         # Structure is fixed due to pretrained model
         # Adaptation layer to project to feature_dim is needed to be trained
-        self.preprocessor = MobileNetV2Preprocessor(
+        
+        #self.preprocessor = MobileNetV2Preprocessor(
+        #    output_features=feature_dim,
+        #)
+        self.preprocessor = MobileNetV3LitePreprocessor(
             output_features=feature_dim,
         )
-        
+        #self.preprocessor = MobileNetV3LitePreprocessorQuantized(
+        #    output_features=feature_dim,
+        #)
+
         # KAN network for classification with regularization
         kan_width = [feature_dim] + kan_hidden_dims + [num_classes]
         self.kan = RegularizedKAN(
