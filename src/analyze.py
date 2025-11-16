@@ -9,6 +9,16 @@ Date: March 2025
 
 import os
 import torch
+
+from pathlib import Path
+
+def get_device():
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if getattr(torch.backends, "mps", None) is not None and torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -44,9 +54,12 @@ from utils.visualization import plot_confusion_matrix, show_misclassified
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import get_experiment_paths, get_experiment_name, DATASET_CONFIG, KAN_CONFIG, PREPROCESSOR_CONFIG
 
-def load_model_and_config(model_path):
+def load_model_and_config(model_path, device):
     """Load trained model and its configuration from checkpoint"""
-    checkpoint = torch.load(model_path)
+    model_path = Path(model_path)
+
+    # ВАЖНО: всегда грузим на CPU, чтобы не падать на чужих CUDA-чекпоинтах
+    checkpoint = torch.load(model_path, map_location=torch.device("cpu"))
     
     # Extract model configuration from checkpoint
     model_info = checkpoint.get('model_info', {})
@@ -79,14 +92,18 @@ def load_model_and_config(model_path):
     )
     
     # Load weights
-    model.load_state_dict(checkpoint['model_state_dict'])
+    state_dict = checkpoint.get('model_state_dict', checkpoint)
+    model.load_state_dict(state_dict)
+
+    # Переносим модель на нужное устройство (cuda / cpu / mps)
+    model = model.to(device)
     
     # Extract additional info
     try:
         best_epoch = checkpoint.get('epoch', 0)
         best_accuracy = checkpoint.get('val_acc', checkpoint.get('accuracy', 0))
         history = checkpoint.get('history', {})
-    except:
+    except Exception:
         best_epoch = 0
         best_accuracy = 0
         history = {}
@@ -101,7 +118,6 @@ def load_model_and_config(model_path):
         'grid': grid,
         'degree': degree
     }
-
 
 def save_model_analysis(model, model_config, save_dir, inference_results=None, metrics=None):
     """
@@ -381,10 +397,10 @@ def main():
             print("Please specify --model_path or train a model first")
             return
     
-    # Load model and configuration
-    model, model_config = load_model_and_config(model_path)
-    model = model.to(device)
+    # Load model and configuration 
+    model, model_config = load_model_and_config(model_path, device=device)
     model.eval()
+
     
     # Print model info
     print("\nModel Information:")

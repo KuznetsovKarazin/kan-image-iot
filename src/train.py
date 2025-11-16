@@ -16,6 +16,14 @@ import torch.optim as optim
 from torch.optim.lr_scheduler import (
     ReduceLROnPlateau, CosineAnnealingLR, StepLR, OneCycleLR
 )
+try:
+    import torch_directml
+    DIRECTML_AVAILABLE = True
+    print("DirectML available - using AMD GPU acceleration")
+except ImportError:
+    DIRECTML_AVAILABLE = False
+    print("DirectML not available - using CPU")
+    
 import numpy as np
 from pathlib import Path
 from torchvision import datasets, transforms

@@ -23,9 +23,9 @@ ENV/
 .idea/
 
 # Model checkpoints and experimental data
-experiment_data/
-*.pt
-*.pth
+# experiment_data/
+# *.pt
+# *.pth
 
 # Dataset files
 data/raw/
