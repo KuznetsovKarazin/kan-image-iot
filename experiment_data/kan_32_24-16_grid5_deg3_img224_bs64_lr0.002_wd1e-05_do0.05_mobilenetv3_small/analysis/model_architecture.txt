@@ -1,0 +1,17 @@
+KAN Image Classifier Architecture
+==================================================
+
+Image size: 224x224
+Feature dimension: 32
+KAN hidden dimensions: [24, 16]
+KAN grid points: 5
+KAN spline degree: 3
+Dropout rate: 0.05
+Activation L1: 1e-05
+
+Total parameters: 965,512
+Trainable parameters: 35,104
+Model size: 3.68 MB
+Preprocessor type: mobilenetv3_small
+CNN parameters: 945,536 (97.9% of total)
+KAN parameters: 19,976 (2.1% of total)

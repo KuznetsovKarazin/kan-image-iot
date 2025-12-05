@@ -1,0 +1,2 @@
+model_path,exp_name,fp32_size_mb,hybrid_size_mb,reduction_pct,accuracy,macro_f1,person_precision,person_recall,roc_auc,single_ms_96,batch16_ms_96,batch32_ms_96,method
+experiment_data/kan_48_32-24-16_grid5_deg3_img224_bs64_lr0.002_wd1e-05_do0.05_mobilenetv3_small/models/kan_person_detector_best.pt,kan_48_32-24-16_grid5_deg3_img224_bs64_lr0.002_wd1e-05_do0.05_mobilenetv3_small,3.9675,1.3419,66.18,83.83,0.8378,0.8798,0.7835,0.9189,317.2143,20.6651,10.3369,hybrid_manual_int8

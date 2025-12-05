@@ -1,0 +1,121 @@
+{
+  "experiment_name": "kan_32_24-16_grid5_deg3_img224_bs64_lr0.002_wd1e-05_do0.05_mobilenetv3_small",
+  "source_model_path": "experiment_data/kan_32_24-16_grid5_deg3_img224_bs64_lr0.002_wd1e-05_do0.05_mobilenetv3_small/models/kan_person_detector_best.pt",
+  "quantization": {
+    "method": "hybrid_manual_int8",
+    "fp32_size_mb": 3.8310489654541016,
+    "hybrid_size_mb": 1.2056522369384766,
+    "reduction_pct": 68.52944851892364,
+    "compression_ratio": 3.1775738045178916
+  },
+  "kan_config": {
+    "img_size": 224,
+    "feature_dim": 32,
+    "hidden_dims": [
+      24,
+      16
+    ],
+    "grid": 5,
+    "degree": 3
+  },
+  "metrics": {
+    "accuracy": 83.65,
+    "macro_f1": 0.83602183968452,
+    "person_precision": 0.8772421524663677,
+    "person_recall": 0.7825,
+    "roc_auc": 0.92070425
+  },
+  "latency_summary_96": {
+    "single_bs1_ms": 137.40174770355225,
+    "batch16_ms": 10.8137708902359,
+    "batch32_ms": 5.2384935319423676
+  },
+  "inference_results": [
+    {
+      "image_size": 96,
+      "batch_size": 1,
+      "batch_time_ms": 137.40174770355225,
+      "per_image_time_ms": 137.40174770355225
+    },
+    {
+      "image_size": 96,
+      "batch_size": 4,
+      "batch_time_ms": 152.14670181274414,
+      "per_image_time_ms": 38.036675453186035
+    },
+    {
+      "image_size": 96,
+      "batch_size": 16,
+      "batch_time_ms": 173.0203342437744,
+      "per_image_time_ms": 10.8137708902359
+    },
+    {
+      "image_size": 96,
+      "batch_size": 32,
+      "batch_time_ms": 167.63179302215576,
+      "per_image_time_ms": 5.2384935319423676
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 141.57368183135986,
+      "per_image_time_ms": 141.57368183135986
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 149.38692569732666,
+      "per_image_time_ms": 37.346731424331665
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 169.10873889923096,
+      "per_image_time_ms": 10.569296181201935
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 193.3199691772461,
+      "per_image_time_ms": 6.04124903678894
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 140.68629264831543,
+      "per_image_time_ms": 140.68629264831543
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 144.7455072402954,
+      "per_image_time_ms": 36.18637681007385
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 144.27223205566406,
+      "per_image_time_ms": 9.017014503479004
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 196.27825260162354,
+      "per_image_time_ms": 6.1336953938007355
+    }
+  ],
+  "confusion_matrix": [
+    [
+      1781,
+      219
+    ],
+    [
+      435,
+      1565
+    ]
+  ],
+  "classes": [
+    "no_person",
+    "person"
+  ]
+}

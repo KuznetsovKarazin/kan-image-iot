@@ -1,0 +1,122 @@
+{
+  "experiment_name": "kan_48_32-24-16_grid5_deg3_img224_bs64_lr0.002_wd1e-05_do0.05_mobilenetv3_small",
+  "source_model_path": "experiment_data/kan_48_32-24-16_grid5_deg3_img224_bs64_lr0.002_wd1e-05_do0.05_mobilenetv3_small/models/kan_person_detector_best.pt",
+  "quantization": {
+    "method": "hybrid_manual_int8",
+    "fp32_size_mb": 3.9674625396728516,
+    "hybrid_size_mb": 1.3419132232666016,
+    "reduction_pct": 66.17704112268056,
+    "compression_ratio": 2.9565716105061624
+  },
+  "kan_config": {
+    "img_size": 224,
+    "feature_dim": 48,
+    "hidden_dims": [
+      32,
+      24,
+      16
+    ],
+    "grid": 5,
+    "degree": 3
+  },
+  "metrics": {
+    "accuracy": 83.825,
+    "macro_f1": 0.8377636865105458,
+    "person_precision": 0.879842784952274,
+    "person_recall": 0.7835,
+    "roc_auc": 0.918927
+  },
+  "latency_summary_96": {
+    "single_bs1_ms": 317.21431732177734,
+    "batch16_ms": 20.665112137794495,
+    "batch32_ms": 10.336891263723373
+  },
+  "inference_results": [
+    {
+      "image_size": 96,
+      "batch_size": 1,
+      "batch_time_ms": 317.21431732177734,
+      "per_image_time_ms": 317.21431732177734
+    },
+    {
+      "image_size": 96,
+      "batch_size": 4,
+      "batch_time_ms": 332.88251399993896,
+      "per_image_time_ms": 83.22062849998474
+    },
+    {
+      "image_size": 96,
+      "batch_size": 16,
+      "batch_time_ms": 330.6417942047119,
+      "per_image_time_ms": 20.665112137794495
+    },
+    {
+      "image_size": 96,
+      "batch_size": 32,
+      "batch_time_ms": 330.78052043914795,
+      "per_image_time_ms": 10.336891263723373
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 322.08271980285645,
+      "per_image_time_ms": 322.08271980285645
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 338.2686376571655,
+      "per_image_time_ms": 84.56715941429138
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 357.458553314209,
+      "per_image_time_ms": 22.34115958213806
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 383.27327728271484,
+      "per_image_time_ms": 11.977289915084839
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 318.79682540893555,
+      "per_image_time_ms": 318.79682540893555
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 325.1286268234253,
+      "per_image_time_ms": 81.28215670585632
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 347.2126770019531,
+      "per_image_time_ms": 21.70079231262207
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 372.36613273620605,
+      "per_image_time_ms": 11.63644164800644
+    }
+  ],
+  "confusion_matrix": [
+    [
+      1786,
+      214
+    ],
+    [
+      433,
+      1567
+    ]
+  ],
+  "classes": [
+    "no_person",
+    "person"
+  ]
+}

@@ -1,0 +1,8 @@
+              precision    recall  f1-score   support
+
+   no_person       0.80      0.89      0.84      2000
+      person       0.88      0.78      0.83      2000
+
+    accuracy                           0.84      4000
+   macro avg       0.84      0.84      0.84      4000
+weighted avg       0.84      0.84      0.84      4000
