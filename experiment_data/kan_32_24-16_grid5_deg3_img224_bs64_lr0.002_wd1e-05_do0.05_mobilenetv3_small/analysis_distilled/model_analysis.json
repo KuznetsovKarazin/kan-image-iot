@@ -1,0 +1,95 @@
+{
+  "model_configuration": {
+    "best_epoch": 21,
+    "best_accuracy": 87.38333333333334,
+    "history": {},
+    "img_size": 224,
+    "feature_dim": 32,
+    "hidden_dims": [
+      24,
+      16
+    ],
+    "grid": 5,
+    "degree": 3
+  },
+  "inference_results": [
+    {
+      "image_size": 96,
+      "batch_size": 1,
+      "batch_time_ms": 97.14407920837402,
+      "per_image_time_ms": 97.14407920837402
+    },
+    {
+      "image_size": 96,
+      "batch_size": 4,
+      "batch_time_ms": 106.94482326507568,
+      "per_image_time_ms": 26.73620581626892
+    },
+    {
+      "image_size": 96,
+      "batch_size": 16,
+      "batch_time_ms": 111.2231969833374,
+      "per_image_time_ms": 6.951449811458588
+    },
+    {
+      "image_size": 96,
+      "batch_size": 32,
+      "batch_time_ms": 113.56489181518555,
+      "per_image_time_ms": 3.5489028692245483
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 99.9482774734497,
+      "per_image_time_ms": 99.9482774734497
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 94.46229457855225,
+      "per_image_time_ms": 23.61557364463806
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 100.56522846221924,
+      "per_image_time_ms": 6.285326778888702
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 114.78860855102539,
+      "per_image_time_ms": 3.5871440172195435
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 87.61674404144287,
+      "per_image_time_ms": 87.61674404144287
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 100.10632038116455,
+      "per_image_time_ms": 25.026580095291138
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 101.4898681640625,
+      "per_image_time_ms": 6.343116760253906
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 114.59725379943848,
+      "per_image_time_ms": 3.5811641812324524
+    }
+  ],
+  "performance_metrics": {
+    "accuracy": 88.28333333333333,
+    "roc_auc": 0.9497706666666667,
+    "person_precision": 0.8986463033668864,
+    "person_recall": 0.863
+  }
+}

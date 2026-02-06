@@ -1,0 +1,10 @@
+{
+  "training_time": 27918.380657672882,
+  "best_accuracy": 87.08333333333333,
+  "final_learning_rate": 2.7560267532331253e-05,
+  "total_epochs": 47,
+  "early_stopped": true,
+  "used_mixup": false,
+  "used_ema": true,
+  "used_amp": true
+}

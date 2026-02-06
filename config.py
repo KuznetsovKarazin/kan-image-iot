@@ -74,8 +74,11 @@ AUGMENTATION_CONFIG = {
 """
 # CNN Preprocessor configuration
 PREPROCESSOR_CONFIG = {
+    'preprocessor_type': 'mobilenetv3_small',  # Options: 'custom_cnn', 'mobilenetv3_small', 'resnet18', 'mobilenetv3_small_quantized'
+    'width_mult': 1.0,          # Width multiplier for MobileNetV3 (TEMP for testing)
+    'pretrained': False,               # Use pretrained weights for MobileNetV3
     'input_channels': 3,
-    'output_features': 64,            # Feature dimension after preprocessing
+    'output_features': 24,            # Feature dimension after preprocessing (TEMP for testing)
     'conv_channels': [16, 24, 32],    # Channels in each conv layer
     'kernel_size': [3, 3, 3],                 # Kernel size for convolutions
     'pool_kernel_size': 2,
@@ -88,7 +91,20 @@ PREPROCESSOR_CONFIG = {
 
 # KAN configuration
 KAN_CONFIG = {
-    'feature_dim': 64,          # Input dimension to KAN (same as preprocessor output)
+    'feature_dim': 24,          # Input dimension to KAN (same as preprocessor output)
+    'hidden_dims': [16],    # Hidden layer dimensions
+    'grid': 5,                  # Number of grid points
+    'degree': 3,                # Spline degree
+    'seed': 42,                 # Random seed for initialization
+    'dropout_rate': 0.05,        # Dropout rate for KAN layers
+    'weight_decay': 1e-5,       # Weight decay (L2 regularization) for KAN parameters
+    'activation_l1': 1e-5,      # L1 regularization for activations (sparsity)
+    'use_batchnorm': True,      # Use batch normalization between KAN layers
+}
+"""
+# KAN configuration (48 32 24 16) acc. 87% (wm 0.5)
+KAN_CONFIG = {
+    'feature_dim': 48,          # Input dimension to KAN (same as preprocessor output)
     'hidden_dims': [32, 24, 16],    # Hidden layer dimensions
     'grid': 5,                  # Number of grid points
     'degree': 3,                # Spline degree
@@ -98,7 +114,8 @@ KAN_CONFIG = {
     'activation_l1': 1e-5,      # L1 regularization for activations (sparsity)
     'use_batchnorm': True,      # Use batch normalization between KAN layers
 }
-
+"""
+"""
 # Training configuration CPU
 TRAINING_CONFIG = {
     'batch_size': 64,
@@ -111,7 +128,7 @@ TRAINING_CONFIG = {
     'lr_factor': 0.5,            # For ReduceLROnPlateau
     'early_stopping_patience': 15,
     'optimizer': 'adamw',        # Options: 'adam', 'adamw', 'sgd'
-    'num_workers': min(os.cpu_count(), 12),  # Workers for data loading
+    'num_workers': min(os.cpu_count(), 24),  # Workers for data loading
     'save_checkpoints': True,
     'checkpoint_interval': 50,   # Save checkpoint every N epochs
     'gradient_clip_val': 1.0,    # Gradient clipping value
@@ -146,7 +163,7 @@ TRAINING_CONFIG = {
     'cross_validation_folds': 0, # Number of cross-validation folds (0 = disabled)
     'precision': 'mixed',        # Default to mixed precision for GPU training
 }
-"""
+
 # Experiment names will be generated based on key parameters
 def get_experiment_name():
     """Generate experiment name based on current configuration"""
@@ -163,6 +180,12 @@ def get_experiment_name():
     if KAN_CONFIG['dropout_rate'] > 0:
         exp_name += f"_do{KAN_CONFIG['dropout_rate']}"
     
+    # Add preprocessor type
+    exp_name += f"_{PREPROCESSOR_CONFIG['preprocessor_type']}"
+
+    # Add width_mult type
+    exp_name += f"_wm{PREPROCESSOR_CONFIG['width_mult']}"
+
     return exp_name
 
 # Paths for current experiment

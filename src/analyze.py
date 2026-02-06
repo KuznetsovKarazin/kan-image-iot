@@ -77,7 +77,9 @@ def load_model_and_config(model_path, device):
     degree = kan_config.get('degree', KAN_CONFIG['degree'])
     conv_channels = preprocessor_config.get('conv_channels', PREPROCESSOR_CONFIG['conv_channels'])
     use_batch_norm = preprocessor_config.get('use_batch_norm', PREPROCESSOR_CONFIG['use_batch_norm'])
-    
+    preprocessor_type = preprocessor_config.get('preprocessor_type', PREPROCESSOR_CONFIG['preprocessor_type'])
+    width_mult = preprocessor_config.get('width_mult', PREPROCESSOR_CONFIG.get('width_mult', 1.0))
+
     # Create model with the same architecture
     model = KANImageClassifier(
         input_channels=3,
@@ -88,7 +90,10 @@ def load_model_and_config(model_path, device):
         kan_grid=grid,
         kan_degree=degree,
         conv_channels=conv_channels,
-        use_batch_norm=use_batch_norm
+        use_batch_norm=use_batch_norm,
+        preprocessor_type=preprocessor_type,
+        width_mult=width_mult,
+        preprocessor_pretrained=False,
     )
     
     # Load weights
@@ -155,7 +160,8 @@ def save_model_analysis(model, model_config, save_dir, inference_results=None, m
         f.write("### Preprocessing Network\n\n")
         f.write(f"- Input channels: 3\n")
         f.write(f"- Feature dimension: {model_config['feature_dim']}\n")
-        
+        #f.write(f"- Preprocessor type: {model_config['preprocessor_type']}\n")
+
         # Check if 'conv_channels' exists in model_config before accessing it
         if 'conv_channels' in model_config:
             f.write(f"- Convolutional channels: {model_config['conv_channels']}\n")
@@ -407,6 +413,7 @@ def main():
     print(f"Model path: {model_path}")
     print(f"Best epoch: {model_config['best_epoch']}")
     print(f"Best validation accuracy: {model_config['best_accuracy']:.2f}%")
+    #print(f"Preprocessor type: {model_config['preprocessor_type']}")
     print(f"Image size: {model_config['img_size']}x{model_config['img_size']}")
     print(f"Feature dimension: {model_config['feature_dim']}")
     print(f"KAN hidden dimensions: {model_config['hidden_dims']}")

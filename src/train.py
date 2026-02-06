@@ -638,6 +638,9 @@ def train_single_run(model, train_loader, val_loader, criterion, optimizer, sche
                     'config': {
                         'img_size': DATASET_CONFIG['img_size'],
                         'preprocessor': {
+                            'preprocessor_type': PREPROCESSOR_CONFIG['preprocessor_type'],
+                            'width_mult': PREPROCESSOR_CONFIG.get('width_mult', 1.0),
+                            'pretrained': PREPROCESSOR_CONFIG.get('pretrained', True),
                             'input_channels': PREPROCESSOR_CONFIG['input_channels'],
                             'output_features': PREPROCESSOR_CONFIG['output_features'],
                             'conv_channels': PREPROCESSOR_CONFIG['conv_channels'],
@@ -776,6 +779,8 @@ def train_single_run(model, train_loader, val_loader, criterion, optimizer, sche
             'config': {
                 'img_size': DATASET_CONFIG['img_size'],
                 'preprocessor': {
+                    'preprocessor_type': PREPROCESSOR_CONFIG['preprocessor_type'],
+                    'width_mult': PREPROCESSOR_CONFIG.get('width_mult', 1.0),
                     'input_channels': PREPROCESSOR_CONFIG['input_channels'],
                     'output_features': PREPROCESSOR_CONFIG['output_features'],
                     'conv_channels': PREPROCESSOR_CONFIG['conv_channels'],
@@ -1031,7 +1036,10 @@ def main():
         dropout_rate=KAN_CONFIG['dropout_rate'],
         activation_l1=KAN_CONFIG['activation_l1'],
         stochastic_depth_rate=PREPROCESSOR_CONFIG.get('stochastic_depth_rate', 0.0),
-        seed=KAN_CONFIG['seed']
+        seed=KAN_CONFIG['seed'],
+        preprocessor_type=PREPROCESSOR_CONFIG['preprocessor_type'],
+        width_mult=PREPROCESSOR_CONFIG.get('width_mult', 1.0),
+        preprocessor_pretrained=PREPROCESSOR_CONFIG.get('pretrained', True)
     )
     model = model.to(device)
     
@@ -1060,6 +1068,8 @@ def main():
         f.write(f"Total parameters: {param_counts['total']:,}\n")
         f.write(f"Trainable parameters: {param_counts['trainable']:,}\n")
         f.write(f"Model size: {model_size_mb:.2f} MB\n")
+        f.write(f"Preprocessor type: {PREPROCESSOR_CONFIG['preprocessor_type']}\n")
+        f.write(f"Width multiplier: {PREPROCESSOR_CONFIG.get('width_mult', 1.0)}\n")
         f.write(f"CNN parameters: {param_counts['cnn']:,} ({param_counts['cnn']/param_counts['total']*100:.1f}% of total)\n")
         f.write(f"KAN parameters: {param_counts['kan']:,} ({param_counts['kan']/param_counts['total']*100:.1f}% of total)\n")
     
@@ -1140,7 +1150,9 @@ def main():
                 dropout_rate=KAN_CONFIG['dropout_rate'],
                 activation_l1=KAN_CONFIG['activation_l1'],
                 stochastic_depth_rate=PREPROCESSOR_CONFIG.get('stochastic_depth_rate', 0.0),
-                seed=KAN_CONFIG['seed']
+                seed=KAN_CONFIG['seed'],
+                preprocessor_type=PREPROCESSOR_CONFIG['preprocessor_type'],
+                width_mult=PREPROCESSOR_CONFIG.get('width_mult', 1.0)
             ).to(device)
             
             # Reset optimizer and scheduler

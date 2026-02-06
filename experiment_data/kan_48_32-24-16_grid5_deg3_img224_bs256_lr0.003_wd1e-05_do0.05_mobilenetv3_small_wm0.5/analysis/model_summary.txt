@@ -1,0 +1,35 @@
+
+=====================================================
+KAN Person Detection Model Analysis Summary
+=====================================================
+
+Model Characteristics:
+- Model size: 1.20 MB
+- Total parameters: 315,520
+- Trainable parameters: 308,344
+- Image size: 224x224
+- Feature dimension: 48
+- KAN hidden dimensions: [32, 24, 16]
+- KAN grid points: 5
+- KAN spline degree: 3
+
+Performance Metrics:
+- Test accuracy: 87.05%
+- ROC AUC: 0.941
+- Person detection precision: 0.886
+- Person detection recall: 0.851
+
+Inference Performance:
+- Single image inference: 106.22 ms
+- Batch inference (16 images): 7.26 ms per image
+- Batch inference (32 images): 3.73 ms per image
+
+Test Dataset:
+- Test dataset size: 6000
+- Test dataset classes: ['no_person', 'person']
+
+The model is suitable for IoT deployment with excellent balance of accuracy,
+size and speed. The 1.20 MB model size allows 
+deployment on memory-constrained devices while maintaining good detection performance.
+
+=====================================================

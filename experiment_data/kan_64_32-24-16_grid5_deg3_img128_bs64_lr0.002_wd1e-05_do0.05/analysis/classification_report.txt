@@ -1,0 +1,11 @@
+Classification Report for KAN Person Detection Model (Epoch 21)
+================================================================================
+
+              precision    recall  f1-score   support
+
+   no_person       0.78      0.88      0.82      2000
+      person       0.86      0.75      0.80      2000
+
+    accuracy                           0.81      4000
+   macro avg       0.82      0.81      0.81      4000
+weighted avg       0.82      0.81      0.81      4000

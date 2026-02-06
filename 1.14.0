@@ -1,0 +1,17 @@
+Collecting onnx
+  Downloading onnx-1.20.1-cp311-cp311-win_amd64.whl.metadata (8.6 kB)
+Requirement already satisfied: numpy>=1.23.2 in c:\python311\lib\site-packages (from onnx) (2.3.4)
+Collecting protobuf>=4.25.1 (from onnx)
+  Using cached protobuf-6.33.5-cp310-abi3-win_amd64.whl.metadata (593 bytes)
+Requirement already satisfied: typing_extensions>=4.7.1 in c:\python311\lib\site-packages (from onnx) (4.7.1)
+Collecting ml_dtypes>=0.5.0 (from onnx)
+  Downloading ml_dtypes-0.5.4-cp311-cp311-win_amd64.whl.metadata (9.2 kB)
+Downloading onnx-1.20.1-cp311-cp311-win_amd64.whl (16.4 MB)
+   ---------------------------------------- 16.4/16.4 MB 10.4 MB/s eta 0:00:00
+Downloading ml_dtypes-0.5.4-cp311-cp311-win_amd64.whl (210 kB)
+Using cached protobuf-6.33.5-cp310-abi3-win_amd64.whl (437 kB)
+Installing collected packages: protobuf, ml_dtypes, onnx
+  Attempting uninstall: protobuf
+    Found existing installation: protobuf 4.23.4
+    Uninstalling protobuf-4.23.4:
+      Successfully uninstalled protobuf-4.23.4

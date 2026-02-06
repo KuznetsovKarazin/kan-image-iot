@@ -83,12 +83,12 @@ class MobileNetV3LitePreprocessor(nn.Module):
     Leverages pretrained MobileNetV3 Lite for efficient feature extraction.
     """
     def __init__(self, output_features=48,  
-                 pretrained=True, freeze_mobilenet=True):
+                 pretrained=True, freeze_mobilenet=True, width_mult=1.0):
         super(MobileNetV3LitePreprocessor, self).__init__()
         
         # Load pretrained MobileNetV3 model
         # self.mobilenet = torchvision.models.mobilenet_v2(pretrained=pretrained)        
-        self.mobilenet = torchvision.models.mobilenet_v3_small(pretrained=pretrained)
+        self.mobilenet = torchvision.models.mobilenet_v3_small(pretrained=pretrained, width_mult=width_mult)
         self.mobilenet.classifier = nn.Sequential()  # Rimuove il classificatore
 
         # Freeze MobileNetV3 parameters if specified
@@ -98,7 +98,8 @@ class MobileNetV3LitePreprocessor(nn.Module):
         
         # Final feature dimension after MobileNetV3
         mobilenet_output_dim = 576  # MobileNetV3 Lite final feature dimension
-        
+        mobilenet_output_dim = int(mobilenet_output_dim * width_mult) # Adjust for width multiplier
+
         # Linear projection to desired output feature size
         self.projector = nn.Sequential(
             nn.Linear(mobilenet_output_dim, output_features),
@@ -407,7 +408,8 @@ class KANImageClassifier(nn.Module):
     def __init__(self, input_channels=3, img_size=224, num_classes=2, feature_dim=48, 
                  kan_hidden_dims=[24, 12], kan_grid=4, kan_degree=3, conv_channels=[16, 32, 64],
                  use_batch_norm=True, dropout_rate=0.1, activation_l1=0.0, 
-                 stochastic_depth_rate=0.0, seed=42):
+                 stochastic_depth_rate=0.0, seed=42, preprocessor_type='mobilenetv3_small', width_mult=1.0,
+                 preprocessor_freeze=True, preprocessor_pretrained=True):
         super(KANImageClassifier, self).__init__()
         
         self.input_channels = input_channels
@@ -433,15 +435,20 @@ class KANImageClassifier(nn.Module):
         # Structure is fixed due to pretrained model
         # Adaptation layer to project to feature_dim is needed to be trained
         
-        #self.preprocessor = MobileNetV2Preprocessor(
-        #    output_features=feature_dim,
-        #)
-        self.preprocessor = MobileNetV3LitePreprocessor(
+        if preprocessor_type == 'mobilenetv2':
+            self.preprocessor = MobileNetV2Preprocessor(
             output_features=feature_dim,
-        )
-        #self.preprocessor = MobileNetV3LitePreprocessorQuantized(
-        #    output_features=feature_dim,
-        #)
+            )
+        elif preprocessor_type == 'mobilenetv3_small':
+            self.preprocessor = MobileNetV3LitePreprocessor(
+                output_features=feature_dim, width_mult=width_mult, 
+                pretrained=preprocessor_pretrained, 
+                freeze_mobilenet=preprocessor_pretrained
+            )
+        elif preprocessor_type == 'mobilenetv3_small_quantized':
+            self.preprocessor = MobileNetV3LitePreprocessorQuantized(
+            output_features=feature_dim,
+            )
 
         # KAN network for classification with regularization
         kan_width = [feature_dim] + kan_hidden_dims + [num_classes]

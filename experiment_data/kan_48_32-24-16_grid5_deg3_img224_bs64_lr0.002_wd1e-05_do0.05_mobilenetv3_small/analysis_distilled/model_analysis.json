@@ -1,0 +1,96 @@
+{
+  "model_configuration": {
+    "best_epoch": 28,
+    "best_accuracy": 87.8,
+    "history": {},
+    "img_size": 224,
+    "feature_dim": 48,
+    "hidden_dims": [
+      32,
+      24,
+      16
+    ],
+    "grid": 5,
+    "degree": 3
+  },
+  "inference_results": [
+    {
+      "image_size": 96,
+      "batch_size": 1,
+      "batch_time_ms": 166.84557914733887,
+      "per_image_time_ms": 166.84557914733887
+    },
+    {
+      "image_size": 96,
+      "batch_size": 4,
+      "batch_time_ms": 167.98544883728027,
+      "per_image_time_ms": 41.99636220932007
+    },
+    {
+      "image_size": 96,
+      "batch_size": 16,
+      "batch_time_ms": 176.15193843841553,
+      "per_image_time_ms": 11.00949615240097
+    },
+    {
+      "image_size": 96,
+      "batch_size": 32,
+      "batch_time_ms": 221.10098838806152,
+      "per_image_time_ms": 6.909405887126923
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 174.0443468093872,
+      "per_image_time_ms": 174.0443468093872
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 175.14050483703613,
+      "per_image_time_ms": 43.78512620925903
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 179.65704917907715,
+      "per_image_time_ms": 11.228565573692322
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 238.3163595199585,
+      "per_image_time_ms": 7.447386234998703
+    },
+    {
+      "image_size": 224,
+      "batch_size": 1,
+      "batch_time_ms": 172.86719799041748,
+      "per_image_time_ms": 172.86719799041748
+    },
+    {
+      "image_size": 224,
+      "batch_size": 4,
+      "batch_time_ms": 168.0622386932373,
+      "per_image_time_ms": 42.015559673309326
+    },
+    {
+      "image_size": 224,
+      "batch_size": 16,
+      "batch_time_ms": 178.30661296844482,
+      "per_image_time_ms": 11.144163310527802
+    },
+    {
+      "image_size": 224,
+      "batch_size": 32,
+      "batch_time_ms": 220.31274318695068,
+      "per_image_time_ms": 6.884773224592209
+    }
+  ],
+  "performance_metrics": {
+    "accuracy": 87.7,
+    "roc_auc": 0.9494342777777778,
+    "person_precision": 0.9248685199098422,
+    "person_recall": 0.8206666666666667
+  }
+}

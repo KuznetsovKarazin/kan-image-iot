@@ -1,0 +1,13 @@
+TEST
+
+1) KAN small
+- feature_dim = 32
+- hidden = [24,16]
+2) KAN medium
+- feature_dim = 48
+- hidden = [32,24,16]
+3) MobileNet width multiplier 0.75
+- più veloce e più piccolo del baseline
+Per ogni modello:
+(a) train FP32 → (b) quantizzazione ibrida → (c) analisi + grafico Pareto.
+Appena hai il primo modello FP32, mandami il checkpoint e lo confrontiamo.
