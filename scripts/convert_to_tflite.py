@@ -491,8 +491,8 @@ def main():
     )
     parser.add_argument('model_path', type=str, 
                         help='Path to PyTorch checkpoint (.pt file)')
-    parser.add_argument('--output_name', type=str, default='model.tflite',
-                        help='Output TFLite filename (default: model.tflite)')
+    parser.add_argument('--output_name', type=str, default=None,
+                        help='Output TFLite filename (default: model.tflite in experiment dir)')
     parser.add_argument('--quantize', type=str, default='none',
                         choices=['none', 'float16', 'int8'],
                         help='Quantization type (default: none)')
@@ -520,13 +520,25 @@ def main():
     print(f"Verification: {args.verify}")
     
     # Create output directory
-    output_dir = Path("tflite_models")
-    output_dir.mkdir(exist_ok=True)
+    if args.output_name is None:
+        paths = config.get_experiment_paths()
+        output_dir = paths['model_dir']
+        tflite_filename = 'model.tflite'
+        print(f"Output directory (auto): {output_dir}")
+    else:
+        # User specified output path
+        output_path_user = Path(args.output_name)
+        output_dir = output_path_user.parent
+        if str(output_dir) == '.':
+            output_dir = Path.cwd()
+        output_dir.mkdir(parents=True, exist_ok=True)
+        tflite_filename = output_path_user.name
+        print(f"Output directory (custom): {output_dir}")
     
     # Define intermediate paths
     onnx_path = output_dir / "model.onnx"
     tf_path = output_dir / "tf_model"
-    tflite_path = output_dir / args.output_name
+    tflite_path = output_dir / tflite_filename
     
     # Load PyTorch model
     print("\nLoading PyTorch model...")
