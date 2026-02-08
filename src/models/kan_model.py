@@ -16,7 +16,7 @@ Date: September 2025
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from kan import KAN
+from kan_patched import KAN
 import numpy as np
 import torchvision
 

@@ -10,7 +10,7 @@ Dropout rate: 0.05
 Activation L1: 1e-05
 
 Total parameters: 948,112
-Trainable parameters: 19,720
+Trainable parameters: 946,728
 Model size: 3.62 MB
 Preprocessor type: mobilenetv3_small
 Width multiplier: 1.0

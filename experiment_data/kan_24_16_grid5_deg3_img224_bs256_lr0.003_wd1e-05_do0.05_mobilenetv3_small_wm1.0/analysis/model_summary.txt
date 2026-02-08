@@ -14,15 +14,15 @@ Model Characteristics:
 - KAN spline degree: 3
 
 Performance Metrics:
-- Test accuracy: 89.32%
-- ROC AUC: 0.958
-- Person detection precision: 0.913
-- Person detection recall: 0.869
+- Test accuracy: 88.58%
+- ROC AUC: 0.951
+- Person detection precision: 0.904
+- Person detection recall: 0.863
 
 Inference Performance:
-- Single image inference: 22.69 ms
-- Batch inference (16 images): 1.99 ms per image
-- Batch inference (32 images): 1.03 ms per image
+- Single image inference: 28.80 ms
+- Batch inference (16 images): 2.34 ms per image
+- Batch inference (32 images): 1.22 ms per image
 
 Test Dataset:
 - Test dataset size: 6000

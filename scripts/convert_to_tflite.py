@@ -489,8 +489,8 @@ def main():
     parser = argparse.ArgumentParser(
         description='Convert KAN Image Classifier from PyTorch to TFLite'
     )
-    parser.add_argument('model_path', type=str, 
-                        help='Path to PyTorch checkpoint (.pt file)')
+    parser.add_argument('model_path', type=str, nargs='?', default=None,
+                        help='Path to PyTorch checkpoint (.pt file). Defaults to current experiment best model.')
     parser.add_argument('--output_name', type=str, default=None,
                         help='Output TFLite filename (default: model.tflite in experiment dir)')
     parser.add_argument('--quantize', type=str, default='none',
@@ -505,6 +505,13 @@ def main():
     parser.add_argument('--force_config', dest='force_config', action='store_true',
                         help='Force configuration from config.py')    
     args = parser.parse_args()
+    
+    # Handle default model path
+    if args.model_path is None:
+        paths = config.get_experiment_paths()
+        default_model = paths['model_dir'] / 'kan_person_detector_best.pt'
+        args.model_path = str(default_model)
+        print(f"\n[INFO] No model path provided. Using default from config: {args.model_path}")
     
     # Validate model path
     if not os.path.exists(args.model_path):

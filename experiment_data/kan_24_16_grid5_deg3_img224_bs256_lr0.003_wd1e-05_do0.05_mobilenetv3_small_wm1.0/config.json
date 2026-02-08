@@ -1,9 +1,9 @@
 {
   "dataset_config": {
     "dataset_name": "vww",
-    "raw_data_dir": "C:\\Users\\Daniele\\Documents\\vscode\\kan-image-iot\\data\\raw\\coco",
-    "processed_data_dir": "C:\\Users\\Daniele\\Documents\\vscode\\kan-image-iot\\data\\processed",
-    "subset_dir": "C:\\Users\\Daniele\\Documents\\vscode\\kan-image-iot\\data\\processed\\vww_subset",
+    "raw_data_dir": "T:\\Antigravity\\kan-image-iot\\data\\raw\\coco",
+    "processed_data_dir": "T:\\Antigravity\\kan-image-iot\\data\\processed",
+    "subset_dir": "T:\\Antigravity\\kan-image-iot\\data\\processed\\vww_subset",
     "img_size": 224,
     "train_samples_per_class": 50000,
     "val_samples_per_class": 5000,
@@ -43,9 +43,9 @@
   "preprocessor_config": {
     "preprocessor_type": "mobilenetv3_small",
     "width_mult": 1.0,
-    "pretrained": true,
+    "pretrained": false,
     "input_channels": 3,
-    "output_features": 64,
+    "output_features": 24,
     "conv_channels": [
       16,
       24,

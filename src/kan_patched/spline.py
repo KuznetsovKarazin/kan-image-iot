@@ -44,6 +44,23 @@ def B_batch(x, grid, k=0, extend=True, device='cpu'):
     
     # in case grid is degenerate
     # value = torch.nan_to_num(value)
+
+    # Sostituisce NaN con 0
+    # Sostituisce NaN con 0
+    value = torch.where(value != value, torch.zeros_like(value), value)
+
+    # Sostituisce +inf con un limite massimo
+    max_val = 10 #1e6
+    value = torch.where(value == float('inf'),
+                        torch.full_like(value, max_val),
+                        value)
+
+    # Sostituisce -inf con un limite minimo
+    min_val = -10 #1e6
+    value = torch.where(value == float('-inf'),
+                        torch.full_like(value, min_val),
+                        value)
+
     return value
 
 

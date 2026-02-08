@@ -2,8 +2,8 @@
 
 ## Model Information
 
-- Best epoch: 4
-- Best validation accuracy: 88.73%
+- Best epoch: 24
+- Best validation accuracy: 88.35%
 - Image size: 224x224
 
 ## Architecture Details

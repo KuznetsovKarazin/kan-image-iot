@@ -292,6 +292,48 @@ This plot is suitable for inclusion in a thesis or paper.
 
 ---
 
+
+---
+
+## TFLite Conversion & Testing
+
+To deploy models on edge devices, we support conversion to TensorFlow Lite.
+
+### Convert to TFLite
+
+Use `scripts/convert_to_tflite.py` to convert a PyTorch checkpoint to TFLite format. This script handles the conversion pipeline: PyTorch -> ONNX -> TensorFlow -> TFLite.
+
+
+```bash
+# Basic conversion (uses model from config.py by default)
+python scripts/convert_to_tflite.py
+
+# Convert specific checkpoint
+python scripts/convert_to_tflite.py <path_to_checkpoint.pt>
+
+# Force configuration from config.py (useful if checkpoint config mismatch)
+python scripts/convert_to_tflite.py <path_to_checkpoint.pt> --force_config
+```
+
+The script will save the `.tflite` model in the same experiment directory.
+
+### Test TFLite Model
+
+Use `scripts/test_tflite.py` to evaluate the converted model on the validation set.
+
+```bash
+# Evaluate accuracy and latency (limit to 100 batches for quick check)
+python scripts/test_tflite.py <path_to_model.tflite> --limit 100
+```
+
+This script reports:
+- Accuracy on the validation set
+- Average inference latency (ms/sample)
+- Confusion Matrix
+- Classification Report (Precision, Recall, F1-score)
+
+---
+
 ## How to Use this Branch (v2) in Practice
 
 For a fresh clone:

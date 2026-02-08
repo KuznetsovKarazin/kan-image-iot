@@ -8,6 +8,7 @@ from pathlib import Path
 # Important: import TF after settings but before use
 import tensorflow as tf
 from tqdm import tqdm
+from sklearn.metrics import confusion_matrix, classification_report
 
 # Attempt to handle potential import errors gracefully or mock if needed
 # (Assuming standard environment has these, but windows led to valid warnings before)
@@ -118,6 +119,9 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
     input_index = input_details[0]['index']
     output_index = output_details[0]['index']
     
+    all_preds = []
+    all_labels = []
+    
     print("Starting inference...")
     
     for i, (images, labels) in enumerate(tqdm(dataloader)):
@@ -179,6 +183,9 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
                 correct += 1
             total += 1
             
+            all_preds.append(prediction)
+            all_labels.append(label)
+            
     if total == 0:
         print("No images processed.")
         return
@@ -192,6 +199,12 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
     print(f"Accuracy: {accuracy:.2f}% ({correct}/{total})")
     print(f"Avg Latency: {avg_latency:.2f} ms/sample")
     print("="*40)
+    
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(all_labels, all_preds))
+    
+    print("\nClassification Report:")
+    print(classification_report(all_labels, all_preds, target_names=dataset.classes))
 
 if __name__ == "__main__":
     if not os.path.exists(args.model_path):
