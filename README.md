@@ -381,6 +381,62 @@ Then follow the steps:
 - `python scripts/pareto_summary.py`
 
 ---
+## Addendum for tflite conversion (v2b) 
+
+Tflite conversion is crucial to deploy directly in XIAO/Seeed modules (and similar devices), so we have provided support to translate KAN models into tflite format.
+
+For a fresh clone:
+
+```bash
+git clone https://github.com/danielefaggi/cnn-kan-image.git
+cd cnn-kan-image
+
+# Setup environment
+python -m venv venv
+# On Linux/macOS:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+
+pip install -r requirements.txt
+```
+
+Conversion of KAN model directly to tflite is a really tough challenge, so it relies on using the right libraries, installed in the right sequence.
+In order to install the dependencies and resolve conflicts between tf2onnx and protobuf (which is the main issue), run the following script:
+
+```bash
+./install_requirements.sh
+```
+
+or
+
+```bash
+install_requirements.bat
+```
+
+on Windows.
+
+Please note that these scripts download by default the cu121 version of pytorch. If you have a different architecture, you have to change it accordingly.
+
+Setup config.py by editing the `config.py` with your desired configuration.
+Please note that matching output of preprocessor (PREPROCESSOR_CONFIG.output_features) to kan input (KAN_CONFIG.feature_dim) is strongly suggested in order to avoid accuracy degradation and errors. Feel free to change every other parameter.
+
+Then follow the steps:
+
+- `python scripts/download_dataset.py`
+- `python scripts/prepare_dataset.py`
+- `python src/train.py` (or use your own config)
+- `python src/analyze.py`
+- `python scripts/quantize_hybrid_manual.py` ...
+- `python scripts/pareto_summary.py`
+
+- `python scripts/convert_to_tflite.py --force_config --quantize int8`
+- `python scripts/test_tflite.py` 
+---
+
+Please use the --force_config parameter to force the structure of the model as 
+the config.py file, just in case the metadata in the checkpoint file won't match 
+the the real model structure.
 
 ## License
 
