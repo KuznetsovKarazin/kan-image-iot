@@ -20,9 +20,14 @@ except ImportError as e:
     print(f"Error importing torch/torchvision: {e}")
     sys.exit(1)
 
+# Add project root to path for config import
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import config
+
 # Define parser for use in main
 parser = argparse.ArgumentParser(description='Test TFLite model on validation set')
-parser.add_argument('model_path', type=str, help='Path to TFLite model file')
+parser.add_argument('model_path', type=str, nargs='?', default=None,
+                    help='Path to TFLite model file (optional, defaults to experiment model)')
 parser.add_argument('--data_dir', type=str, default=r'data/processed/vww_subset/val', 
                     help='Path to validation dataset')
 parser.add_argument('--img_size', type=int, default=224, help='Image size')
@@ -76,9 +81,18 @@ def load_tflite_model(model_path, use_xnnpack=True):
         print(f"[FAIL] All interpreter loading attempts failed: {e}")
         return None
 
-def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None, use_xnnpack=True):
+def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None, use_xnnpack=True, save_report=True):
     """
     Evaluate TFLite model on dataset.
+    
+    Args:
+        model_path: Path to TFLite model file
+        data_dir: Path to validation dataset
+        img_size: Image size for input
+        batch_size: Batch size (usually 1 for TFLite)
+        limit: Limit number of batches for quick testing
+        use_xnnpack: Whether to use XNNPACK delegate
+        save_report: Whether to save report to experiment analysis directory
     """
     print(f"Loading model: {model_path}")
     interpreter = load_tflite_model(model_path, use_xnnpack=use_xnnpack)
@@ -193,31 +207,98 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
     accuracy = 100 * correct / total
     avg_latency = np.mean(latencies)
     
-    print("\n" + "="*40)
-    print("Results")
-    print("="*40)
-    print(f"Accuracy: {accuracy:.2f}% ({correct}/{total})")
-    print(f"Avg Latency: {avg_latency:.2f} ms/sample")
-    print("="*40)
+    # Prepare report text
+    cm = confusion_matrix(all_labels, all_preds)
+    report = classification_report(all_labels, all_preds, target_names=dataset.classes)
     
-    print("\nConfusion Matrix:")
-    print(confusion_matrix(all_labels, all_preds))
+    report_text = [
+        "="*60,
+        "TFLite Model Evaluation Report",
+        "="*60,
+        f"Model: {model_path}",
+        f"Dataset: {data_dir}",
+        f"Total Images: {total}",
+        "",
+        "="*60,
+        "Results",
+        "="*60,
+        f"Accuracy: {accuracy:.2f}% ({correct}/{total})",
+        f"Avg Latency: {avg_latency:.2f} ms/sample",
+        f"Min Latency: {np.min(latencies):.2f} ms",
+        f"Max Latency: {np.max(latencies):.2f} ms",
+        f"Std Latency: {np.std(latencies):.2f} ms",
+        "="*60,
+        "",
+        "Confusion Matrix:",
+        str(cm),
+        "",
+        "Classification Report:",
+        report,
+        "="*60,
+    ]
     
-    print("\nClassification Report:")
-    print(classification_report(all_labels, all_preds, target_names=dataset.classes))
+    report_output = "\n".join(report_text)
+    
+    # Print to console
+    print("\n" + report_output)
+    
+    # Save report if requested
+    if save_report:
+        try:
+            # Determine analysis directory from model path
+            model_dir = Path(model_path).parent
+            analysis_dir = model_dir.parent / 'analysis'
+            analysis_dir.mkdir(parents=True, exist_ok=True)
+            
+            report_path = analysis_dir / 'report_tflite.txt'
+            with open(report_path, 'w', encoding='utf-8') as f:
+                f.write(report_output)
+            
+            print(f"\n[INFO] Report saved to: {report_path}")
+        except Exception as e:
+            print(f"\n[WARN] Failed to save report: {e}")
+    
+    return accuracy, avg_latency
 
 if __name__ == "__main__":
+    # If no model path specified, use default from experiment
+    if args.model_path is None:
+        # Get experiment paths from config
+        exp_paths = config.get_experiment_paths()
+        model_dir = exp_paths['model_dir']
+        tflite_path = Path(model_dir) / 'model.tflite'
+        
+        if not tflite_path.exists():
+            print(f"[ERROR] No TFLite model found at default location: {tflite_path}")
+            print("Please specify a model path or run convert_to_tflite.py first.")
+            sys.exit(1)
+        
+        args.model_path = str(tflite_path)
+        print(f"[INFO] Using model from experiment: {args.model_path}")
+    
+    # Verify model exists
     if not os.path.exists(args.model_path):
-        print(f"Error: Model not found at {args.model_path}")
+        print(f"[ERROR] Model not found at {args.model_path}")
         sys.exit(1)
         
+    # Verify data directory exists
     if not os.path.exists(args.data_dir):
         # Fallback to absolute path check if relative fails
         abs_data_dir = os.path.join(os.getcwd(), args.data_dir)
         if os.path.exists(abs_data_dir):
             args.data_dir = abs_data_dir
         else:
-            print(f"Error: Data directory not found at {args.data_dir}")
+            print(f"[ERROR] Data directory not found at {args.data_dir}")
             sys.exit(1)
+    
+    print("="*60)
+    print("TFLite Model Testing")
+    print("="*60)
+    print(f"Model: {args.model_path}")
+    print(f"Dataset: {args.data_dir}")
+    print(f"XNNPACK: {'Disabled' if args.disable_xnnpack else 'Enabled'}")
+    print("="*60)
+    print()
             
-    evaluate_model(args.model_path, args.data_dir, args.img_size, limit=args.limit, use_xnnpack=not args.disable_xnnpack)
+    evaluate_model(args.model_path, args.data_dir, args.img_size, 
+                   limit=args.limit, use_xnnpack=not args.disable_xnnpack, save_report=True)

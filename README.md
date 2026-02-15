@@ -292,17 +292,15 @@ This plot is suitable for inclusion in a thesis or paper.
 
 ---
 
-
----
-
 ## TFLite Conversion & Testing
 
 To deploy models on edge devices, we support conversion to TensorFlow Lite.
+In conversion, it is needed to use the included patched version of kan instead of the original one due to ONNX unsupported operations in the original version.
 
 ### Convert to TFLite
 
 Use `scripts/convert_to_tflite.py` to convert a PyTorch checkpoint to TFLite format. This script handles the conversion pipeline: PyTorch -> ONNX -> TensorFlow -> TFLite.
-
+It is able to convert models and apply quantization to int8 and float16.
 
 ```bash
 # Basic conversion (uses model from config.py by default)
@@ -311,8 +309,8 @@ python scripts/convert_to_tflite.py
 # Convert specific checkpoint
 python scripts/convert_to_tflite.py <path_to_checkpoint.pt>
 
-# Force configuration from config.py (useful if checkpoint config mismatch)
-python scripts/convert_to_tflite.py <path_to_checkpoint.pt> --force_config
+# Force configuration from config.py (useful if checkpoint config mismatch) and apply int8 quantization 
+python scripts/convert_to_tflite.py <path_to_checkpoint.pt> --force_config --quantize int8
 ```
 
 The script will save the `.tflite` model in the same experiment directory.
@@ -334,12 +332,30 @@ This script reports:
 
 ---
 
+### Results of tflite conversion
+
+The results of the tflite conversion are the following:
+
+- FP32 baseline (32, 16, width mult 1.0): ~3.89 MB, ~88% accuracy
+- Tflite INT8 (32, 16, width mult 1.0): ~1.34 MB, ~87% accuracy
+
+- FP32 baseline (32, 16, width mult 0.75): ~2.20 MB, ~88% accuracy
+- Tflite INT8 (32, 16, width mult 0.75): ~ 0.90MB, ~87% accuracy
+
+- FP32 baseline (32, 16, width mult 0.67): ~1.73 MB, ~88% accuracy
+- Tflite INT8 (32, 16, width mult 0.67): ~ 0.76MB, ~86% accuracy
+
+- FP32 baseline (32, 16, width mult 0.5): ~1.21 MB, ~87% accuracy
+- Tflite INT8 (32, 16, width mult 0.5): ~0.57 MB, ~83% accuracy
+
+Please note that quantization retains some weight in int64 format in kan layers.
+
 ## How to Use this Branch (v2) in Practice
 
 For a fresh clone:
 
 ```bash
-git clone https://github.com/KuznetsovKarazin/kan-image-iot.git
+git clone https://github.com/danielefaggi/kan-image-iot.git
 cd kan-image-iot
 
 # Switch to the v2 branch
@@ -374,8 +390,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
+Daniele Faggi - daniele.faggi@gmail.com
+
 Oleksandr Kuznetsov - oleksandr.o.kuznetsov@gmail.com
 
+Project Link: https://github.com/KuznetsovKarazin/cnn-kan-image
 
 ---
 
