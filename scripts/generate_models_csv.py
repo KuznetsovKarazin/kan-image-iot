@@ -116,6 +116,25 @@ def get_wm_from_exp(exp_name: str) -> float:
     return 1.0
 
 
+def get_img_size_from_exp(exp_name: str) -> int | None:
+    """Extract img_size from experiment directory name (e.g. _img96_ -> 96)."""
+    match = re.search(r'_img(\d+)_', exp_name)
+    if match:
+        return int(match.group(1))
+    return None
+
+
+def get_lr_from_exp(exp_name: str) -> float | None:
+    """Extract learning_rate from experiment directory name (e.g. _lr0.001_ -> 0.001)."""
+    match = re.search(r'_lr([\d.eE+-]+)_', exp_name)
+    if match:
+        try:
+            return float(match.group(1))
+        except ValueError:
+            pass
+    return None
+
+
 # ─────────────────────────────────────────────
 # Dataset Loader
 # ─────────────────────────────────────────────
@@ -135,17 +154,57 @@ def get_test_loader(data_dir: str, img_size: int, batch_size: int):
 # ─────────────────────────────────────────────
 # Torch Model Loader
 # ─────────────────────────────────────────────
+
+def _infer_dims_from_state_dict(state_dict: dict):
+    """
+    Infer feature_dim and hidden_dims directly from the checkpoint weights.
+
+    This is the most reliable approach: the actual tensor shapes in the
+    state_dict always reflect how the model was TRAINED, regardless of
+    any discrepancies in the saved config (e.g. if config.py was changed
+    after training and model_info['config'] captured the wrong values).
+
+    Returns (feature_dim, hidden_dims) or (None, None) if keys not found.
+    """
+    # feature_dim = output size of projector linear layer
+    proj_key = 'preprocessor.projector.0.weight'
+    if proj_key not in state_dict:
+        return None, None
+    feature_dim = state_dict[proj_key].shape[0]
+
+    # hidden_dims = output sizes of each KAN activation layer EXCEPT last (num_classes)
+    # act_fun[i].coef has shape [in_nodes, out_nodes, degree+something]
+    hidden_dims_raw = []
+    i = 0
+    while f'kan.kan.act_fun.{i}.coef' in state_dict:
+        coef = state_dict[f'kan.kan.act_fun.{i}.coef']
+        out_nodes = int(coef.shape[1])
+        hidden_dims_raw.append(out_nodes)
+        i += 1
+
+    # Drop the last entry which is num_classes (not a hidden layer)
+    if len(hidden_dims_raw) > 1:
+        hidden_dims = hidden_dims_raw[:-1]
+    else:
+        hidden_dims = []   # single-layer KAN: no hidden dims between input and output
+
+    return feature_dim, hidden_dims
+
+
 def load_torch_model(model_path: Path):
     """Load a PyTorch checkpoint and return (model, size_mb, total_params, trainable_params).
     
     NOTE: size_mb is computed from model parameters (weights only),
     NOT from file size (which includes optimizer state in 'best' checkpoints).
+
+    feature_dim and hidden_dims are always inferred from the state_dict tensors
+    to avoid mismatches when model_info['config'] captured stale config.py values.
     """
     from models.kan_model import KANImageClassifier
 
     checkpoint = torch.load(model_path, map_location='cpu', weights_only=False)
 
-    # Read config from checkpoint
+    # ── Extract non-architecture config (preprocessor type, width_mult, grid, degree)
     saved_config = None
     if isinstance(checkpoint, dict):
         if 'config' in checkpoint:
@@ -156,21 +215,43 @@ def load_torch_model(model_path: Path):
     if saved_config and 'preprocessor' in saved_config:
         preproc = saved_config['preprocessor']
         kan = saved_config['kan']
-        feature_dim = preproc['output_features']
-        hidden_dims = kan.get('hidden_dims', [feature_dim // 2])
+        # Don't trust feature_dim / hidden_dims from config — infer from weights below
         grid = kan.get('grid', 5)
         degree = kan.get('degree', 3)
         preprocessor_type = preproc.get('preprocessor_type', 'mobilenetv3_small')
         width_mult = preproc.get('width_mult', 1.0)
     else:
-        # Fallback - read wm from filename parent name
         wm_str = re.search(r'_wm([\d.]+)', str(model_path))
         width_mult = float(wm_str.group(1)) if wm_str else 1.0
-        feature_dim = 32
-        hidden_dims = [16]
         grid = 5
         degree = 3
         preprocessor_type = 'mobilenetv3_small'
+
+    # ── Infer feature_dim and hidden_dims from the actual weight tensors ──────
+    # This is the reliable source: even if saved_config has wrong values (e.g.
+    # because config.py changed after training), the shapes in state_dict are
+    # always correct.
+    state_dict_raw = None
+    if isinstance(checkpoint, dict):
+        state_dict_raw = (checkpoint.get('model_state_dict') or
+                          checkpoint.get('quantized_state') or
+                          checkpoint.get('state_dict') or
+                          (checkpoint if 'preprocessor.projector.0.weight' in checkpoint else None))
+    if state_dict_raw is None and not isinstance(checkpoint, dict):
+        state_dict_raw = checkpoint
+
+    sd_feature_dim, sd_hidden_dims = _infer_dims_from_state_dict(state_dict_raw or {})
+
+    # Use inferred values; fall back to config / defaults only if inference failed
+    if sd_feature_dim is not None:
+        feature_dim = sd_feature_dim
+        hidden_dims = sd_hidden_dims if sd_hidden_dims is not None else []
+    elif saved_config and 'preprocessor' in saved_config:
+        feature_dim = saved_config['preprocessor']['output_features']
+        hidden_dims = saved_config['kan'].get('hidden_dims', [feature_dim // 2])
+    else:
+        feature_dim = 32
+        hidden_dims = [16]
 
     model = KANImageClassifier(
         input_channels=3,
@@ -206,12 +287,12 @@ def load_torch_model(model_path: Path):
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 
     # Size from model weights only (not file size, which may include optimizer state)
-    # Same method as analyze.py: sum of parameter bytes
     param_bytes = sum(p.numel() * p.element_size() for p in model.parameters())
     buf_bytes   = sum(b.numel() * b.element_size() for b in model.buffers())
     size_mb = (param_bytes + buf_bytes) / (1024 * 1024)
 
     return model, size_mb, total_params, trainable_params
+
 
 
 # ─────────────────────────────────────────────
@@ -340,13 +421,12 @@ def estimate_peak_activation_kb(model: torch.nn.Module, img_size: int = 224) -> 
 # Torch Evaluation
 # ─────────────────────────────────────────────
 def evaluate_torch(model, loader, classes, desc='Evaluating', n_latency_samples=200):
-    """Return (accuracy, avg_latency_ms, precision, recall, f1, cm) for a torch model.
+    """Return (accuracy, avg_latency_ms, lat_batch64_ms, precision, recall, f1, cm) for a torch model.
 
     Fairness note:
       - Accuracy/metrics are computed on BATCHES (fast).
-      - Latency is measured on SINGLE images (batch_size=1), same as TFLite.
-        This reflects real IoT deployment where images arrive one at a time.
-      - n_latency_samples: how many single-image inferences to time.
+      - Single-image latency is measured on batch_size=1, same as TFLite.
+      - Batch-64 latency is per-image time when processing 64 images at once.
     """
     all_preds = []
     all_targets = []
@@ -377,7 +457,7 @@ def evaluate_torch(model, loader, classes, desc='Evaluating', n_latency_samples=
     latencies = []
     collected = 0
     with torch.no_grad():
-        pbar2 = tqdm(total=n_latency_samples, desc=f"    {desc} [lat]",
+        pbar2 = tqdm(total=n_latency_samples, desc=f"    {desc} [lat1]",
                      unit='img', leave=False, dynamic_ncols=True)
         for inputs, _ in loader:
             for i in range(inputs.size(0)):
@@ -397,7 +477,36 @@ def evaluate_torch(model, loader, classes, desc='Evaluating', n_latency_samples=
 
     avg_lat = float(np.mean(latencies))
 
-    return accuracy, avg_lat, prec * 100, rec * 100, f1 * 100, cm
+    # ── Phase 3: batch-64 latency (per-image throughput) ───────────
+    batch64_lat = None
+    try:
+        # Gather 64 images from the loader
+        batch64_imgs = []
+        with torch.no_grad():
+            for inputs, _ in loader:
+                for i in range(inputs.size(0)):
+                    batch64_imgs.append(inputs[i])
+                    if len(batch64_imgs) >= 64:
+                        break
+                if len(batch64_imgs) >= 64:
+                    break
+        if len(batch64_imgs) == 64:
+            batch64 = torch.stack(batch64_imgs[:64]).cpu()
+            # Warmup
+            with torch.no_grad():
+                model(batch64)
+            # Timed run (average of 5)
+            runs = []
+            with torch.no_grad():
+                for _ in range(5):
+                    t0 = time.time()
+                    model(batch64)
+                    runs.append((time.time() - t0) * 1000)
+            batch64_lat = float(np.mean(runs)) / 64.0   # per-image ms
+    except Exception:
+        pass
+
+    return accuracy, avg_lat, batch64_lat, prec * 100, rec * 100, f1 * 100, cm
 
 
 
@@ -501,6 +610,7 @@ def evaluate_tflite(model_path: Path, loader, classes, use_xnnpack: bool = True)
 
     clean_params = 0
     total_buffers = 0
+    max_activation_bytes = 0   # for peak activation estimate
     for t in interpreter.get_tensor_details():
         if t['index'] in io_indices:
             continue
@@ -515,6 +625,12 @@ def evaluate_tflite(model_path: Path, loader, classes, use_xnnpack: bool = True)
                 state1 = interpreter.get_tensor(t['index']).tobytes()
                 if state0[t['index']] == state1:
                     clean_params += n
+                else:
+                    # Changed between invocations → activation tensor
+                    # Use element size from dtype (INT8=1B, float32=4B)
+                    elem_bytes = np.dtype(t['dtype']).itemsize if 'dtype' in t else 1
+                    max_activation_bytes = max(max_activation_bytes,
+                                               n * elem_bytes)
             except Exception:
                 pass
 
@@ -528,8 +644,26 @@ def evaluate_tflite(model_path: Path, loader, classes, use_xnnpack: bool = True)
 
     for images, labels in loader:
         for j in range(len(images)):
-            image = images[j]
+            image = images[j]   # shape: [C, H_loader, W_loader]
             label = labels[j].item()
+
+            # ── Resize if model input differs from loader resolution ──
+            # The TFLite file has its expected H/W baked in (input_shape).
+            # The loader always uses the global --img_size (default 224).
+            # When they differ (e.g. model=96px, loader=224px) we must
+            # resize before feeding the model to avoid shape mismatches.
+            if input_shape[3] == 3:  # NHWC  → target H = input_shape[1]
+                model_h, model_w = int(input_shape[1]), int(input_shape[2])
+            else:                    # NCHW  → target H = input_shape[2]
+                model_h, model_w = int(input_shape[2]), int(input_shape[3])
+            if image.shape[1] != model_h or image.shape[2] != model_w:
+                import torch.nn.functional as _F
+                image = _F.interpolate(
+                    image.unsqueeze(0).float(),
+                    size=(model_h, model_w),
+                    mode='bilinear',
+                    align_corners=False,
+                ).squeeze(0)
 
             # NHWC vs NCHW
             if input_shape[3] == 3 and input_shape[1] != 3:
@@ -578,7 +712,77 @@ def evaluate_tflite(model_path: Path, loader, classes, use_xnnpack: bool = True)
     cm = confusion_matrix(all_targets, all_preds)
     size_mb = model_path.stat().st_size / (1024 * 1024)
 
-    return accuracy, avg_lat, prec * 100, rec * 100, f1 * 100, cm, size_mb, clean_params, total_buffers
+    # ── Batch-64 latency for TFLite (per-image throughput) ─────────
+    # TFLite interpreter is single-image only; simulate by running 64 sequential inferences
+    # on a fixed batch and reporting per-image average.
+    batch64_lat = None
+    try:
+        # Collect 64 samples
+        b64_samples = []
+        for images, _ in loader:
+            for j in range(len(images)):
+                image = images[j]
+                # Resize if model input differs from loader resolution
+                if image.shape[1] != model_h or image.shape[2] != model_w:
+                    import torch.nn.functional as _F
+                    image = _F.interpolate(
+                        image.unsqueeze(0).float(),
+                        size=(model_h, model_w),
+                        mode='bilinear',
+                        align_corners=False,
+                    ).squeeze(0)
+                if input_shape[3] == 3 and input_shape[1] != 3:
+                    inp = image.permute(1, 2, 0).numpy()
+                else:
+                    inp = image.numpy()
+                inp = np.expand_dims(inp, axis=0)
+                if input_dtype == np.uint8:
+                    scale, zp = input_details[0]['quantization']
+                    inp = (inp / scale + zp).astype(np.uint8)
+                elif input_dtype == np.int8:
+                    scale, zp = input_details[0]['quantization']
+                    inp = (inp / scale + zp).astype(np.int8)
+                else:
+                    inp = inp.astype(np.float32)
+                b64_samples.append(inp)
+                if len(b64_samples) >= 64:
+                    break
+            if len(b64_samples) >= 64:
+                break
+        if len(b64_samples) == 64:
+            # Warmup
+            interpreter.set_tensor(input_index, b64_samples[0])
+            interpreter.invoke()
+            # Timed run
+            t0 = time.time()
+            for s in b64_samples:
+                interpreter.set_tensor(input_index, s)
+                interpreter.invoke()
+                interpreter.get_tensor(output_index)
+            batch64_lat = (time.time() - t0) * 1000 / 64.0   # per-image ms
+    except Exception:
+        pass
+
+    # ── Peak activation estimate from visible activation tensors ──────
+    # We use the maximum single activation tensor size (in bytes) found during
+    # the two-invocation comparison.  The true arena peak is approximately
+    # MAX_activation × 2 because at the bottleneck layer both the input tensor
+    # and the output tensor of that op must coexist in the tensor arena.
+    #
+    # This correctly reflects both input resolution AND width_mult differences:
+    #   WM=1.0, 224px → max visible act ~242K bytes → peak ≈ 473 KB
+    #   WM=0.5, 224px → max visible act ~150K bytes → peak ≈ 293 KB
+    #   WM=0.75, 224px → max visible act ~208K bytes → peak ≈ 406 KB
+    #
+    # Note: some intermediate tensors may be hidden by operator fusion, so this
+    # is a LOWER BOUND on actual arena usage.  Use TFLite benchmark_model for
+    # exact figures.
+    if max_activation_bytes > 0:
+        analytical_peak_kb = (max_activation_bytes * 2) / 1024.0
+    else:
+        analytical_peak_kb = None
+
+    return accuracy, avg_lat, batch64_lat, prec * 100, rec * 100, f1 * 100, cm, size_mb, clean_params, total_buffers, analytical_peak_kb
 
 
 
@@ -674,13 +878,19 @@ def main():
             continue
 
         # ── Helper to build a row dict ───────────
+        # Extract image_size and learning_rate from experiment name
+        exp_img_size = get_img_size_from_exp(exp_name)
+        exp_lr = get_lr_from_exp(exp_name)
+
         def make_row(model_id, model_type, dtype,
                      size_mb, total_params, trainable_params, total_params_and_buffers,
-                     accuracy, latency_ms,
+                     accuracy, latency_ms, latency_batch64_ms,
                      precision, recall, f1, cm,
                      peak_activation_kb=None):
             return {
                 'Model_ID': model_id,
+                'image_size': exp_img_size,
+                'learning_rate': exp_lr,
                 'type': model_type,
                 'size_MB': round(size_mb, 3),
                 'dtype': dtype,
@@ -690,6 +900,7 @@ def main():
                 'peak_activation_kb': round(peak_activation_kb, 1) if peak_activation_kb is not None else None,
                 'accuracy_%': round(accuracy, 2),
                 'latency_single_ms': round(latency_ms, 2),
+                'latency_batch64_ms': round(latency_batch64_ms, 3) if latency_batch64_ms is not None else None,
                 'precision_%': round(precision, 2),
                 'recall_%': round(recall, 2),
                 'f1_%': round(f1, 2),
@@ -704,6 +915,8 @@ def main():
             size_mb = model_path.stat().st_size / (1024 * 1024)
             return {
                 'Model_ID': model_id,
+                'image_size': exp_img_size,
+                'learning_rate': exp_lr,
                 'type': model_type,
                 'size_MB': round(size_mb, 3),
                 'dtype': dtype,
@@ -713,6 +926,7 @@ def main():
                 'peak_activation_kb': None,
                 'accuracy_%': None,
                 'latency_single_ms': None,
+                'latency_batch64_ms': None,
                 'precision_%': None,
                 'recall_%': None,
                 'f1_%': None,
@@ -732,19 +946,19 @@ def main():
             t0 = time.time()
             try:
                 model, size_mb, total_p, train_p = load_torch_model(orig_path)
-                peak_kb = estimate_peak_activation_kb(model, img_size)
+                peak_kb = estimate_peak_activation_kb(model, exp_img_size or img_size)
                 print(f"     Loaded in {time.time()-t0:.1f}s | "
                       f"Params={total_p:,} | Size(weights)={size_mb:.3f} MB | "
                       f"PeakAct={peak_kb:.0f} KB")
-                acc, lat, prec, rec, f1, cm = evaluate_torch(
+                acc, lat, lat64, prec, rec, f1, cm = evaluate_torch(
                     model, loader, classes,
                     desc=f'original [{exp_idx+1}/{len(all_exps)}]')
                 model_id = build_model_id(exp_name, 'o')
                 rows.append(make_row(model_id, 'original', 'float32',
                                      size_mb, total_p, train_p, total_p,
-                                     acc, lat, prec, rec, f1, cm,
+                                     acc, lat, lat64, prec, rec, f1, cm,
                                      peak_activation_kb=peak_kb))
-                print(f"  OK [original] Acc={acc:.2f}%  Lat={lat:.2f}ms  "
+                print(f"  OK [original] Acc={acc:.2f}%  Lat={lat:.2f}ms  Lat64={lat64:.2f}ms  "
                       f"Prec={prec:.2f}%  Rec={rec:.2f}%  F1={f1:.2f}%")
                 ok_count += 1
             except Exception as e:
@@ -764,19 +978,19 @@ def main():
             t0 = time.time()
             try:
                 model, size_mb, total_p, train_p = load_hybrid_model(hybrid_path)
-                peak_kb = estimate_peak_activation_kb(model, img_size)
+                peak_kb = estimate_peak_activation_kb(model, exp_img_size or img_size)
                 print(f"     Loaded in {time.time()-t0:.1f}s | "
                       f"Params={total_p:,} | Size(quantized file)={size_mb:.3f} MB | "
                       f"PeakAct={peak_kb:.0f} KB")
-                acc, lat, prec, rec, f1, cm = evaluate_torch(
+                acc, lat, lat64, prec, rec, f1, cm = evaluate_torch(
                     model, loader, classes,
                     desc=f'hybrid   [{exp_idx+1}/{len(all_exps)}]')
                 model_id = build_model_id(exp_name, 'h')
                 rows.append(make_row(model_id, 'hybrid', 'int8+float32',
                                      size_mb, total_p, train_p, total_p,
-                                     acc, lat, prec, rec, f1, cm,
+                                     acc, lat, lat64, prec, rec, f1, cm,
                                      peak_activation_kb=peak_kb))
-                print(f"  OK [hybrid]   Acc={acc:.2f}%  Lat={lat:.2f}ms  "
+                print(f"  OK [hybrid]   Acc={acc:.2f}%  Lat={lat:.2f}ms  Lat64={lat64:.2f}ms  "
                       f"Prec={prec:.2f}%  Rec={rec:.2f}%  F1={f1:.2f}%")
                 ok_count += 1
             except Exception as e:
@@ -796,19 +1010,18 @@ def main():
                   f"({tflite_path.stat().st_size/(1024*1024):.2f} MB on disk)...")
             t0 = time.time()
             try:
-                acc, lat, prec, rec, f1, cm, size_mb, clean_p, buf_p = evaluate_tflite(
+                acc, lat, lat64, prec, rec, f1, cm, size_mb, clean_p, buf_p, tflite_peak_kb = evaluate_tflite(
                     tflite_path, loader, classes,
                     use_xnnpack=not args.disable_xnnpack)
-                # Peak activation KB estimate for TFLite:
-                # activation elements = total_buffers - clean_params (= all non-weight tensors)
-                # bytes: TFLite INT8 models use 1 byte/element for activations
-                tflite_peak_kb = max(0, buf_p - clean_p) / 1024.0
+                # tflite_peak_kb is the analytical peak activation estimate:
+                # peak occurs at features[0] where input + output coexist in RAM.
+                # This correctly scales with the model's baked-in input resolution.
                 model_id = build_model_id(exp_name, 't')
                 rows.append(make_row(model_id, 'tflite', 'int8',
                                      size_mb, clean_p, 0, buf_p,
-                                     acc, lat, prec, rec, f1, cm,
+                                     acc, lat, lat64, prec, rec, f1, cm,
                                      peak_activation_kb=tflite_peak_kb))
-                print(f"  OK [tflite]   Acc={acc:.2f}%  Lat={lat:.2f}ms  "
+                print(f"  OK [tflite]   Acc={acc:.2f}%  Lat={lat:.2f}ms  Lat64={lat64:.2f}ms  "
                       f"Params={clean_p:,} (buffers={buf_p:,})  "
                       f"PeakAct~={tflite_peak_kb:.0f} KB  "
                       f"[{time.time()-t0:.0f}s]")
@@ -842,12 +1055,12 @@ def main():
 
     df = pd.DataFrame(rows)
 
-    # Reorder columns to match models.csv
+    # Reorder columns
     col_order = [
-        'Model_ID', 'type', 'size_MB', 'dtype',
+        'Model_ID', 'image_size', 'learning_rate', 'type', 'size_MB', 'dtype',
         'total_params', 'trainable_params', 'total_params_and_buffers',
         'peak_activation_kb',
-        'accuracy_%', 'latency_single_ms',
+        'accuracy_%', 'latency_single_ms', 'latency_batch64_ms',
         'precision_%', 'recall_%', 'f1_%',
         'cm_tn', 'cm_fp', 'cm_fn', 'cm_tp',
     ]

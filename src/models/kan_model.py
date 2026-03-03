@@ -82,14 +82,21 @@ class MobileNetV3LitePreprocessor(nn.Module):
     Preprocessing module using MobileNetV3 Lite to convert image features to format suitable for KAN.
     Leverages pretrained MobileNetV3 Lite for efficient feature extraction.
     """
-    def __init__(self, output_features=48,  
-                 pretrained=True, freeze_mobilenet=True, width_mult=1.0):
+    def __init__(self, output_features=48,
+                 pretrained=True, freeze_mobilenet=True, width_mult=1.0, img_size=224):
         super(MobileNetV3LitePreprocessor, self).__init__()
         
         # Load pretrained MobileNetV3 model
         # self.mobilenet = torchvision.models.mobilenet_v2(pretrained=pretrained)        
         self.mobilenet = torchvision.models.mobilenet_v3_small(pretrained=pretrained, width_mult=width_mult)
         self.mobilenet.classifier = nn.Sequential()  # Rimuove il classificatore
+
+        # For small input images (≤128px) MobileNetV3-Small has 5×stride-2 layers,
+        # which collapses the spatial resolution to 3×3 before GAP (only 9 positions).
+        # Removing the first stride-2 keeps the final feature map at 6×6 (36 positions),
+        # giving 4× more spatial context without touching the pretrained weights.
+        if img_size <= 128:
+            self.mobilenet.features[0][0].stride = (1, 1)
 
         # Freeze MobileNetV3 parameters if specified
         if freeze_mobilenet:
@@ -443,7 +450,8 @@ class KANImageClassifier(nn.Module):
             self.preprocessor = MobileNetV3LitePreprocessor(
                 output_features=feature_dim, width_mult=width_mult, 
                 pretrained=preprocessor_pretrained, 
-                freeze_mobilenet=preprocessor_pretrained
+                freeze_mobilenet=preprocessor_pretrained,
+                img_size=img_size
             )
         elif preprocessor_type == 'mobilenetv3_small_quantized':
             self.preprocessor = MobileNetV3LitePreprocessorQuantized(

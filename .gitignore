@@ -35,6 +35,9 @@ tflite_models/
 model/
 quantized_models/
 
+# Trash
+trash/
+
 # Logs
 logs/
 *.log
