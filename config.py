@@ -78,7 +78,7 @@ PREPROCESSOR_CONFIG = {
     'width_mult': 1.0,          # Width multiplier for MobileNetV3 (TEMP for testing)
     'pretrained': False,               # Use pretrained weights for MobileNetV3
     'input_channels': 3,
-    'output_features': 24,            # Feature dimension after preprocessing (TEMP for testing)
+    'output_features': 16,            # Feature dimension after preprocessing (TEMP for testing)
     'conv_channels': [16, 24, 32],    # Channels in each conv layer
     'kernel_size': [3, 3, 3],                 # Kernel size for convolutions
     'pool_kernel_size': 2,
@@ -91,8 +91,8 @@ PREPROCESSOR_CONFIG = {
 
 # KAN configuration
 KAN_CONFIG = {
-    'feature_dim': 24,          # Input dimension to KAN (same as preprocessor output)
-    'hidden_dims': [16],       # Hidden layer dimensions
+    'feature_dim': 16,          # Input dimension to KAN (same as preprocessor output)
+    'hidden_dims': [4],       # Hidden layer dimensions
     'grid': 5,                  # Number of grid points
     'degree': 3,                # Spline degree
     'seed': 42,                 # Random seed for initialization
@@ -145,7 +145,7 @@ TRAINING_CONFIG = {
     'batch_size': 256,  # Increased for GPU - adjust based on available VRAM
     'val_batch_size': 256,  # Can use larger batches for validation
     'epochs': 50,
-    'learning_rate': 0.001,  # Slightly increased for use with larger batches
+    'learning_rate': 0.003,  # Slightly increased for use with larger batches
     'weight_decay': 1e-5,
     'lr_scheduler': 'cosine',    # Options: 'reducelr', 'cosine', 'step', 'onecycle'
     'lr_patience': 3,            # For ReduceLROnPlateau
