@@ -7,7 +7,8 @@ Date: February 2026
 
 Conversion Pipeline: PyTorch → ONNX → TensorFlow → TFLite
 """
-
+import time
+from sympy.core.sympify import converter
 import sys
 from unittest.mock import MagicMock
 
@@ -39,7 +40,158 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import config  # Import project configuration
 
-def export_to_onnx(model, output_path, img_size=224):
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import onnx
+from onnx import helper, numpy_helper
+
+def surgical_fix_hardsigmoid(onnx_model_path, output_path):
+    model = onnx.load(onnx_model_path)
+    graph = model.graph
+    
+    # Dizionario per tenere traccia dei nuovi nodi
+    new_nodes = []
+    
+    for node in graph.node:
+        if node.op_type == 'HardSigmoid':
+            input_name = node.input[0]
+            output_name = node.output[0]
+            
+            # Creiamo nomi univoci per i tensori intermedi
+            add_out = output_name + "_add"
+            mul_out = output_name + "_mul"
+            relu_out = output_name + "_relu"
+            
+            # 1. Nodo ADD (x + 3.0)
+            const_3 = helper.make_tensor(output_name + "_3", onnx.TensorProto.FLOAT, [], [3.0])
+            graph.initializer.append(const_3)
+            add_node = helper.make_node('Add', [input_name, output_name + "_3"], [add_out])
+            
+            # 2. Nodo MUL (x * 1/6)
+            const_inv6 = helper.make_tensor(output_name + "_inv6", onnx.TensorProto.FLOAT, [], [0.16666666666666666])
+            graph.initializer.append(const_inv6)
+            mul_node = helper.make_node('Mul', [add_out, output_name + "_inv6"], [mul_out])
+            
+            # 3. Nodo ReLU (taglia a 0)
+            relu_node = helper.make_node('Relu', [mul_out], [relu_out])
+            
+            # 4. Nodo MIN (taglia a 1)
+            const_1 = helper.make_tensor(output_name + "_1", onnx.TensorProto.FLOAT, [], [1.0])
+            graph.initializer.append(const_1)
+            min_node = helper.make_node('Min', [relu_out, output_name + "_1"], [output_name])
+            
+            new_nodes.extend([add_node, mul_node, relu_node, min_node])
+        else:
+            new_nodes.append(node)
+            
+    # Sostituiamo i nodi nel grafo
+    del graph.node[:]
+    graph.node.extend(new_nodes)
+    
+    # Pulizia e salvataggio
+    onnx.checker.check_model(model)
+    onnx.save(model, output_path)
+    print(f"Chirurgia completata! Modello salvato in: {output_path}")
+
+
+class FastLutKAN(nn.Module):
+    def __init__(self, original_kan, grid_range=[-2.2, 2.2], grid_size=256):
+        super(FastLutKAN, self).__init__()
+        self.grid_size = grid_size
+        self.min_val = grid_range[0]
+        self.max_val = grid_range[1]
+        
+        # Estraiamo la dimensione di input (il primo elemento di width)
+        # width è una lista tipo [16, 32, 2]
+        if isinstance(original_kan.kan.width[0], list):
+            self.input_dim = original_kan.kan.width[0][0]
+        else:
+            self.input_dim = original_kan.kan.width[0]
+            
+        print(f"[INFO] Inizializzazione LUT per KAN con input_dim: {self.input_dim}")
+
+        with torch.no_grad():
+            x_base = torch.linspace(self.min_val, self.max_val, grid_size)
+            # Creiamo una LUT che ha forma (grid_size, input_dim, output_dim)
+            # Invece di una tabella piatta, abbiamo una tabella per ogni ingresso
+            lut_list = []
+            for i in range(self.input_dim):
+                # Creiamo un input dove solo la i-esima feature varia
+                x_test = torch.zeros(grid_size, self.input_dim)
+                x_test[:, i] = x_base
+                lut_list.append(original_kan(x_test).unsqueeze(1)) # (grid_size, 1, out)
+            
+            self.lut_table = nn.Parameter(torch.cat(lut_list, dim=1).detach())
+            print(f"[OK] LUT multi-dim generata: {self.lut_table.shape}") 
+            # Dovrebbe essere (256, 16, 4) se hai 4 classi
+        """
+        with torch.no_grad():
+            # Generiamo la griglia di campionamento
+            x_base = torch.linspace(self.min_val, self.max_val, grid_size)
+            
+            # Creiamo l'input di test (grid_size, input_dim)
+            # Immaginiamo di "scansionare" la risposta della rete per ogni possibile valore di input
+            x_test = x_base.unsqueeze(1).repeat(1, self.input_dim)
+            
+            # Calcoliamo la risposta dell'intera KAN (tutti i layer)
+            # Questo "congela" la logica MultKAN in una tabella finale
+            self.lut_table = nn.Parameter(original_kan(x_test).detach())
+            print(f"[OK] LUT generata. Shape tabella: {self.lut_table.shape}")
+        """
+    def forward(self, x):
+        # x shape: (Batch, 16)
+        grid_step = (self.max_val - self.min_val) / (self.grid_size - 1)
+        
+        # 1. Portiamo x in "unità di griglia"
+        x_grid = ((x - self.min_val) / grid_step).unsqueeze(-1) # (Batch, 16, 1)
+
+        # 2. Creiamo la griglia di indici
+        grid = torch.arange(self.grid_size, device=x.device).float().view(1, 1, -1) # (1, 1, 256)
+
+        # 3. Calcoliamo la maschera di pesi (Batch, 16, 256)
+        dist = torch.abs(x_grid - grid)
+        weight_mask = torch.relu(1.0 - dist)
+
+        # 4. ALLINEAMENTO PER IL PRODOTTO (Il punto critico)
+        # Dobbiamo moltiplicare ogni feature (1..16) per la sua LUT specifica.
+        # weight_mask: (Batch, 16, 256) -> la ruotiamo per mettere la griglia in mezzo
+        # mask_permuted: (Batch, 256, 16)
+        mask_permuted = weight_mask.permute(0, 2, 1)
+
+        # self.lut_table è (256, 16, 2)
+        # Moltiplichiamo elemento per elemento: (Batch, 256, 16) * (1, 256, 16)
+        # Poi aggiungiamo una dimensione vuota alla maschera per includere le classi (Out=2)
+        # mask_expanded: (Batch, 256, 16, 1)
+        # lut_expanded:  (1, 256, 16, 2)
+        combined = mask_permuted.unsqueeze(-1) * self.lut_table.unsqueeze(0)
+        
+        # 5. Riduzione finale
+        # Sommiamo sulla dimensione della griglia (dim 1) per ottenere (Batch, 16, 2)
+        res = combined.sum(dim=1)
+        
+        # Media delle feature
+        return res.mean(dim=1)
+"""
+    def forward(self, x):
+        # x shape: (Batch, input_dim)
+        # 1. Portiamo l'input nel range [0, grid_size - 1]
+        x_norm = (x - self.min_val) / (self.max_val - self.min_val)
+        x_scaled = x_norm * (self.grid_size - 1)
+        
+        # 2. Indici per il lookup (clamp per sicurezza)
+        indices = x_scaled.int().clamp(0, self.grid_size - 1)
+        
+        # 3. Lookup. Se x è (B, 16), prendiamo il valore medio della LUT
+        # Nota: Essendo una LUT 1D approssimata, usiamo la media delle feature 
+        # o la mappatura diretta se la rete è lineare.
+        # Per semplicità in ONNX usiamo il primo indice o la media:
+        idx = indices[:, 0] # Prendiamo la prima feature come riferimento per la LUT
+        
+        return torch.index_select(self.lut_table, 0, idx)
+"""
+
+def export_to_onnx(model, output_path, img_size=224, use_lut=False):
     """
     Export PyTorch model to ONNX format.
     
@@ -52,9 +204,22 @@ def export_to_onnx(model, output_path, img_size=224):
     print("STEP 1: Exporting PyTorch model to ONNX")
     print("="*60)
     
+
     # Set model to eval mode
     model.eval()
-    
+
+    # Tentativo di conversione KAN in LUT
+    if use_lut:
+        model.kan = FastLutKAN(model.kan, grid_range=[-2.0, 2.0], grid_size=16)
+
+    # Subst relu0to1 with ReLU
+    #replace_relu0to1(model.preprocessor)
+    #replace_hardsigmoid(model.preprocessor)
+    #time.sleep(5)
+    # Applica al modello globale che contiene preprocessor, projector e kan
+    #deep_clean_everything(model)
+    #time.sleep(5)
+
     # Create dummy input
     dummy_input = torch.randn(1, 3, img_size, img_size)
     
@@ -63,7 +228,7 @@ def export_to_onnx(model, output_path, img_size=224):
         torch.onnx.export(
             model,
             dummy_input,
-            output_path,
+            output_path + ".orig.onnx",
             export_params=True,
             opset_version=13,  # Use stable opset version
             do_constant_folding=True,
@@ -78,6 +243,7 @@ def export_to_onnx(model, output_path, img_size=224):
         
         # Verify ONNX model
         import onnx
+        surgical_fix_hardsigmoid(output_path + ".orig.onnx", output_path)
         onnx_model = onnx.load(output_path)
         onnx.checker.check_model(onnx_model)
         print("[OK] ONNX model is valid")
@@ -336,7 +502,8 @@ def convert_onnx_to_tensorflow(onnx_path, tf_output_path):
 
 
 def convert_tensorflow_to_tflite(tf_model_path, tflite_output_path, 
-                                  quantize='none', representative_dataset=None):
+                                  quantize='none', representative_dataset=None,
+                                  enforce_quantization = True):
     """
     Convert TensorFlow SavedModel to TFLite format.
     
@@ -358,10 +525,21 @@ def convert_tensorflow_to_tflite(tf_model_path, tflite_output_path,
         
         # Apply quantization
         if quantize == 'float16':
+            if enforce_quantization:
+                converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_FLOAT16]
+                converter.inference_input_type = tf.float16
+                converter.inference_output_type = tf.float16
+
             converter.optimizations = [tf.lite.Optimize.DEFAULT]
             converter.target_spec.supported_types = [tf.float16]
             print("Applying float16 quantization...")
+
         elif quantize == 'int8':
+            if enforce_quantization:
+                converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+                converter.inference_input_type = tf.int8
+                converter.inference_output_type = tf.int8
+
             converter.optimizations = [tf.lite.Optimize.DEFAULT]
             if representative_dataset is not None:
                 converter.representative_dataset = representative_dataset
@@ -504,6 +682,10 @@ def main():
                         help='Skip verification step')
     parser.add_argument('--force_config', dest='force_config', action='store_true',
                         help='Force configuration from config.py')    
+    parser.add_argument('--use_lut', dest='use_lut', action='store_true',
+                        help='Use LUT for KAN (default: False)')  
+    parser.add_argument('--enforce_quantization', dest='enforce_quantization', action='store_true',
+                        help='Enforce quantization (default: False)')  
     args = parser.parse_args()
     
     # Handle default model path
@@ -673,7 +855,7 @@ def main():
         print("="*60)
         
         # Step 1: Export to ONNX
-        if not export_to_onnx(model, str(onnx_path), args.img_size):
+        if not export_to_onnx(model, str(onnx_path), args.img_size, args.use_lut):
             print("\n[FAIL] Conversion failed at ONNX export stage")
             sys.exit(1)
         
@@ -705,7 +887,8 @@ def main():
             str(tf_path), 
             str(tflite_path),
             args.quantize,
-            rep_dataset
+            rep_dataset,
+            args.enforce_quantization
         )
         
         if not success:

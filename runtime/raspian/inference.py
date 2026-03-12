@@ -76,8 +76,36 @@ def preprocess_image(frame, target_size, debug=False):
     img = np.expand_dims(img, axis=0)
     return img
 
+def preprocess_image_quantized(frame, target_size, interpreter, debug=False):
+    if debug:
+        cv2.imwrite("capture.jpg", frame)
 
-def inference(model_path, input_shape, camera_id, debug, callback=None):
+    # 1. Pipeline Standard (fino alla normalizzazione float)
+    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img, target_size)
+    img = img.astype(np.float32) / 255.0
+
+    mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
+    std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
+    img = (img - mean) / std    
+
+    # 2. Recupero parametri di quantizzazione dal modello TFLite
+    input_details = interpreter.get_input_details()[0]
+    # Se il modello non è quantizzato, scale sarà 0.0 e zero_point 0
+    scale, zero_point = input_details['quantization']
+
+    # 3. QUANTIZZAZIONE
+    # Applichiamo la formula: q = round(f / scale) + zero_point
+    # Poi forziamo il tipo a int8 con clipping nel range [-128, 127]
+    img_quantized = np.round(img / scale) + zero_point
+    img_quantized = np.clip(img_quantized, -128, 127).astype(np.int8)
+
+    # 4. Aggiunta batch dimension
+    img_quantized = np.expand_dims(img_quantized, axis=0)
+    
+    return img_quantized
+
+def inference(model_path, input_shape, camera_id, debug, qint8, callback=None):
     """
     Run inference on the Raspberry Pi.
     """ 
@@ -98,7 +126,12 @@ def inference(model_path, input_shape, camera_id, debug, callback=None):
             if frame is not None:
                 if(debug):
                     print("Preprocessing")
-                input_data = preprocess_image(frame, input_shape, debug)
+
+                if qint8:
+                    input_data = preprocess_image_quantized(frame, input_shape, interpreter, debug)
+                else:
+                    input_data = preprocess_image(frame, input_shape, debug)
+
                 if(debug):
                     print("TFLite invoke")
 
@@ -139,6 +172,7 @@ if __name__ == '__main__':
     parser.add_argument('--model_path', type=str, default=MODEL_PATH, help='Path to the TFLite model.')
     parser.add_argument('--input_shape', type=int, default=input_shape, help='Input shape for the model.')
     parser.add_argument('--camera_id', type=int, default=0, help='Camera ID.')
+    parser.add_argument('--qint8', dest='qint8', action='store_true', help='Network quantization int8')
     parser.add_argument('--debug', type=str, default=False, help='Debug mode.')
     args = parser.parse_args()
-    inference(args.model_path, args.input_shape, args.camera_id, args.debug)
+    inference(args.model_path, args.input_shape, args.camera_id, args.debug, args.qint8)
