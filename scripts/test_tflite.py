@@ -162,22 +162,27 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
             # If shape is [1, 3, 224, 224], we keep as is.
             
             if input_shape[3] == 3 and input_shape[1] != 3:
-                # NHWC
+                #print("[INFO] Network is NHCW..")
+                # --> NHWC
                 input_data = image.permute(1, 2, 0).numpy() # [H, W, C]
                 input_data = np.expand_dims(input_data, axis=0) # [1, H, W, C]
             else:
+                #print("[INFO] Network is NCHW..")
                 # NCHW
                 input_data = image.numpy()
                 input_data = np.expand_dims(input_data, axis=0)
             
             # quantization handling if input expects int8/uint8
             if input_dtype == np.uint8:
+                #print("[INFO] Network expects uint8 input..")
                 input_scale, input_zero_point = input_details[0]['quantization']
                 input_data = (input_data / input_scale + input_zero_point).astype(np.uint8)
             elif input_dtype == np.int8:
+                #print("[INFO] Network expects int8 input..")
                 input_scale, input_zero_point = input_details[0]['quantization']
                 input_data = (input_data / input_scale + input_zero_point).astype(np.int8)
             else:
+                #print("[INFO] Network expects float32 input..")
                 input_data = input_data.astype(np.float32)
                 
             # Inference

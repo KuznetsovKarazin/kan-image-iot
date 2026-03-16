@@ -7,6 +7,7 @@ Date: February 2026
 
 Conversion Pipeline: PyTorch → ONNX → TensorFlow → TFLite
 """
+from numpy import real
 import time
 from sympy.core.sympify import converter
 import sys
@@ -96,6 +97,12 @@ def surgical_fix_hardsigmoid(onnx_model_path, output_path):
 
 
 class FastLutKAN(nn.Module):
+    """
+    This class is used to convert a KAN model to a LUT-based model.
+    It is approximate and the accuracy result depends on the layer structuse and
+    training data. It generates simplified model for edge devices at the cost of accuracy.
+    Use this class, but check the accuracy after conversion.
+    """
     def __init__(self, original_kan, grid_range=[-2.2, 2.2], grid_size=256):
         super(FastLutKAN, self).__init__()
         self.grid_size = grid_size
@@ -191,7 +198,157 @@ class FastLutKAN(nn.Module):
         return torch.index_select(self.lut_table, 0, idx)
 """
 
-def export_to_onnx(model, output_path, img_size=224, use_lut=False):
+class FastLutKANLayer(nn.Module):
+    """
+    This class is uset to convert a KAN layer to a LUT-based layer.
+    It approximates the KAN layer with a LUT but is more accurate than the FastLutKAN class and
+    don't depend on the layer structure nor traing data. Please note that the results of 
+    models using this class use more memory than the FastLutKAN class but it has the gain 
+    of accuracy.
+    This is the class representing the correct math approximation of the KAN layer.
+    """
+    def __init__(self, kan_layer, min_vals, max_vals, grid_size=256):
+        super().__init__()
+        self.grid_size = grid_size
+        #self.min_val = grid_range[0]
+        #self.max_val = grid_range[1]
+        #self.min_vals = min_vals  # vettore (in_dim)
+        #self.max_vals = max_vals  # vettore (in_dim)
+        self.register_buffer("min_vals", min_vals.detach().clone())
+        self.register_buffer("max_vals", max_vals.detach().clone())
+
+        self.input_dim = kan_layer.in_dim
+        self.output_dim = kan_layer.out_dim
+
+        with torch.no_grad():
+            lut_list = []
+
+            for i in range(self.input_dim):
+                # Range reale per la feature i
+                x_base = torch.linspace(self.min_vals[i], self.max_vals[i], grid_size)
+
+                x_test = torch.zeros(grid_size, self.input_dim)
+                x_test[:, i] = x_base
+
+                y, _, _, _ = kan_layer(x_test)
+                lut_list.append(y.unsqueeze(1))
+
+            self.lut_table = nn.Parameter(torch.cat(lut_list, dim=1).detach())
+    """
+        with torch.no_grad():
+            x_base = torch.linspace(self.min_val, self.max_val, grid_size)
+            lut_list = []
+
+            for i in range(self.input_dim):
+                x_test = torch.zeros(grid_size, self.input_dim)
+                x_test[:, i] = x_base
+                y, _, _, _ = kan_layer(x_test)
+                lut_list.append(y.unsqueeze(1))
+
+            self.lut_table = nn.Parameter(torch.cat(lut_list, dim=1).detach())
+    """
+    """
+    def forward(self, x):
+        grid_step = (self.max_val - self.min_val) / (self.grid_size - 1)
+        x_grid = ((x - self.min_val) / grid_step).unsqueeze(-1)
+
+        grid = torch.arange(self.grid_size, device=x.device).float().view(1, 1, -1)
+        dist = torch.abs(x_grid - grid)
+        weight_mask = torch.relu(1.0 - dist)
+
+        mask_permuted = weight_mask.permute(0, 2, 1)
+        combined = mask_permuted.unsqueeze(-1) * self.lut_table.unsqueeze(0)
+
+        res = combined.sum(dim=1)
+        return res.mean(dim=1)
+    """
+    def forward(self, x):
+        # x: (B, in_dim)
+
+        # Clipping per evitare extrapolazioni
+        x = torch.max(torch.min(x, self.max_vals), self.min_vals)
+
+        # Normalizzazione per-feature
+        t = (x - self.min_vals) / (self.max_vals - self.min_vals + 1e-9)
+
+        # Indici nella LUT
+        idx = (t * (self.grid_size - 1)).long()   # (B, in_dim)
+
+        # Output finale
+        B = x.shape[0]
+        out = torch.zeros(B, self.output_dim, device=x.device)
+
+        # Loop ONNX‑safe: niente indexing avanzato
+        for i in range(self.input_dim):
+            # estrai la colonna i della LUT: shape (grid_size, out_dim)
+            lut_i = self.lut_table[:, i, :]   # (grid_size, out_dim)
+
+            # indice per il batch: shape (B,)
+            idx_i = idx[:, i]                 # (B,)
+
+            # lookup ONNX‑safe: gather
+            gathered = lut_i.index_select(0, idx_i)  # (B, out_dim)
+
+            out += gathered
+
+        return out
+
+
+#def convert_kan_to_layerwise_lut(multiKan, grid_range=[-2.2, 2.2], grid_size=256):
+    """
+    Convert a KAN model to a LUT-based model in a layer-wise manner.
+    The resulting model is the correct math approximation of a multilayer KAN model.
+
+    Args:
+        multiKan: PyTorch model in eval mode
+        grid_range: Range of the grid
+        grid_size: Size of the grid
+    
+    Returns:
+        PyTorch model in eval mode
+    """
+    """
+    lut_layers = []
+
+    # multiKan.kan.layers è la lista dei layer KAN
+    for i, layer in enumerate(multiKan.kan.layers):
+        print(f"[INFO] Converto layer {i}: {layer.width[0]} → {layer.width[1]}")
+        lut_layer = FastLutKANLayer(layer, grid_range, grid_size)
+        lut_layers.append(lut_layer)
+
+    # Restituisco un modello sequenziale LUT-only
+    return nn.Sequential(*lut_layers)
+    """
+    """
+    def convert_kan_to_layerwise_lut(multiKan, grid_range=[-2.2, 2.2], grid_size=256):
+    lut_layers = []
+
+    # multiKan.kan.act_fun contiene i KanLayer
+    for l, layer in enumerate(multiKan.kan.act_fun):
+        print(f"[INFO] Converto layer {l}: {layer.in_dim} → {layer.out_dim}")
+        time.sleep(1)
+        lut_layer = FastLutKANLayer(layer, grid_range, grid_size)
+        lut_layers.append(lut_layer)
+
+    return nn.Sequential(*lut_layers)
+    """
+
+def convert_kan_to_layerwise_lut(multiKan, layer_ranges, grid_size=256):
+    lut_layers = []
+
+    for l, layer in enumerate(multiKan.kan.act_fun):
+        print(f"[INFO] Converto layer {l}: {layer.in_dim} → {layer.out_dim}")
+        min_vals, max_vals = layer_ranges[l]
+        print("   Feature ranges:")
+        for i in range(layer.in_dim):
+            print(f"     - f{i:02d}: [{min_vals[i].item():.4f}, {max_vals[i].item():.4f}]")        
+        time.sleep(1)        
+        lut_layer = FastLutKANLayer(layer, min_vals, max_vals, grid_size)
+        lut_layers.append(lut_layer)
+
+    return nn.Sequential(*lut_layers)
+
+def export_to_onnx(model, output_path, img_size=224, use_lut=False, use_deep_lut=False):
     """
     Export PyTorch model to ONNX format.
     
@@ -210,7 +367,13 @@ def export_to_onnx(model, output_path, img_size=224, use_lut=False):
 
     # Tentativo di conversione KAN in LUT
     if use_lut:
-        model.kan = FastLutKAN(model.kan, grid_range=[-2.0, 2.0], grid_size=16)
+        if use_deep_lut:
+            print("[INFO] Computing layer ranges for KAN to LUT conversion...")
+            images = load_images_for_kan(img_size=96, samples=500)
+            layer_ranges = compute_kan_layer_stats(model, images)
+            model.kan = convert_kan_to_layerwise_lut(model.kan, layer_ranges, grid_size=32)
+        else:
+            model.kan = FastLutKAN(model.kan, grid_range=[-2.0, 2.0], grid_size=16)
 
     # Subst relu0to1 with ReLU
     #replace_relu0to1(model.preprocessor)
@@ -316,12 +479,187 @@ def load_calibration_dataset(img_size=224, samples=20):
             
     return representative_dataset
 
+    """
+    def load_train_dataset(img_size=224, samples=20):
+    """
+    """Load real train data from the project's data directory.
+    Target path: data/processed/vww_subset/train
+    """
+    """
+    data_root = os.path.join(os.getcwd(), 'data', 'processed', 'vww_subset', 'train')
+    if not os.path.exists(data_root):
+        print(f"[WARN] Calibration data not found at {data_root}")
+        return None
+
+    print(f"[INFO] Loading calibration images from {data_root}...")
+    
+    # Collect image paths from both classes
+    image_paths = []
+    for class_name in ['person', 'no_person']:
+        class_dir = os.path.join(data_root, class_name)
+        if os.path.exists(class_dir):
+            files = [os.path.join(class_dir, f) for f in os.listdir(class_dir) 
+                     if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+            image_paths.extend(files)
+            
+    if not image_paths:
+        print("[WARN] No images found in calibration directory")
+        return None
+        
+    print(f"[INFO] Found {len(image_paths)} images. Using {min(samples, len(image_paths))} for calibration.")
+    random.shuffle(image_paths)
+    image_paths = image_paths[:samples]
+    
+    # Preprocessing transforms (Standard ImageNet normalization)
+    transform = transforms.Compose([
+        transforms.Resize((img_size, img_size)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    
+    images = []
+    for img_path in image_paths:
+        try:
+            img = Image.open(img_path).convert('RGB')
+            #tensor = transform(img)
+            ## Standard TFLite/ONNX2TF expects NHWC: (1, 224, 224, 3)
+            ## PyTorch's Transform gives NCHW: (3, 224, 224)
+            ## Let's transpose to NHWC: (224, 224, 3)
+            #tensor = tensor.permute(1, 2, 0)
+            ## Add batch dimension: (1, 224, 224, 3)
+            #tensor = tensor.unsqueeze(0)
+            #images.append(tensor)
+
+            tensor = transform(img)        # (3, 224, 224)  → CORRETTO per PyTorch
+            tensor = tensor.unsqueeze(0)   # (1, 3, 224, 224)
+            images.append(tensor)
+        except Exception as e:
+            print(f"Error loading {os.path.basename(img_path)}: {e}")
+            
+    if not images:
+        return None
+        
+    # Stack into a generator
+    def representative_dataset():
+        for img_tensor in images:
+            # Yield as list of inputs (TFLite converter expects list)
+            yield [img_tensor.numpy().astype(np.float32)]
+            
+    return representative_dataset
+    """
+
+def load_images_for_kan(img_size=224, samples=50):
+    data_root = os.path.join(os.getcwd(), 'data', 'processed', 'vww_subset', 'train')
+
+    transform = transforms.Compose([
+        transforms.Resize((img_size, img_size)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+
+    image_paths = []
+    for class_name in ['person', 'no_person']:
+        class_dir = os.path.join(data_root, class_name)
+        if os.path.exists(class_dir):
+            files = [os.path.join(class_dir, f) for f in os.listdir(class_dir)
+                     if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+            image_paths.extend(files)
+
+    random.shuffle(image_paths)
+    image_paths = image_paths[:samples]
+
+    images = []
+    for img_path in image_paths:
+        img = Image.open(img_path).convert('RGB')
+        tensor = transform(img)        # (3, H, W)
+        tensor = tensor.unsqueeze(0)   # (1, 3, H, W)
+        images.append(tensor)
+
+    return images
+
+def compute_kan_layer_stats(model, images):
+    """
+    Passa dati reali attraverso multiKan.kan e raccoglie
+    i range REALI (min/max) degli input di ogni KanLayer.
+    
+    model: il modello completo che contiene model.multiKan.kan
+    data_batch: tensore (N, H, W, C) o (N, C, H, W) già preprocessato
+    """
+
+    """
+    model.eval()
+    with torch.no_grad():
+        
+        # 1. Passiamo i dati attraverso tutto il modello fino alla KAN
+        #    (dipende dalla tua architettura, qui assumo che multiKan
+        #     sia l'ultimo blocco prima dell'output)
+        x = data_batch
+        
+        # Se il modello usa NCHW, convertiamo
+        if x.ndim == 4 and x.shape[-1] == 3:
+            x = x.permute(0, 3, 1, 2)  # NHWC → NCHW
+        
+        # Passiamo attraverso tutto il modello fino alla KAN
+        # (adatta questa parte alla tua architettura)
+        x = model.encoder(x)
+        x = model.decoder_before_kan(x)
+        
+        # Ora x è l'input della KAN
+        kan = model.multiKan.kan
+        
+        layer_inputs = []  # input reali di ogni layer
+        layer_inputs.append(x.clone())  # input del layer 0
+        
+        # 2. Passiamo layer-by-layer nella KAN
+        for l, layer in enumerate(kan.act_fun):
+            y, _, _, _ = layer(x)
+            layer_inputs.append(y.clone())
+            x = y
+        
+        # 3. Calcoliamo min/max per ogni layer
+        layer_ranges = []
+        for l, a in enumerate(layer_inputs[:-1]):  # input dei layer
+            min_vals = a.min(dim=0).values
+            max_vals = a.max(dim=0).values
+            layer_ranges.append((min_vals, max_vals))
+        
+        return layer_ranges
+    """
+    model.eval()
+    kan = model.kan
+
+    all_inputs = []
+
+    with torch.no_grad():
+        for img in images:  # img: (1, 3, H, W)
+            x = model.preprocessor(img)  # (1, 16)
+            all_inputs.append(x)
+
+    x_all = torch.cat(all_inputs, dim=0)  # (N, 16)
+
+    layer_inputs = [x_all.clone()]
+    x = x_all
+
+    for layer in kan.kan.act_fun:
+        y, _, _, _ = layer(x)
+        layer_inputs.append(y.clone())
+        x = y
+
+    layer_ranges = []
+    for a in layer_inputs[:-1]:
+        min_vals = a.min(dim=0).values
+        max_vals = a.max(dim=0).values
+        layer_ranges.append((min_vals, max_vals))
+
+    return layer_ranges
 
 def convert_pytorch_to_tflite_direct(model, output_path, img_size=224, quantize='none'):
     """
     Convert PyTorch model directly to TFLite using ai_edge_torch.
     This is the modern Google-supported approach.
     
+    NOTE: It is here only for reference (we started conversion from here), we wrote it but we haven't seen it working a single time.
+
     Args:
         model: PyTorch model in eval mode
         output_path: Path to save TFLite model
@@ -684,6 +1022,8 @@ def main():
                         help='Force configuration from config.py')    
     parser.add_argument('--use_lut', dest='use_lut', action='store_true',
                         help='Use LUT for KAN (default: False)')  
+    parser.add_argument('--deep', dest='use_deep_lut', action='store_true',
+                        help='Use deep LUT for KAN (default: False), requires --use_lut')  
     parser.add_argument('--enforce_quantization', dest='enforce_quantization', action='store_true',
                         help='Enforce quantization (default: False)')  
     args = parser.parse_args()
@@ -855,7 +1195,7 @@ def main():
         print("="*60)
         
         # Step 1: Export to ONNX
-        if not export_to_onnx(model, str(onnx_path), args.img_size, args.use_lut):
+        if not export_to_onnx(model, str(onnx_path), args.img_size, args.use_lut, args.use_deep_lut):
             print("\n[FAIL] Conversion failed at ONNX export stage")
             sys.exit(1)
         
