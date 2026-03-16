@@ -438,6 +438,66 @@ Please use the --force_config parameter to force the structure of the model as
 the config.py file, just in case the metadata in the checkpoint file won't match 
 the the real model structure.
 
+## Deployment on devices
+
+Here is a list of devices where the model has been deployed:
+
+- Arduino ESP32S3 Sense
+- Raspberry Pi 3 Bookworm
+
+See /runtime folder for projects.
+
+Raspberry Pi 2 / Zero are not supported due to lack of NEON instructions. It is possible to run the model on these devices, but it will be very slow using TFLite C++ API (analogous to the Arduino).
+On Raspberry Pi 3 Bookworm, the inference, even if slower than on host, uses practically the same interpreter of the host, not requiring any further analysis on accuracy.
+
+About Arduino ESP32S3 Sense TFLM libraries:
+
+# ESP-NN
+
+It is not possible to use the ESP-NN library, which supports ESP32 acceleration instructions, from ESP-IDF directly. It needs to migrate to ESP-IDF v5.2.0 or higher instead of Arduino framework. But the used device (Seeed XIAO ESP32S3 Sense) is not fully supported out of the box, requiring manual configuration of the board in ESP-IDF. So we have not used it.
+
+
+# TFLM_ESP32
+
+LTFM_ESP32 is not directly usable because the error: 
+
+.pio/libdeps/seeed_xiao_esp32s3/tflm_esp32/src/tensorflow/lite/micro/kernels/fully_connected_common.cpp FullyConnected per-channel quantization not yet supported. Please set converter._experimental_disable_per_channel_quantization_for_dense_layers = True.
+
+By patching the fully_connected_common.cpp file with the one from ESP-IDF (where it is implemented), we get an inference time (depending on the build) ranging from 5.0 to 7.0 s.
+
+
+# TensorFlowLite_ESP32
+
+TensorFlowLite_ESP32 is not usable because the Sum operation is not implemented.
+It seems to be implemented only for ARM8 NEON.
+
+
+# Chirale_TensorFlowLite
+
+Chirale_TensorFlowLite supports acceleration for Cortex but not is not known how much acceleration it provides for ESP32. All the operations needed for the inference are implemented, thus not requiring any patch.
+The inference time is around 1.2s - 1.8s (depending on the build)
+
+## Note of deployment on microcontrollers
+
+Probably, in deployment on microcontrollers, memory alignment plays a significant role in the inference time.
+For the sample in /runtime we have used Chirale_TensorFlowLite with the following configuration:
+
+- Model: 16-4
+- Resolution: 96x96
+- WM: 0.334
+- Framework: Chirale
+- Patched: no
+- LUT: yes
+- Size (MB): 0.259
+- RAM Type: SRAM
+- Last measured inference Time (s): 1.61
+
+If the validation set il placed in a SD memory (under /val/person and /val/no_person directories), by using the #define PERFORMANCE_TESTING in the main.cpp file, we can evaluate the inference time and accuracy on device, with the display of the results on the serial monitor.
+The results in accuracy and confusion matrix are almost identical to the ones obtained by using the tflite interpreter on the host.
+
+The development of the Arduino code has been done using PlatformIO: if the runtime folder is opened on this IDE, all the needed libraries are automatically downloaded (see platformio.ini file).
+
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
