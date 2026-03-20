@@ -28,7 +28,7 @@
 #include "bmpfile.hpp"
 
 // For accuracy calculation on device with validation dataset
-//#define PERFORMANCE_TESTING 1
+#define PERFORMANCE_TESTING 1
 
 // Inference image size (must be the same as the one used during training and conversion to tflite)
 #define IMG_SIZE 96
@@ -273,6 +273,7 @@ void setup() {
 
 // Loop variables
 int counter = 0;
+int skipped = 0;
 
 static char debugName[64];
 static char filename[64];
@@ -300,12 +301,14 @@ void loop() {
 
         if (loadJPGfromSD(filename, &jpgRGB, label)) {
             //static uint8_t resized[96 * 96 * 3];
+            //if(counter < DEBUG_SAMPLES) {
+            //    sprintf(debugName, "/debug_orig_%d.bmp", counter);
+            //    saveBMP224(debugName, jpgRGB);
+            //}
             if(counter < DEBUG_SAMPLES) {
-                sprintf(debugName, "/debug_orig_%d.bmp", counter);
+                sprintf(debugName, "/debug_full_%d.bmp", counter);            
                 saveBMP224(debugName, jpgRGB);
             }
-            sprintf(debugName, "/debug_full_%d.bmp", counter);
-            saveBMP224(debugName, jpgRGB);
             resized = (uint8_t*) heap_caps_malloc(IMG_SIZE * IMG_SIZE * 3, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
             flipped = (uint8_t*) heap_caps_malloc(IMG_SIZE * IMG_SIZE * 3, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
             if (!resized) {
@@ -329,15 +332,23 @@ void loop() {
               saveBMP96(debugName, resized);
             }
 
-            for (int y = 0; y < IMG_SIZE; y++) {
-                int src_row = y * IMG_SIZE * 3;
-                int dst_row = (IMG_SIZE - 1 - y) * IMG_SIZE * 3;
-                memcpy(&resized[dst_row], &flipped[src_row], IMG_SIZE * 3);
-            }
+            // Direct 
+            memcpy(resized, flipped, IMG_SIZE * IMG_SIZE * 3);
+
+            // Flipped vertically
+            //for (int y = 0; y < IMG_SIZE; y++) {
+            //    int src_row = y * IMG_SIZE * 3;
+            //    int dst_row = (IMG_SIZE - 1 - y) * IMG_SIZE * 3;
+            //    memcpy(&resized[dst_row], &flipped[src_row], IMG_SIZE * 3);
+            //}
 
             free(flipped);
 
             Serial.println("[OK] Flipping complete");
+        } else {
+            Serial.println("ERROR: loadJPGfromSD");
+            skipped++;
+            return;
         }
     }
 #else 
@@ -432,9 +443,13 @@ void loop() {
         float g = (resized[base+1] / 255.0f - 0.456f) / 0.224f;
         float b = (resized[base+2] / 255.0f - 0.406f) / 0.225f;
         
-        input->data.int8[idx++] = round(r / scale) + zero_point;
-        input->data.int8[idx++] = round(g / scale) + zero_point;
-        input->data.int8[idx++] = round(b / scale) + zero_point;
+        float r_c = round(r / scale) + zero_point;
+        float g_c = round(g / scale) + zero_point;
+        float b_c = round(b / scale) + zero_point;  
+
+        input->data.int8[idx++] = r_c < -128 ? -128 : (r_c > 127 ? 127 : (int8_t)r_c);
+        input->data.int8[idx++] = g_c < -128 ? -128 : (g_c > 127 ? 127 : (int8_t)g_c);
+        input->data.int8[idx++] = b_c < -128 ? -128 : (b_c > 127 ? 127 : (int8_t)b_c);
       }
   }
 
@@ -476,6 +491,7 @@ void loop() {
   Serial.printf("Real Label: %d, Predicted Label: %d\n", label, person > nonperson ? 1 : 0);
   updateConfusionMatrix(label, person > nonperson ? 1 : 0);
   printConfusionMatrix();  
+  Serial.printf("Skipped samples: %d\n", skipped);
 
   // The validation set is composed of 6000 samples, so we can stop after 6000 iterations
   if (checkEndDataset(6000)) {

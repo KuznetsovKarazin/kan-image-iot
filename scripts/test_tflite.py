@@ -28,7 +28,7 @@ import config
 parser = argparse.ArgumentParser(description='Test TFLite model on validation set')
 parser.add_argument('model_path', type=str, nargs='?', default=None,
                     help='Path to TFLite model file (optional, defaults to experiment model)')
-parser.add_argument('--data_dir', type=str, default=r'data/processed/vww_subset/val', 
+parser.add_argument('--data_dir', type=str, default=r'data/processed/vww_subset/test', 
                     help='Path to validation dataset')
 parser.add_argument('--img_size', type=int, default=224, help='Image size')
 parser.add_argument('--limit', type=int, default=None, help='Limit number of batches for quick testing')
@@ -113,7 +113,9 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
     # Standard ImageNet normalization
     transform = transforms.Compose([
         transforms.Resize((img_size, img_size)),
+        #transforms.RandomVerticalFlip(p=1.0),
         transforms.ToTensor(),
+        #transforms.Normalize(mean=[0.486, 0.456, 0.405], std=[0.225, 0.224, 0.229])
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
     
@@ -180,7 +182,8 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
             elif input_dtype == np.int8:
                 #print("[INFO] Network expects int8 input..")
                 input_scale, input_zero_point = input_details[0]['quantization']
-                input_data = (input_data / input_scale + input_zero_point).astype(np.int8)
+                #input_data = (input_data / input_scale + input_zero_point).astype(np.int8)
+                input_data = np.clip(np.round(input_data / input_scale + input_zero_point), -128, 127).astype(np.int8)
             else:
                 #print("[INFO] Network expects float32 input..")
                 input_data = input_data.astype(np.float32)
