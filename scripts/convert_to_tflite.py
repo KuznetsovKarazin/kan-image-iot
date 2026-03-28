@@ -369,7 +369,7 @@ def export_to_onnx(model, output_path, img_size=224, use_lut=False, use_deep_lut
     if use_lut:
         if use_deep_lut:
             print("[INFO] Computing layer ranges for KAN to LUT conversion...")
-            images = load_images_for_kan(img_size=96, samples=500)
+            images = load_images_for_kan(img_size=img_size, samples=1000)
             layer_ranges = compute_kan_layer_stats(model, images)
             model.kan = convert_kan_to_layerwise_lut(model.kan, layer_ranges, grid_size=32)
         else:
@@ -647,8 +647,8 @@ def compute_kan_layer_stats(model, images):
 
     layer_ranges = []
     for a in layer_inputs[:-1]:
-        min_vals = a.min(dim=0).values
-        max_vals = a.max(dim=0).values
+        min_vals = a.min(dim=0).values - 0.2 #Extend the range a little bit
+        max_vals = a.max(dim=0).values + 0.2 #Extend the range a little bit
         layer_ranges.append((min_vals, max_vals))
 
     return layer_ranges
@@ -1084,7 +1084,10 @@ def main():
 
     if saved_config and not args.force_config:
         print("\nUsing configuration from checkpoint...")
-        
+        kan_config = saved_config.get('kan')
+        if kan_config:
+            head_type = kan_config.get('head_type', 'kan')  
+            
         if 'preprocessor' in saved_config:
             # Checkpoint contains preprocessor config
             preproc_config = saved_config['preprocessor']
@@ -1122,6 +1125,7 @@ def main():
         degree = config.KAN_CONFIG['degree']
         preprocessor_type = config.PREPROCESSOR_CONFIG['preprocessor_type']
         width_mult = config.PREPROCESSOR_CONFIG['width_mult']
+        head_type = config.KAN_CONFIG['head_type']
     
     print(f"  Preprocessor type: {preprocessor_type}")
     print(f"  Width multiplier: {width_mult}")
@@ -1143,6 +1147,7 @@ def main():
         width_mult=width_mult,
         preprocessor_pretrained=config.PREPROCESSOR_CONFIG.get('pretrained', False),
         preprocessor_freeze=False,  # Not relevant for inference
+        head_type=head_type
     )
     
     # Load weights - handle different checkpoint formats

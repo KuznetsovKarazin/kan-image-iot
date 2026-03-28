@@ -5,17 +5,14 @@ Author: Daniele Faggi
 Date: February 2026
 
 Usage:
-    # Scan all experiments
-    python scripts/generate_models_csv.py
+    python inference.py [OPTIONS]
 
-    # Debug mode: limit to 2 experiments
-    python scripts/generate_models_csv.py --limit 2
-
-    # Custom output CSV
-    python scripts/generate_models_csv.py --output my_results.csv
-
-    # Custom data directory
-    python scripts/generate_models_csv.py --data_dir data/processed/vww_subset/test
+Command-line Arguments:
+    --model_path    Path to the TFLite model. (default: model.tflite)
+    --input_shape   Input shape for the model. (default: 224 224)
+    --camera_id     Camera ID. (default: 0)
+    --qint8         Use this flag for if int8 network quantization.
+    --debug         Enable debug mode.
 """
 import cv2
 import numpy as np
@@ -23,6 +20,8 @@ from tflite_runtime.interpreter import Interpreter
 import threading
 import time
 import argparse
+import subprocess
+import os
 
 # 1. Base Configuration
 MODEL_PATH = "model.tflite"
@@ -49,6 +48,17 @@ class VideoStream:
     def stop(self):
         self.stopped = True
         self.cap.release()
+
+
+def get_cpu_temperature():
+    try:
+        result = subprocess.run(['vcgencmd', 'measure_temp'], capture_output=True, text=True, check=True)
+        output = result.stdout.strip()
+        if output.startswith("temp="):
+            return output.split("=")[1].replace("'C", "")
+        return "n/a"
+    except Exception:
+        return "n/a"
 
 
 def preprocess_image(frame, target_size, debug=False):
@@ -120,6 +130,11 @@ def inference(model_path, input_shape, camera_id, debug, qint8, callback=None):
     time.sleep(2.0) # Time to warm up camera
     print("Capturing image")
 
+    if debug:
+        program_start_time = time.time()
+        with open("inference-log.csv", "w") as f:
+            f.write("TimeSinceStart_s,InferenceTime_ms,Temperature_C\n")
+
     try:
         while True:
             frame = vs.read()
@@ -155,8 +170,15 @@ def inference(model_path, input_shape, camera_id, debug, qint8, callback=None):
                 inference_time = last_inference_time * 1000
 
                 if(debug):
+                    current_time = time.time()
+                    time_since_start = current_time - program_start_time
+                    temp = get_cpu_temperature()
+                    
+                    with open("inference-log.csv", "a") as f:
+                        f.write(f"{time_since_start:.2f},{inference_time:.2f},{temp}\n")
+
                     # Debug
-                    print(f"Raw output: {output_data}, Predicted class: {predicted_class_index}, Inference time: {inference_time:.2f} ms")
+                    print(f"Raw output: {output_data}, Predicted class: {predicted_class_index}, Inference time: {inference_time:.2f} ms, Temp: {temp}°C")
                     # Show image
                     cv2.imshow("Live AI", frame)
                     if cv2.waitKey(1) & 0xFF == ord('q'):

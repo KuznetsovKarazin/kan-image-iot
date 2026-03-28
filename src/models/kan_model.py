@@ -416,7 +416,7 @@ class KANImageClassifier(nn.Module):
                  kan_hidden_dims=[24, 12], kan_grid=4, kan_degree=3, conv_channels=[16, 32, 64],
                  use_batch_norm=True, dropout_rate=0.1, activation_l1=0.0, 
                  stochastic_depth_rate=0.0, seed=42, preprocessor_type='mobilenetv3_small', width_mult=1.0,
-                 preprocessor_freeze=True, preprocessor_pretrained=True):
+                 preprocessor_freeze=True, preprocessor_pretrained=True, head_type='kan'):
         super(KANImageClassifier, self).__init__()
         
         self.input_channels = input_channels
@@ -424,6 +424,8 @@ class KANImageClassifier(nn.Module):
         self.num_classes = num_classes
         self.feature_dim = feature_dim
         
+        self.head_type = head_type
+
         # Image preprocessing network
         #self.preprocessor = ImagePreprocessor(
         #    input_channels=input_channels,
@@ -458,17 +460,25 @@ class KANImageClassifier(nn.Module):
             output_features=feature_dim,
             )
 
-        # KAN network for classification with regularization
-        kan_width = [feature_dim] + kan_hidden_dims + [num_classes]
-        self.kan = RegularizedKAN(
-            width=kan_width,
-            grid=kan_grid,
-            degree=kan_degree,
-            dropout_rate=dropout_rate,
-            use_batchnorm=use_batch_norm,
-            activation_l1=activation_l1,
-            seed=seed
-        )
+        if head_type == 'kan':
+                # KAN network for classification with regularization
+                kan_width = [feature_dim] + kan_hidden_dims + [num_classes]
+                self.kan = RegularizedKAN(
+                    width=kan_width,
+                    grid=kan_grid,
+                degree=kan_degree,
+                dropout_rate=dropout_rate,
+                use_batchnorm=use_batch_norm,
+                activation_l1=activation_l1,
+                seed=seed
+            )
+        elif head_type == 'mlp':
+            # KAN hidden dims are used as mlp hidden dims
+            self.kan = nn.Sequential(
+                nn.Linear(feature_dim, kan_hidden_dims[0]),
+                nn.ReLU(),
+                nn.Linear(kan_hidden_dims[0], num_classes)
+            )
         
     def forward(self, x):
         # Preprocess image to extract features
@@ -525,7 +535,10 @@ class KANImageClassifier(nn.Module):
     
     def get_activation_regularization(self):
         """Get activation regularization from KAN"""
-        return self.kan.get_activation_regularization()
+        if self.head_type == 'kan':
+            return self.kan.get_activation_regularization()
+        else:
+            return None
     
     def visualize_splines(self, save_dir='figures'):
         """Visualize KAN splines and save to directory"""

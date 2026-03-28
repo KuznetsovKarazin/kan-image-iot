@@ -21,7 +21,7 @@ DATASET_CONFIG = {
     'raw_data_dir': DATA_DIR / 'raw' / 'coco',
     'processed_data_dir': DATA_DIR / 'processed',
     'subset_dir': DATA_DIR / 'processed' / 'vww_subset',
-    'img_size': 96,  # Image size for model input (224 base for mobilenetv3, 96 alternate)
+    'img_size': 224,  # Image size for model input (224 base for mobilenetv3, 96 alternate)
     'train_samples_per_class': 50000,  # Number of training samples per class
     'val_samples_per_class': 5000,     # Number of validation samples per class
     'test_samples_per_class': 2000,    # Number of test samples per class
@@ -75,7 +75,7 @@ AUGMENTATION_CONFIG = {
 # CNN Preprocessor configuration
 PREPROCESSOR_CONFIG = {
     'preprocessor_type': 'mobilenetv3_small',  # Options: 'custom_cnn', 'mobilenetv3_small', 'resnet18', 'mobilenetv3_small_quantized'
-    'width_mult': 0.334,          # Width multiplier for MobileNetV3 (TEMP for testing)
+    'width_mult': 1.0,         # Width multiplier for MobileNetV3 (TEMP for testing)
     'pretrained': False,               # Use pretrained weights for MobileNetV3
     'input_channels': 3,
     'output_features': 16,            # Feature dimension after preprocessing (TEMP for testing)
@@ -91,6 +91,7 @@ PREPROCESSOR_CONFIG = {
 
 # KAN configuration
 KAN_CONFIG = {
+    'head_type': 'kan',         # Options: 'kan', 'mlp' (hidden dims used for hidden layer of mlp)
     'feature_dim': 16,          # Input dimension to KAN (same as preprocessor output)
     'hidden_dims': [4],       # Hidden layer dimensions
     'grid': 5,                  # Number of grid points
@@ -167,7 +168,7 @@ TRAINING_CONFIG = {
 # Experiment names will be generated based on key parameters
 def get_experiment_name():
     """Generate experiment name based on current configuration"""
-    exp_name = f"kan_{KAN_CONFIG['feature_dim']}_{'-'.join(map(str, KAN_CONFIG['hidden_dims']))}"
+    exp_name = f"{KAN_CONFIG['head_type']}_{KAN_CONFIG['feature_dim']}_{'-'.join(map(str, KAN_CONFIG['hidden_dims']))}"
     exp_name += f"_grid{KAN_CONFIG['grid']}_deg{KAN_CONFIG['degree']}"
     exp_name += f"_img{DATASET_CONFIG['img_size']}"
     exp_name += f"_bs{TRAINING_CONFIG['batch_size']}"

@@ -79,6 +79,7 @@ def load_model_and_config(model_path, device):
     use_batch_norm = preprocessor_config.get('use_batch_norm', PREPROCESSOR_CONFIG['use_batch_norm'])
     preprocessor_type = preprocessor_config.get('preprocessor_type', PREPROCESSOR_CONFIG['preprocessor_type'])
     width_mult = preprocessor_config.get('width_mult', PREPROCESSOR_CONFIG.get('width_mult', 1.0))
+    head_type = kan_config.get('head_type', KAN_CONFIG['head_type'])
 
     # Create model with the same architecture
     model = KANImageClassifier(
@@ -94,6 +95,7 @@ def load_model_and_config(model_path, device):
         preprocessor_type=preprocessor_type,
         width_mult=width_mult,
         preprocessor_pretrained=False,
+        head_type=head_type
     )
     
     # Load weights

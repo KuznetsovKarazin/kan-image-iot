@@ -513,9 +513,10 @@ def train_single_run(model, train_loader, val_loader, criterion, optimizer, sche
                         loss = criterion(outputs, targets)
                     
                     # Add activation regularization if available
-                    if hasattr(model, 'get_activation_regularization'):
+                    if hasattr(model, 'get_activation_regularization'):                        
                         activation_reg = model.get_activation_regularization()
-                        loss = loss + activation_reg
+                        if activation_reg is not None:
+                            loss = loss + activation_reg
                 
                 # Backward and optimize with scaler
                 optimizer.zero_grad()
@@ -1039,7 +1040,8 @@ def main():
         seed=KAN_CONFIG['seed'],
         preprocessor_type=PREPROCESSOR_CONFIG['preprocessor_type'],
         width_mult=PREPROCESSOR_CONFIG.get('width_mult', 1.0),
-        preprocessor_pretrained=PREPROCESSOR_CONFIG.get('pretrained', True)
+        preprocessor_pretrained=PREPROCESSOR_CONFIG.get('pretrained', True),
+        head_type=KAN_CONFIG['head_type']
     )
     model = model.to(device)
     
