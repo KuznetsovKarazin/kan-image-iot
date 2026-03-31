@@ -841,7 +841,8 @@ def convert_onnx_to_tensorflow(onnx_path, tf_output_path):
 
 def convert_tensorflow_to_tflite(tf_model_path, tflite_output_path, 
                                   quantize='none', representative_dataset=None,
-                                  enforce_quantization = True):
+                                  enforce_quantization = True,
+                                  quantization_per_channel = True):
     """
     Convert TensorFlow SavedModel to TFLite format.
     
@@ -868,6 +869,9 @@ def convert_tensorflow_to_tflite(tf_model_path, tflite_output_path,
                 converter.inference_input_type = tf.float16
                 converter.inference_output_type = tf.float16
 
+            print("quantization_per_channel: ", quantization_per_channel)    
+            converter._experimental_disable_per_channel_quantization_for_dense_layers = not quantization_per_channel
+
             converter.optimizations = [tf.lite.Optimize.DEFAULT]
             converter.target_spec.supported_types = [tf.float16]
             print("Applying float16 quantization...")
@@ -877,7 +881,12 @@ def convert_tensorflow_to_tflite(tf_model_path, tflite_output_path,
                 converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
                 converter.inference_input_type = tf.int8
                 converter.inference_output_type = tf.int8
+            
+            print("quantization_per_channel: ", quantization_per_channel)
+            converter._experimental_disable_per_channel_quantization_for_dense_layers = not quantization_per_channel
 
+            # Warning: added next to force int8 quantization (default isn't enough)    
+            #converter.target_spec.supported_types = [tf.int8]
             converter.optimizations = [tf.lite.Optimize.DEFAULT]
             if representative_dataset is not None:
                 converter.representative_dataset = representative_dataset
@@ -1026,6 +1035,8 @@ def main():
                         help='Use deep LUT for KAN (default: False), requires --use_lut')  
     parser.add_argument('--enforce_quantization', dest='enforce_quantization', action='store_true',
                         help='Enforce quantization (default: False)')  
+    parser.add_argument('--quantization_per_tensor', dest='quantization_per_tensor', action='store_true',
+                        help='Quantization per tensor (default: False, per channel)')  
     args = parser.parse_args()
     
     # Handle default model path
@@ -1233,7 +1244,8 @@ def main():
             str(tflite_path),
             args.quantize,
             rep_dataset,
-            args.enforce_quantization
+            args.enforce_quantization,
+            not args.quantization_per_tensor
         )
         
         if not success:

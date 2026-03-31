@@ -21,7 +21,7 @@ DATASET_CONFIG = {
     'raw_data_dir': DATA_DIR / 'raw' / 'coco',
     'processed_data_dir': DATA_DIR / 'processed',
     'subset_dir': DATA_DIR / 'processed' / 'vww_subset',
-    'img_size': 224,  # Image size for model input (224 base for mobilenetv3, 96 alternate)
+    'img_size': 96,  # Image size for model input (224 base for mobilenetv3, 96 alternate)
     'train_samples_per_class': 50000,  # Number of training samples per class
     'val_samples_per_class': 5000,     # Number of validation samples per class
     'test_samples_per_class': 2000,    # Number of test samples per class
@@ -75,7 +75,7 @@ AUGMENTATION_CONFIG = {
 # CNN Preprocessor configuration
 PREPROCESSOR_CONFIG = {
     'preprocessor_type': 'mobilenetv3_small',  # Options: 'custom_cnn', 'mobilenetv3_small', 'resnet18', 'mobilenetv3_small_quantized'
-    'width_mult': 1.0,         # Width multiplier for MobileNetV3 (TEMP for testing)
+    'width_mult': 0.334,         # Width multiplier for MobileNetV3 (TEMP for testing)
     'pretrained': False,               # Use pretrained weights for MobileNetV3
     'input_channels': 3,
     'output_features': 16,            # Feature dimension after preprocessing (TEMP for testing)

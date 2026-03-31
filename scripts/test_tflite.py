@@ -115,7 +115,7 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
         transforms.Resize((img_size, img_size)),
         #transforms.RandomVerticalFlip(p=1.0),
         transforms.ToTensor(),
-        #transforms.Normalize(mean=[0.486, 0.456, 0.405], std=[0.225, 0.224, 0.229])
+        #transforms.Normalize(mean=[0.406, 0.456, 0.485], std=[0.225, 0.224, 0.229])
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
     
@@ -184,6 +184,9 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
                 input_scale, input_zero_point = input_details[0]['quantization']
                 #input_data = (input_data / input_scale + input_zero_point).astype(np.int8)
                 input_data = np.clip(np.round(input_data / input_scale + input_zero_point), -128, 127).astype(np.int8)
+                #val_to_round = (input_data / input_scale) + input_zero_point
+                #rounded = np.where(val_to_round >= 0, np.floor(val_to_round + 0.5), np.ceil(val_to_round - 0.5))
+                #input_data = np.clip(rounded, -128, 127).astype(np.int8)                
             else:
                 #print("[INFO] Network expects float32 input..")
                 input_data = input_data.astype(np.float32)

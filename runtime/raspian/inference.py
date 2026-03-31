@@ -11,7 +11,7 @@ Command-line Arguments:
     --model_path    Path to the TFLite model. (default: model.tflite)
     --input_shape   Input shape for the model. (default: 224 224)
     --camera_id     Camera ID. (default: 0)
-    --qint8         Use this flag for if int8 network quantization.
+    --qint8         Use this flag for if network is int8 quantizated.
     --debug         Enable debug mode.
 """
 import cv2
@@ -90,27 +90,28 @@ def preprocess_image_quantized(frame, target_size, interpreter, debug=False):
     if debug:
         cv2.imwrite("capture.jpg", frame)
 
-    # 1. Pipeline Standard (fino alla normalizzazione float)
+    # 1. Standard Pipeline 
     img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     img = cv2.resize(img, target_size)
     img = img.astype(np.float32) / 255.0
 
+    # Imagenet normalization
     mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
     std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
     img = (img - mean) / std    
 
-    # 2. Recupero parametri di quantizzazione dal modello TFLite
+    # 2. Quantization parameters from TFLite model
     input_details = interpreter.get_input_details()[0]
     # Se il modello non è quantizzato, scale sarà 0.0 e zero_point 0
     scale, zero_point = input_details['quantization']
 
-    # 3. QUANTIZZAZIONE
-    # Applichiamo la formula: q = round(f / scale) + zero_point
-    # Poi forziamo il tipo a int8 con clipping nel range [-128, 127]
+    # 3. Quantization
+    # Formula: q = round(f / scale) + zero_point
+    # int8 with clipping inside range [-128, 127]
     img_quantized = np.round(img / scale) + zero_point
     img_quantized = np.clip(img_quantized, -128, 127).astype(np.int8)
 
-    # 4. Aggiunta batch dimension
+    # 4. Add batch dimension (needed for model input)
     img_quantized = np.expand_dims(img_quantized, axis=0)
     
     return img_quantized

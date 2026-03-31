@@ -36,7 +36,7 @@
 // -------------------------
 // SD CONFIGURATION (SPI)
 // -------------------------
-#define SD_CS 21   // CS soldered in this way
+#define SD_CS 21   // On XIAO CS is soldered in this way
 
 // Dump the first choosen samples to SD as BMP for debugging
 #define DEBUG_SAMPLES 20
