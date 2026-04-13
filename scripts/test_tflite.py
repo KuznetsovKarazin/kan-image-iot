@@ -218,6 +218,27 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
     accuracy = 100 * correct / total
     avg_latency = np.mean(latencies)
     
+    # ================= Memory Profiling =================
+    rom_size_kb = os.path.getsize(model_path) / 1024.0
+    
+    tensor_details = interpreter.get_tensor_details()
+    tensor_sizes_kb = []
+    
+    for t in tensor_details:
+        shape = t['shape']
+        dtype = t['dtype']
+        bytes_size = np.prod(shape) * np.dtype(dtype).itemsize if len(shape) > 0 else np.dtype(dtype).itemsize
+        tensor_sizes_kb.append(bytes_size / 1024.0)
+    
+    max_tensor_kb = max(tensor_sizes_kb) if tensor_sizes_kb else 0
+    total_tensors_kb = sum(tensor_sizes_kb) if tensor_sizes_kb else 0
+    
+    # 1. Flash/ROM: Dettato dalla grandezza fisica del modello.
+    # 2. RAM/Arena: Un'approssimazione empirica per TFLite Micro. TFLite pianifica la RAM ottimizzando la vita dei tensori, 
+    # di base serve spazio per mantenere vivi simultaneamente almeno due tensori enormi (Input/Output di un nodo) più un po' di overhead per gli array intermedi.
+    arena_heuristic_kb = max(max_tensor_kb * 2.5 + 10, total_tensors_kb - rom_size_kb)
+    # ====================================================
+
     # Prepare report text
     cm = confusion_matrix(all_labels, all_preds)
     report = classification_report(all_labels, all_preds, target_names=dataset.classes)
@@ -229,6 +250,13 @@ def evaluate_model(model_path, data_dir, img_size=224, batch_size=1, limit=None,
         f"Model: {model_path}",
         f"Dataset: {data_dir}",
         f"Total Images: {total}",
+        "",
+        "="*60,
+        "Hardware Target Footprint (IoT)",
+        "="*60,
+        f"Flash ROM (Model Size): {rom_size_kb:.2f} KB",
+        f"Max Tensor Buffer   : {max_tensor_kb:.2f} KB",
+        f"Estimated Mem Arena : ~{arena_heuristic_kb:.2f} KB (RAM)",
         "",
         "="*60,
         "Results",

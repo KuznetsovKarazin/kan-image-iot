@@ -99,7 +99,7 @@ def surgical_fix_hardsigmoid(onnx_model_path, output_path):
 class FastLutKAN(nn.Module):
     """
     This class is used to convert a KAN model to a LUT-based model.
-    It is approximate and the accuracy result depends on the layer structuse and
+    It is approximate and the accuracy result depends on the layer structure and
     training data. It generates simplified model for edge devices at the cost of accuracy.
     Use this class, but check the accuracy after conversion.
     """
@@ -109,8 +109,7 @@ class FastLutKAN(nn.Module):
         self.min_val = grid_range[0]
         self.max_val = grid_range[1]
         
-        # Estraiamo la dimensione di input (il primo elemento di width)
-        # width è una lista tipo [16, 32, 2]
+        # Estraiamo la dimensione di input
         if isinstance(original_kan.kan.width[0], list):
             self.input_dim = original_kan.kan.width[0][0]
         else:
@@ -120,92 +119,85 @@ class FastLutKAN(nn.Module):
 
         with torch.no_grad():
             x_base = torch.linspace(self.min_val, self.max_val, grid_size)
-            # Creiamo una LUT che ha forma (grid_size, input_dim, output_dim)
-            # Invece di una tabella piatta, abbiamo una tabella per ogni ingresso
+            
+            zeros = torch.zeros(1, self.input_dim)
+            y_base = original_kan(zeros) # (1, out_dim)
+            self.register_buffer("base_bias", y_base.detach().clone())
+
             lut_list = []
+            scales_list = []
             for i in range(self.input_dim):
-                # Creiamo un input dove solo la i-esima feature varia
                 x_test = torch.zeros(grid_size, self.input_dim)
                 x_test[:, i] = x_base
-                lut_list.append(original_kan(x_test).unsqueeze(1)) # (grid_size, 1, out)
-            
+                
+                y = original_kan(x_test)
+                
+                # Zero-Mean normalize deviation
+                y_norm = y - y_base
+                
+                # Independent Scale extraction
+                feat_max = y_norm.abs().max() + 1e-9
+                y_scaled = y_norm / feat_max
+                
+                lut_list.append(y_scaled.unsqueeze(1))
+                scales_list.append(feat_max)
+
+            # (grid_size, input_dim, out_dim)
             self.lut_table = nn.Parameter(torch.cat(lut_list, dim=1).detach())
-            print(f"[OK] LUT multi-dim generata: {self.lut_table.shape}") 
-            # Dovrebbe essere (256, 16, 4) se hai 4 classi
-        """
-        with torch.no_grad():
-            # Generiamo la griglia di campionamento
-            x_base = torch.linspace(self.min_val, self.max_val, grid_size)
+            self.output_dim = self.lut_table.shape[-1]
             
-            # Creiamo l'input di test (grid_size, input_dim)
-            # Immaginiamo di "scansionare" la risposta della rete per ogni possibile valore di input
-            x_test = x_base.unsqueeze(1).repeat(1, self.input_dim)
+            # TFLITE INT8 SHIELD: Output Scaler (protegge array delle ampiezze)
+            self.scaler = nn.Conv2d(self.input_dim, self.input_dim, kernel_size=1, groups=self.input_dim, bias=False)
+            self.scaler.weight = nn.Parameter(torch.tensor(scales_list, dtype=torch.float32).view(self.input_dim, 1, 1, 1).detach())
             
-            # Calcoliamo la risposta dell'intera KAN (tutti i layer)
-            # Questo "congela" la logica MultKAN in una tabella finale
-            self.lut_table = nn.Parameter(original_kan(x_test).detach())
-            print(f"[OK] LUT generata. Shape tabella: {self.lut_table.shape}")
-        """
+            # TFLITE INT8 SHIELD: Input Scaler (protegge array di normalizzazione range)
+            scale_f = float(self.grid_size - 1) / (self.max_val - self.min_val + 1e-9)
+            bias_f = -self.min_val * scale_f
+            
+            # Espandiamo gli scalari in vettori per compatibilità con i pesi Conv2D
+            vec_scale_f = torch.tensor([scale_f] * self.input_dim, dtype=torch.float32)
+            vec_bias_f = torch.tensor([bias_f] * self.input_dim, dtype=torch.float32)
+            
+            self.input_scaler = nn.Conv2d(self.input_dim, self.input_dim, kernel_size=1, groups=self.input_dim, bias=True)
+            self.input_scaler.weight = nn.Parameter(vec_scale_f.view(self.input_dim, 1, 1, 1).detach())
+            self.input_scaler.bias = nn.Parameter(vec_bias_f.view(self.input_dim).detach())
+            
+            print(f"[OK] LUT generata. Shape tabella: {self.lut_table.shape}, protetta con Depthwise Scaler.")
+
     def forward(self, x):
-        # x shape: (Batch, 16)
-        grid_step = (self.max_val - self.min_val) / (self.grid_size - 1)
+        # ONNX2TF / TFLITE SURVIVAL MODE: MEMORY OPTIMIZATION.
+        B = x.shape[0]
+        x = torch.clamp(x, self.min_val, self.max_val)
         
-        # 1. Portiamo x in "unità di griglia"
-        x_grid = ((x - self.min_val) / grid_step).unsqueeze(-1) # (Batch, 16, 1)
-
-        # 2. Creiamo la griglia di indici
-        grid = torch.arange(self.grid_size, device=x.device).float().view(1, 1, -1) # (1, 1, 256)
-
-        # 3. Calcoliamo la maschera di pesi (Batch, 16, 256)
-        dist = torch.abs(x_grid - grid)
-        weight_mask = torch.relu(1.0 - dist)
-
-        # 4. ALLINEAMENTO PER IL PRODOTTO (Il punto critico)
-        # Dobbiamo moltiplicare ogni feature (1..16) per la sua LUT specifica.
-        # weight_mask: (Batch, 16, 256) -> la ruotiamo per mettere la griglia in mezzo
-        # mask_permuted: (Batch, 256, 16)
-        mask_permuted = weight_mask.permute(0, 2, 1)
-
-        # self.lut_table è (256, 16, 2)
-        # Moltiplichiamo elemento per elemento: (Batch, 256, 16) * (1, 256, 16)
-        # Poi aggiungiamo una dimensione vuota alla maschera per includere le classi (Out=2)
-        # mask_expanded: (Batch, 256, 16, 1)
-        # lut_expanded:  (1, 256, 16, 2)
-        combined = mask_permuted.unsqueeze(-1) * self.lut_table.unsqueeze(0)
+        # Uso Conv2D per forzare ONNX2TF ad applicare correttamente il layout channels NCHW->NHWC
+        x_uns = x.view(B, self.input_dim, 1, 1)
+        idx_f = self.input_scaler(x_uns).view(B, self.input_dim)
         
-        # 5. Riduzione finale
-        # Sommiamo sulla dimensione della griglia (dim 1) per ottenere (Batch, 16, 2)
-        res = combined.sum(dim=1)
+        idx_f = torch.clamp(idx_f, 0.0, float(self.grid_size - 1))
+        idx = idx_f.long()
+        idx = torch.clamp(idx, 0, self.grid_size - 1)
         
-        # Media delle feature
-        return res.mean(dim=1)
-"""
-    def forward(self, x):
-        # x shape: (Batch, input_dim)
-        # 1. Portiamo l'input nel range [0, grid_size - 1]
-        x_norm = (x - self.min_val) / (self.max_val - self.min_val)
-        x_scaled = x_norm * (self.grid_size - 1)
+        lut_flat = self.lut_table.transpose(0, 1).reshape(self.input_dim * self.grid_size, self.output_dim)
+        offsets = torch.arange(self.input_dim, device=x.device) * self.grid_size
         
-        # 2. Indici per il lookup (clamp per sicurezza)
-        indices = x_scaled.int().clamp(0, self.grid_size - 1)
+        idx_flat = idx + offsets.unsqueeze(0)
         
-        # 3. Lookup. Se x è (B, 16), prendiamo il valore medio della LUT
-        # Nota: Essendo una LUT 1D approssimata, usiamo la media delle feature 
-        # o la mappatura diretta se la rete è lineare.
-        # Per semplicità in ONNX usiamo il primo indice o la media:
-        idx = indices[:, 0] # Prendiamo la prima feature come riferimento per la LUT
+        gathered = lut_flat.index_select(0, idx_flat.view(-1))
+        gathered = gathered.view(B, self.input_dim, self.output_dim)
         
-        return torch.index_select(self.lut_table, 0, idx)
-"""
+        # De-scale usando Conv2D: shape (B, C, H, W) -> (B, in_dim, 1, out_dim)
+        gathered_uns = gathered.unsqueeze(2)
+        gathered = self.scaler(gathered_uns).squeeze(2)
+        
+        # Orizzonte INT8 sgombro: la ReduceSum basta e avanza
+        res = gathered.sum(dim=1)
+        
+        return res + self.base_bias
 
 class FastLutKANLayer(nn.Module):
     """
-    This class is uset to convert a KAN layer to a LUT-based layer.
-    It approximates the KAN layer with a LUT but is more accurate than the FastLutKAN class and
-    don't depend on the layer structure nor traing data. Please note that the results of 
-    models using this class use more memory than the FastLutKAN class but it has the gain 
-    of accuracy.
-    This is the class representing the correct math approximation of the KAN layer.
+    This class is used to convert a KAN layer to a LUT-based layer.
+    It approximates the KAN layer with a LUT but is more accurate than the FastLutKAN class.
     """
     def __init__(self, kan_layer, min_vals, max_vals, grid_size=256):
         super().__init__()
@@ -213,7 +205,14 @@ class FastLutKANLayer(nn.Module):
         #self.min_val = grid_range[0]
         #self.max_val = grid_range[1]
         #self.min_vals = min_vals  # vettore (in_dim)
-        #self.max_vals = max_vals  # vettore (in_dim)
+class FastLutKANLayer(nn.Module):
+    """
+    This class is used to convert a KAN layer to a LUT-based layer.
+    It approximates the KAN layer with a LUT but is more accurate than the FastLutKAN class.
+    """
+    def __init__(self, kan_layer, min_vals, max_vals, grid_size=256):
+        super().__init__()
+        self.grid_size = grid_size
         self.register_buffer("min_vals", min_vals.detach().clone())
         self.register_buffer("max_vals", max_vals.detach().clone())
 
@@ -221,78 +220,72 @@ class FastLutKANLayer(nn.Module):
         self.output_dim = kan_layer.out_dim
 
         with torch.no_grad():
-            lut_list = []
+            zeros = torch.zeros(1, self.input_dim)
+            y_base, _, _, _ = kan_layer(zeros) # (1, out_dim)
+            self.register_buffer("base_bias", y_base.detach().clone())
 
+            lut_list = []
+            scales_list = []
             for i in range(self.input_dim):
-                # Range reale per la feature i
                 x_base = torch.linspace(self.min_vals[i], self.max_vals[i], grid_size)
-
                 x_test = torch.zeros(grid_size, self.input_dim)
                 x_test[:, i] = x_base
 
                 y, _, _, _ = kan_layer(x_test)
-                lut_list.append(y.unsqueeze(1))
+                
+                # Zero-mean isolation
+                y_norm = y - y_base
+                
+                feat_max = y_norm.abs().max() + 1e-9
+                y_scaled = y_norm / feat_max
+                
+                lut_list.append(y_scaled.unsqueeze(1))
+                scales_list.append(feat_max)
 
             self.lut_table = nn.Parameter(torch.cat(lut_list, dim=1).detach())
-    """
-        with torch.no_grad():
-            x_base = torch.linspace(self.min_val, self.max_val, grid_size)
-            lut_list = []
+            
+            # TFLITE INT8 SHIELD: Output Scaler
+            self.scaler = nn.Conv2d(self.input_dim, self.input_dim, kernel_size=1, groups=self.input_dim, bias=False)
+            self.scaler.weight = nn.Parameter(torch.tensor(scales_list, dtype=torch.float32).view(self.input_dim, 1, 1, 1).detach())
+            
+            # TFLITE INT8 SHIELD: Input Scaler 
+            scale_f = float(self.grid_size - 1) / (self.max_vals - self.min_vals + 1e-9)
+            bias_f = -self.min_vals * scale_f
+            
+            self.input_scaler = nn.Conv2d(self.input_dim, self.input_dim, kernel_size=1, groups=self.input_dim, bias=True)
+            self.input_scaler.weight = nn.Parameter(scale_f.view(self.input_dim, 1, 1, 1).detach())
+            self.input_scaler.bias = nn.Parameter(bias_f.view(self.input_dim).detach())
 
-            for i in range(self.input_dim):
-                x_test = torch.zeros(grid_size, self.input_dim)
-                x_test[:, i] = x_base
-                y, _, _, _ = kan_layer(x_test)
-                lut_list.append(y.unsqueeze(1))
-
-            self.lut_table = nn.Parameter(torch.cat(lut_list, dim=1).detach())
-    """
-    """
-    def forward(self, x):
-        grid_step = (self.max_val - self.min_val) / (self.grid_size - 1)
-        x_grid = ((x - self.min_val) / grid_step).unsqueeze(-1)
-
-        grid = torch.arange(self.grid_size, device=x.device).float().view(1, 1, -1)
-        dist = torch.abs(x_grid - grid)
-        weight_mask = torch.relu(1.0 - dist)
-
-        mask_permuted = weight_mask.permute(0, 2, 1)
-        combined = mask_permuted.unsqueeze(-1) * self.lut_table.unsqueeze(0)
-
-        res = combined.sum(dim=1)
-        return res.mean(dim=1)
-    """
     def forward(self, x):
         # x: (B, in_dim)
-
-        # Clipping per evitare extrapolazioni
+        B = x.shape[0]
         x = torch.max(torch.min(x, self.max_vals), self.min_vals)
 
-        # Normalizzazione per-feature
-        t = (x - self.min_vals) / (self.max_vals - self.min_vals + 1e-9)
+        # Affine normalization on Hardware via Per-Channel weights 
+        x_uns = x.view(B, self.input_dim, 1, 1)
+        idx_f = self.input_scaler(x_uns).view(B, self.input_dim)
+        
+        idx_f = torch.clamp(idx_f, 0.0, float(self.grid_size - 1))
+        
+        idx = idx_f.long() # (B, in_dim)
+        idx = torch.clamp(idx, 0, self.grid_size - 1)
+        
+        lut_flat = self.lut_table.transpose(0, 1).reshape(self.input_dim * self.grid_size, self.output_dim)
+        offsets = torch.arange(self.input_dim, device=x.device) * self.grid_size  # (in_dim,)
+        
+        idx_flat = idx + offsets.unsqueeze(0)  # (B, in_dim)
+        
+        gathered = lut_flat.index_select(0, idx_flat.view(-1))  # (B * in_dim, out_dim)
+        gathered = gathered.view(B, self.input_dim, self.output_dim) # (B, in_dim, out_dim)
+        
+        # De-scale in hardware usando Per-Channel INT8 support map
+        gathered_uns = gathered.unsqueeze(2)
+        gathered = self.scaler(gathered_uns).squeeze(2)
+        
+        # ReduceSum globale in INT32 puro
+        out = gathered.sum(dim=1)  # (B, out_dim)
 
-        # Indici nella LUT
-        idx = (t * (self.grid_size - 1)).long()   # (B, in_dim)
-
-        # Output finale
-        B = x.shape[0]
-        out = torch.zeros(B, self.output_dim, device=x.device)
-
-        # Loop ONNX‑safe: niente indexing avanzato
-        for i in range(self.input_dim):
-            # estrai la colonna i della LUT: shape (grid_size, out_dim)
-            lut_i = self.lut_table[:, i, :]   # (grid_size, out_dim)
-
-            # indice per il batch: shape (B,)
-            idx_i = idx[:, i]                 # (B,)
-
-            # lookup ONNX‑safe: gather
-            gathered = lut_i.index_select(0, idx_i)  # (B, out_dim)
-
-            out += gathered
-
-        return out
-
+        return out + self.base_bias
 
 #def convert_kan_to_layerwise_lut(multiKan, grid_range=[-2.2, 2.2], grid_size=256):
     """
@@ -365,15 +358,37 @@ def export_to_onnx(model, output_path, img_size=224, use_lut=False, use_deep_lut
     # Set model to eval mode
     model.eval()
 
-    # Tentativo di conversione KAN in LUT
     if use_lut:
         if use_deep_lut:
             print("[INFO] Computing layer ranges for KAN to LUT conversion...")
             images = load_images_for_kan(img_size=img_size, samples=1000)
             layer_ranges = compute_kan_layer_stats(model, images)
-            model.kan = convert_kan_to_layerwise_lut(model.kan, layer_ranges, grid_size=32)
+            model.kan = convert_kan_to_layerwise_lut(model.kan, layer_ranges, grid_size=64)
         else:
-            model.kan = FastLutKAN(model.kan, grid_range=[-2.0, 2.0], grid_size=16)
+            model.kan = FastLutKAN(model.kan, grid_range=[-5.0, 5.0], grid_size=64)
+
+        # Se il preprocessor è KKAN, convertiamo anche le sue KAN interne in LUT.
+        if hasattr(model, 'preprocessor') and type(model.preprocessor).__name__ == 'KKAN_VWW_96':
+            print("[INFO] KKAN preprocessor detected. Converting its KAN activations to LUT...")
+            for layer_name in ['layer1', 'layer2', 'layer3']:
+                if hasattr(model.preprocessor, layer_name):
+                    layer = getattr(model.preprocessor, layer_name)
+                    if hasattr(layer, 'kan_act') and hasattr(layer.kan_act, 'kan_act'):
+                        orig_kan = layer.kan_act.kan_act
+                        
+                        # Recuperiamo il range esatto su cui la KAN è stata addestrata
+                        # in modo da non tagliare le features con clamp troppo restrittivi.
+                        try:
+                            grid_tensor = orig_kan.kan.act_fun[0].grid
+                            g_min = grid_tensor.min().item() - 1.0
+                            g_max = grid_tensor.max().item() + 1.0
+                        except Exception:
+                            # Range di fallback molto largo
+                            g_min, g_max = -20.0, 20.0
+                            
+                        # Risoluzione elevatissima (1024 punti su 1D occupa irrisoria memoria)
+                        layer.kan_act.kan_act = FastLutKAN(orig_kan, grid_range=[g_min, g_max], grid_size=254)
+                        print(f"[OK] Converted {layer_name}.kan_act to FastLutKAN (range [{g_min:.2f}, {g_max:.2f}], grid 1024)")
 
     # Subst relu0to1 with ReLU
     #replace_relu0to1(model.preprocessor)

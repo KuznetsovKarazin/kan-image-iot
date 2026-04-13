@@ -74,11 +74,11 @@ AUGMENTATION_CONFIG = {
 """
 # CNN Preprocessor configuration
 PREPROCESSOR_CONFIG = {
-    'preprocessor_type': 'mobilenetv3_small',  # Options: 'custom_cnn', 'mobilenetv3_small', 'resnet18', 'mobilenetv3_small_quantized'
+    'preprocessor_type': 'kkan', #'mobilenetv3_small',  # Options: 'custom_cnn', 'mobilenetv3_small', 'resnet18', 'mobilenetv3_small_quantized'
     'width_mult': 0.334,         # Width multiplier for MobileNetV3 (TEMP for testing)
     'pretrained': False,               # Use pretrained weights for MobileNetV3
     'input_channels': 3,
-    'output_features': 16,            # Feature dimension after preprocessing (TEMP for testing)
+    'output_features': 64,            # Feature dimension after preprocessing (TEMP for testing)
     'conv_channels': [16, 24, 32],    # Channels in each conv layer
     'kernel_size': [3, 3, 3],                 # Kernel size for convolutions
     'pool_kernel_size': 2,
@@ -92,8 +92,8 @@ PREPROCESSOR_CONFIG = {
 # KAN configuration
 KAN_CONFIG = {
     'head_type': 'kan',         # Options: 'kan', 'mlp' (hidden dims used for hidden layer of mlp)
-    'feature_dim': 16,          # Input dimension to KAN (same as preprocessor output)
-    'hidden_dims': [4],       # Hidden layer dimensions
+    'feature_dim': 64,          # Input dimension to KAN (same as preprocessor output)
+    'hidden_dims': [32],       # Hidden layer dimensions
     'grid': 5,                  # Number of grid points
     'degree': 3,                # Spline degree
     'seed': 42,                 # Random seed for initialization
@@ -143,10 +143,10 @@ TRAINING_CONFIG = {
 """
 # Training configuration GPU
 TRAINING_CONFIG = {
-    'batch_size': 256,  # Increased for GPU - adjust based on available VRAM
+    'batch_size': 84,  # Increased for GPU - adjust based on available VRAM
     'val_batch_size': 256,  # Can use larger batches for validation
     'epochs': 50,
-    'learning_rate': 0.003,  # Slightly increased for use with larger batches
+    'learning_rate': 0.001,  # Slightly increased for use with larger batches
     'weight_decay': 1e-5,
     'lr_scheduler': 'cosine',    # Options: 'reducelr', 'cosine', 'step', 'onecycle'
     'lr_patience': 3,            # For ReduceLROnPlateau

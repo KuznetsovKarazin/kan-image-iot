@@ -38,6 +38,285 @@ class StochasticDepth(nn.Module):
         random_tensor = torch.rand(shape, dtype=x.dtype, device=x.device) < keep_prob
         return x * random_tensor / keep_prob
 
+class KANConv2d(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1, grid=5, k=3):
+        super(KANConv2d, self).__init__()
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.kernel_size = kernel_size
+        self.stride = stride
+        self.padding = padding
+        
+        # Calcoliamo la dimensione dell'input per la KAN interna
+        # Ogni patch 3x3 ha (in_channels * 3 * 3) valori
+        kan_input_dim = in_channels * kernel_size * kernel_size
+        
+        # Inizializziamo la TUA classe KAN
+        # Questa è la parte che poi convertirai in LUT post-training
+        self.kan = KAN(
+            width=[kan_input_dim, out_channels], 
+            grid=grid, 
+            k=k
+        )
+
+    def forward(self, x):
+        # 1. Dimensioni originali
+        b, c, h, w = x.shape
+        
+        # 2. Unfold: Trasforma l'immagine in una sequenza di patch
+        # Output: [Batch, in_channels * k * k, L] dove L è il numero di posizioni del kernel
+        x_unfold = nn.functional.unfold(
+            x, 
+            kernel_size=self.kernel_size, 
+            padding=self.padding, 
+            stride=self.stride
+        )
+        
+        # 3. Prepariamo i dati per la KAN
+        # Trasponiamo per avere [Batch * L, Features]
+        # Questo permette alla KAN di processare ogni "posizione" del filtro in parallelo
+        x_unfold = x_unfold.transpose(1, 2).contiguous()
+        x_flat = x_unfold.view(-1, x_unfold.shape[-1])
+        
+        # 4. PASSAGGIO NELLA KAN (Qui avviene la magia non lineare)
+        # Se hai attivato la modalità LUT, qui la KAN userà le tue tabelle
+        out_flat = self.kan(x_flat)
+        
+        # 5. Ricomposizione dell'immagine (Fold)
+        # Calcoliamo le nuove dimensioni H e W
+        out_h = (h + 2 * self.padding - self.kernel_size) // self.stride + 1
+        out_w = (w + 2 * self.padding - self.kernel_size) // self.stride + 1
+        
+        # Riportiamo il tensore alla forma [Batch, out_channels, H, W]
+        out = out_flat.view(b, out_h, out_w, self.out_channels)
+        return out.permute(0, 3, 1, 2).contiguous()
+
+    # Metodo di utilità per aggiornare la griglia (fondamentale per le KAN)
+    def update_grid(self, x):
+        x_unfold = nn.functional.unfold(x, kernel_size=self.kernel_size, padding=self.padding, stride=self.stride)
+        x_unfold = x_unfold.transpose(1, 2).contiguous()
+        x_flat = x_unfold.view(-1, x_unfold.shape[-1])
+        self.kan.update_grid(x_flat)
+
+class KKANBlock(nn.Module):
+    def __init__(self, in_ch, out_ch, stride=1):
+        super().__init__()
+        # Convoluzione KAN: è qui che applicherai la tua LUT post-training
+        self.kan_conv = KANConv2d(in_ch, out_ch, kernel_size=3, stride=stride)
+        self.bn = nn.BatchNorm2d(out_ch)
+        
+        # Shortcut per la connessione residuale (fondamentale per VWW)
+        self.shortcut = nn.Sequential()
+        if stride != 1 or in_ch != out_ch:
+            self.shortcut = nn.Sequential(
+                nn.Conv2d(in_ch, out_ch, kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(out_ch)
+            )
+
+    def forward(self, x):
+        # x -> KANConv -> BN -> + Shortcut
+        # Nota: Non serve ReLU, la KAN è già non-lineare!
+        out = self.bn(self.kan_conv(x))
+        out += self.shortcut(x)
+        return out
+
+class KANDepthwiseConv2d(nn.Module):
+    def __init__(self, channels, kernel_size=3, stride=1, padding=1, grid=5, k=3):
+        super().__init__()
+        self.channels = channels
+        self.kernel_size = kernel_size
+        self.stride = stride
+        self.padding = padding
+
+        # La KAN opera su una patch "single channel" (es. 3x3 = 9 input)
+        # Ne creiamo una che produce 1 output per ogni canale.
+        # Per efficienza, processeremo i canali come un unico grande batch.
+        self.kan = KAN(
+            width=[kernel_size * kernel_size, 1], 
+            grid=grid, 
+            k=k
+        )
+
+    def forward(self, x):
+        b, c, h, w = x.shape
+        # 1. Unfold per canale: usiamo groups=c per isolare i canali
+        # Invece di un unfold gigante, sfruttiamo il fatto che i canali sono indipendenti
+        # Creiamo patch di dimensione [B, C, K*K, L]
+        x_unfold = nn.functional.unfold(
+            x, 
+            kernel_size=self.kernel_size, 
+            padding=self.padding, 
+            stride=self.stride
+        )
+        
+        # 2. Reshape strategico per risparmiare memoria
+        # Portiamo i canali nella dimensione del batch per la KAN: 
+        # [B * C * L, K*K]
+        out_h = (h + 2*self.padding - self.kernel_size) // self.stride + 1
+        out_w = (w + 2*self.padding - self.kernel_size) // self.stride + 1
+        L = out_h * out_w
+        
+        x_unfold = x_unfold.view(b, c, self.kernel_size**2, L)
+        x_unfold = x_unfold.permute(0, 1, 3, 2).contiguous() # [B, C, L, K*K]
+        x_kan_input = x_unfold.view(-1, self.kernel_size**2) # [B*C*L, 9]
+        
+        # 3. Passaggio nella KAN (Qui la LUT lavora su vettori da 9)
+        out_kan = self.kan(x_kan_input) # [B*C*L, 1]
+        
+        # 4. Ricomposizione
+        out = out_kan.view(b, c, out_h, out_w)
+        return out
+
+class KKAN_MobileBlock(nn.Module):
+    """
+    Blocco stile MobileNet: Depthwise KAN + Pointwise Standard
+    """
+    def __init__(self, in_ch, out_ch, stride=1):
+        super().__init__()
+        # Estrazione spaziale non lineare (Depthwise KAN)
+        self.depthwise = KANDepthwiseConv2d(in_ch, stride=stride)
+        self.bn1 = nn.BatchNorm2d(in_ch)
+        
+        # Mix dei canali (Pointwise Lineare - Standard Conv 1x1)
+        # Questo mantiene bassi i parametri e la memoria
+        self.pointwise = nn.Conv2d(in_ch, out_ch, kernel_size=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(out_ch)
+        
+        self.shortcut = nn.Sequential()
+        if stride != 1 or in_ch != out_ch:
+            self.shortcut = nn.Sequential(
+                nn.Conv2d(in_ch, out_ch, kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(out_ch)
+            )
+
+    def forward(self, x):
+        identity = self.shortcut(x)
+        
+        out = self.depthwise(x)
+        out = self.bn1(out)
+        out = self.pointwise(out)
+        out = self.bn2(out)
+        
+        return out + identity
+
+class KAN_Activation_Conv(nn.Module):
+    """
+    Applica la logica KAN (Spline) come se fosse un'attivazione 
+    su una convoluzione standard. Zero Unfold = Zero spreco di memoria.
+    """
+    def __init__(self, channels, grid=5, k=3):
+        super().__init__()
+        # Usiamo una KAN che accetta 1 input e dà 1 output (element-wise)
+        # La applichiamo a ogni pixel in modo indipendente
+        self.kan_act = RegularizedKAN([1, 1], grid=grid, degree=k, dropout_rate=0.1, activation_l1=1e-5)
+
+    def forward(self, x):
+        # x shape: [B, C, H, W]
+        b, c, h, w = x.shape
+        # Flatten spaziale per la KAN: [B*C*H*W, 1]
+        x_flat = x.view(-1, 1)
+        # La KAN lavora pixel per pixel (come una ReLU evoluta)
+        out_flat = self.kan_act(x_flat)
+        return out_flat.view(b, c, h, w)
+
+class KKAN_EfficientBlock(nn.Module):
+    def __init__(self, in_ch, out_ch, stride=1):
+        super().__init__()
+        # 1. Depthwise Conv Standard (Estrae lo spazio linearmente)
+        self.dw_conv = nn.Conv2d(in_ch, in_ch, kernel_size=3, 
+                                 padding=1, stride=stride, groups=in_ch, bias=False)
+        
+        # 2. KAN Activation (La parte non lineare con LUT)
+        # Qui la tua LUT lavora su singoli valori, non su patch da 9!
+        self.kan_act = KAN_Activation_Conv(in_ch)
+        
+        # 3. Pointwise Standard
+        self.pw_conv = nn.Conv2d(in_ch, out_ch, kernel_size=1, bias=False)
+        self.bn = nn.BatchNorm2d(out_ch)
+
+    def forward(self, x):
+        x = self.dw_conv(x)
+        x = self.kan_act(x) # Qui avviene la magia KAN/LUT
+        x = self.pw_conv(x)
+        return self.bn(x)
+
+"""
+class KKAN_VWW_96(nn.Module):
+    def __init__(self, output_features=128):
+        super().__init__()
+        
+        # 1. Input Stem (Leggera): Porta i 3 canali RGB a 16 feature maps
+        # Usiamo una Conv standard qui per non appesantire l'input 96x96
+        self.stem = nn.Sequential(
+            nn.Conv2d(3, 16, kernel_size=3, padding=1, stride=1, bias=False),
+            nn.BatchNorm2d(16)
+        )
+
+        # 2. KKAN Layers (Il cuore del riconoscimento feature)
+        # Stage 1: 96x96 -> 48x48
+        #self.layer1 = KKAN_MobileBlock(16, 32, stride=2) 
+        
+        # Stage 2: 48x48 -> 24x24
+        #self.layer2 = KKAN_MobileBlock(32, 64, stride=2)
+        
+        # Stage 3: 24x24 -> 12x12
+        self.layer3 = KKAN_MobileBlock(16, output_features, stride=2)
+
+        # 3. Global Header
+        self.gap = nn.AdaptiveAvgPool2d(1)
+        
+        # Classifier finale: Una KAN MLP pura
+        # Anche questa andrà in LUT
+        #self.classifier = KAN([128, 64, num_classes], grid=5, k=3)
+
+    def forward(self, x):
+        x = self.stem(x)     # [B, 16, 96, 96]
+        #x = self.layer1(x)   # [B, 32, 48, 48]
+        #x = self.layer2(x)   # [B, 64, 24, 24]
+        x = self.layer3(x)   # [B, 128, 12x12]
+        
+        x = self.gap(x).view(x.size(0), -1) # [B, 128]
+        return x #self.classifier(x)
+"""
+
+class KKAN_VWW_96(nn.Module):
+    def __init__(self, output_features=128):
+        super().__init__()
+        
+        # 1. Input Stem (Leggera): Porta i 3 canali RGB a 16 feature maps
+        # Usiamo una Conv standard qui per non appesantire l'input 96x96
+        self.stem = nn.Sequential(
+            nn.Conv2d(3, 16, kernel_size=3, padding=1, stride=1, bias=False),
+            nn.BatchNorm2d(16)
+        )
+
+        # 2. KKAN Layers (Il cuore del riconoscimento feature)
+        # Stage 1: 96x96 -> 48x48
+        self.layer1 = KKAN_EfficientBlock(16, 32, stride=1) 
+        
+        # Stage 2: 48x48 -> 24x24
+        self.layer2 = KKAN_EfficientBlock(32, 64, stride=2)
+        
+        # Stage 3: 24x24 -> 12x12
+        self.layer3 = KKAN_EfficientBlock(64, output_features, stride=2)
+
+        # 3. Global Header
+        self.gap = nn.AdaptiveAvgPool2d(1)
+        
+        # Classifier finale: Una KAN MLP pura
+        # Anche questa andrà in LUT
+        #self.classifier = KAN([128, 64, num_classes], grid=5, k=3)
+
+    def forward(self, x):
+        x = self.stem(x)     # [B, 16, 96, 96]
+        x = self.layer1(x)   # [B, 32, 48, 48]
+        x = self.layer2(x)   # [B, 64, 24, 24]
+        x = self.layer3(x)   # [B, 128, 12x12]
+        
+        x = self.gap(x).view(x.size(0), -1) # [B, 128]
+        return x #self.classifier(x)
+
+
 class MobileNetV2Preprocessor(nn.Module):
     """
     Preprocessing module using MobileNetV2 to convert image features to format suitable for KAN.
@@ -457,6 +736,10 @@ class KANImageClassifier(nn.Module):
             )
         elif preprocessor_type == 'mobilenetv3_small_quantized':
             self.preprocessor = MobileNetV3LitePreprocessorQuantized(
+            output_features=feature_dim,
+            )
+        elif preprocessor_type == 'kkan':
+            self.preprocessor = KKAN_VWW_96(
             output_features=feature_dim,
             )
 
