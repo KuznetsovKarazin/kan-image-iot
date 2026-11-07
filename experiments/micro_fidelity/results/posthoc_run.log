@@ -1,0 +1,26 @@
+/workspace/scratch/2c56db1469f6/envs/micro-pilot/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/workspace/scratch/2c56db1469f6/envs/micro-pilot/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+Post hoc derived variants: 30
+small_24_16 exact_anchored_additive_control 0 acc 83.008 disagreement 0 margin RMSE 2.34453 probability RMSE 0.04981
+small_24_16 edge_fp32 32 acc 83.008 disagreement 0 margin RMSE 0.01733 probability RMSE 0.00232
+small_24_16 edge_int8_table 32 acc 82.91 disagreement 1 margin RMSE 0.01421 probability RMSE 0.00148
+small_24_16 edge_fp32 256 acc 83.008 disagreement 0 margin RMSE 0.00033 probability RMSE 4e-05
+small_24_16 edge_int8_table 256 acc 82.91 disagreement 1 margin RMSE 0.00877 probability RMSE 0.00132
+small_24_16 anchored_legacy_calibrated_domain 32 acc 83.008 disagreement 0 margin RMSE 2.33858 probability RMSE 0.04954
+small_24_16 anchored_legacy_calibrated_domain 256 acc 83.008 disagreement 0 margin RMSE 2.34444 probability RMSE 0.04981
+full_24_16 exact_anchored_additive_control 0 acc 87.793 disagreement 0 margin RMSE 1.37441 probability RMSE 0.043
+full_24_16 edge_fp32 32 acc 87.793 disagreement 0 margin RMSE 0.00595 probability RMSE 0.00065
+full_24_16 edge_int8_table 32 acc 87.793 disagreement 0 margin RMSE 0.00777 probability RMSE 0.00089
+full_24_16 edge_fp32 256 acc 87.793 disagreement 0 margin RMSE 0.00084 probability RMSE 4e-05
+full_24_16 edge_int8_table 256 acc 87.695 disagreement 1 margin RMSE 0.0073 probability RMSE 0.00091
+full_24_16 anchored_legacy_calibrated_domain 32 acc 87.793 disagreement 0 margin RMSE 1.37178 probability RMSE 0.0429
+full_24_16 anchored_legacy_calibrated_domain 256 acc 87.793 disagreement 0 margin RMSE 1.37437 probability RMSE 0.043
+small_32_24_16 exact_anchored_additive_control 0 acc 83.789 disagreement 2 margin RMSE 2.49705 probability RMSE 0.04951
+small_32_24_16 edge_fp32 32 acc 83.594 disagreement 2 margin RMSE 0.0188 probability RMSE 0.00185
+small_32_24_16 edge_int8_table 32 acc 83.105 disagreement 11 margin RMSE 0.02963 probability RMSE 0.00574
+small_32_24_16 edge_fp32 256 acc 83.594 disagreement 0 margin RMSE 0.01555 probability RMSE 0.00051
+small_32_24_16 edge_int8_table 256 acc 83.594 disagreement 0 margin RMSE 0.02141 probability RMSE 0.00227
+small_32_24_16 anchored_legacy_calibrated_domain 32 acc 83.789 disagreement 2 margin RMSE 2.49102 probability RMSE 0.04934
+small_32_24_16 anchored_legacy_calibrated_domain 256 acc 83.789 disagreement 2 margin RMSE 2.49406 probability RMSE 0.0495

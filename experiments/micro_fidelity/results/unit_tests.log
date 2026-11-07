@@ -1,0 +1,15 @@
+test_active_symbolic_branch_rejected (__main__.FidelityTests.test_active_symbolic_branch_rejected) ... ok
+test_affines_and_masks_preserved (__main__.FidelityTests.test_affines_and_masks_preserved) ... ok
+test_bad_ranges_rejected (__main__.FidelityTests.test_bad_ranges_rejected) ... ok
+test_integer_table_storage_is_real_int8 (__main__.FidelityTests.test_integer_table_storage_is_real_int8) ... ok
+test_interaction_survives_infinite_axis_resolution (__main__.FidelityTests.test_interaction_survives_infinite_axis_resolution) ... ok
+test_legacy_out_of_range_fades_to_zero (__main__.FidelityTests.test_legacy_out_of_range_fades_to_zero) ... ok
+test_multiplication_and_input_remapping_rejected (__main__.FidelityTests.test_multiplication_and_input_remapping_rejected) ... ok
+test_nonzero_intercepts_not_repeated (__main__.FidelityTests.test_nonzero_intercepts_not_repeated) ... ok
+test_saturation_at_boundaries_is_explicit (__main__.FidelityTests.test_saturation_at_boundaries_is_explicit) ... ok
+test_silu_branch_and_resolution_convergence (__main__.FidelityTests.test_silu_branch_and_resolution_convergence) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.117s
+
+OK

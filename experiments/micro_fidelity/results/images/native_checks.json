@@ -1,0 +1,74 @@
+{
+  "small_24_16": {
+    "max_abs_error_vs_python_lut": 1.1920928955078125e-06,
+    "rmse_vs_python_lut": 1.339172943392732e-07,
+    "decision_disagreements_vs_python_lut": 0,
+    "n": 1024,
+    "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+    "compiler_flags": [
+      "-O3",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-ffp-contract=off",
+      "-shared",
+      "-fPIC"
+    ],
+    "cpu_us_per_head_median": 1.0709238281250002,
+    "cpu_us_per_head_p05": 1.0103746093750001,
+    "cpu_us_per_head_p95": 1.29531015625,
+    "timing_repetitions": 30,
+    "timing_scope": "hot-loop head-only CPU, no CNN, no MCU",
+    "explicit_activation_buffers_bytes": 192,
+    "buffers_note": "two declared arrays only, not measured total stack or device SRAM"
+  },
+  "full_24_16": {
+    "max_abs_error_vs_python_lut": 9.5367431640625e-07,
+    "rmse_vs_python_lut": 1.4163109754308818e-07,
+    "decision_disagreements_vs_python_lut": 0,
+    "n": 1024,
+    "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+    "compiler_flags": [
+      "-O3",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-ffp-contract=off",
+      "-shared",
+      "-fPIC"
+    ],
+    "cpu_us_per_head_median": 1.0170097656250001,
+    "cpu_us_per_head_p05": 1.006436328125,
+    "cpu_us_per_head_p95": 1.1422813964843748,
+    "timing_repetitions": 30,
+    "timing_scope": "hot-loop head-only CPU, no CNN, no MCU",
+    "explicit_activation_buffers_bytes": 192,
+    "buffers_note": "two declared arrays only, not measured total stack or device SRAM"
+  },
+  "small_32_24_16": {
+    "max_abs_error_vs_python_lut": 9.5367431640625e-07,
+    "rmse_vs_python_lut": 1.528006745182016e-07,
+    "decision_disagreements_vs_python_lut": 0,
+    "n": 1024,
+    "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+    "compiler_flags": [
+      "-O3",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-ffp-contract=off",
+      "-shared",
+      "-fPIC"
+    ],
+    "cpu_us_per_head_median": 2.817509765625,
+    "cpu_us_per_head_p05": 2.569874658203125,
+    "cpu_us_per_head_p95": 3.1947445312499996,
+    "timing_repetitions": 30,
+    "timing_scope": "hot-loop head-only CPU, no CNN, no MCU",
+    "explicit_activation_buffers_bytes": 256,
+    "buffers_note": "two declared arrays only, not measured total stack or device SRAM"
+  }
+}

@@ -1,0 +1,14 @@
+/workspace/scratch/2c56db1469f6/envs/micro-pilot/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/workspace/scratch/2c56db1469f6/envs/micro-pilot/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+Completed small_24_16 seed=42; 15.8s
+Completed small_24_16 seed=43; 32.3s
+Completed small_24_16 seed=44; 48.1s
+Completed full_24_16 seed=42; 63.4s
+Completed full_24_16 seed=43; 78.9s
+Completed full_24_16 seed=44; 93.9s
+Completed small_32_24_16 seed=42; 145.4s
+Completed small_32_24_16 seed=43; 197.5s
+Completed small_32_24_16 seed=44; 249.4s
+Finished: 297 comparisons

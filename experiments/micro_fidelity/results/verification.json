@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "synthetic_rows_recalculated": 297,
+  "image_rows_recalculated": 75,
+  "synthetic_gate": [
+    {
+      "model": "small_24_16",
+      "rmse_reduction_ratios": [
+        1530.284079173097,
+        60.762434521019294,
+        152.38980672308742
+      ],
+      "passes_all_seeds": true
+    },
+    {
+      "model": "full_24_16",
+      "rmse_reduction_ratios": [
+        2652.1916950130785,
+        686.1641828674689,
+        567.4958047557188
+      ],
+      "passes_all_seeds": true
+    },
+    {
+      "model": "small_32_24_16",
+      "rmse_reduction_ratios": [
+        2161.7165308807344,
+        299.6018506519475,
+        340.02836478438303
+      ],
+      "passes_all_seeds": true
+    }
+  ],
+  "synthetic_go": true,
+  "scope": "saved-logit fidelity, class decisions, paired counts, Wilson CIs, image-ID separation",
+  "posthoc_derived_rows_recalculated": 30
+}

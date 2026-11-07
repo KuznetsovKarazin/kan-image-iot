@@ -1,0 +1,285 @@
+{
+  "utc": "2026-11-07T20:19:10.111169+00:00",
+  "base_commit": "330395f7a9406e73d8501a68c9b2daae2747b6af",
+  "torch": "2.5.1+cpu",
+  "numpy": "1.26.4",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "torch_threads": 1,
+  "n_calibration": 4096,
+  "n_evaluation": 4096,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "seeds_are": "synthetic input seeds, not training repetitions",
+  "models": {
+    "small_24_16": {
+      "path": "experiment_data/kan_24_16_grid5_deg3_img224_bs256_lr0.003_wd1e-05_do0.05_mobilenetv3_small_wm0.25/models/kan_person_detector_best.pt",
+      "sha256": "076940746af55be059d1517199626b22bd7045db9f9f30b14f94c4a73bc931d7",
+      "epoch": 50,
+      "historical_val_acc": 84.6,
+      "config": {
+        "img_size": 224,
+        "preprocessor": {
+          "preprocessor_type": "mobilenetv3_small",
+          "width_mult": 0.25,
+          "pretrained": false,
+          "input_channels": 3,
+          "output_features": 64,
+          "conv_channels": [
+            16,
+            24,
+            32
+          ],
+          "kernel_size": [
+            3,
+            3,
+            3
+          ],
+          "pool_kernel_size": 2,
+          "final_pool_size": 4,
+          "use_batch_norm": true,
+          "dropout_rate": 0.05,
+          "l2_regularization": 1e-05,
+          "stochastic_depth_rate": 0.1
+        },
+        "kan": {
+          "feature_dim": 24,
+          "hidden_dims": [
+            16
+          ],
+          "grid": 5,
+          "degree": 3,
+          "dropout_rate": 0.05,
+          "weight_decay": 1e-05,
+          "activation_l1": 1e-05,
+          "use_batchnorm": true,
+          "seed": 42
+        },
+        "augmentation": {
+          "horizontal_flip_prob": 0.5,
+          "rotation_degrees": 10,
+          "translate": [
+            0.1,
+            0.1
+          ],
+          "scale": [
+            0.95,
+            1.05
+          ],
+          "brightness": 0.1,
+          "contrast": 0.1,
+          "saturation": 0.1,
+          "hue": 0.01,
+          "enable_color_jitter": false,
+          "enable_random_affine": false,
+          "enable_random_perspective": false,
+          "enable_random_grayscale": false,
+          "random_erase_prob": 0.05,
+          "random_erase_scale": [
+            0.02,
+            0.1
+          ],
+          "mixup_alpha": 0.2,
+          "mixup_prob": 0.2,
+          "cutmix_alpha": 0.1,
+          "cutmix_prob": 0.1
+        },
+        "training": {
+          "batch_size": 256,
+          "learning_rate": 0.003,
+          "weight_decay": 1e-05,
+          "lr_scheduler": "cosine",
+          "optimizer": "adamw",
+          "label_smoothing": 0.1,
+          "gradient_clip_val": 1.0,
+          "ema_decay": 0.99,
+          "enable_mixup": false,
+          "enable_cutmix": false
+        }
+      },
+      "strict_load": true
+    },
+    "full_24_16": {
+      "path": "experiment_data/kan_24_16_grid5_deg3_img224_bs256_lr0.003_wd1e-05_do0.05_mobilenetv3_small_wm1.0/models/kan_person_detector_best.pt",
+      "sha256": "bada905190a25b770a659bede8236b5c96ba5ef201433671e37f4e252384f9c5",
+      "epoch": 24,
+      "historical_val_acc": 88.35,
+      "config": {
+        "img_size": 224,
+        "preprocessor": {
+          "preprocessor_type": "mobilenetv3_small",
+          "width_mult": 1.0,
+          "pretrained": false,
+          "input_channels": 3,
+          "output_features": 24,
+          "conv_channels": [
+            16,
+            24,
+            32
+          ],
+          "kernel_size": [
+            3,
+            3,
+            3
+          ],
+          "pool_kernel_size": 2,
+          "final_pool_size": 4,
+          "use_batch_norm": true,
+          "dropout_rate": 0.05,
+          "l2_regularization": 1e-05,
+          "stochastic_depth_rate": 0.1
+        },
+        "kan": {
+          "feature_dim": 24,
+          "hidden_dims": [
+            16
+          ],
+          "grid": 5,
+          "degree": 3,
+          "dropout_rate": 0.05,
+          "weight_decay": 1e-05,
+          "activation_l1": 1e-05,
+          "use_batchnorm": true,
+          "seed": 42
+        },
+        "augmentation": {
+          "horizontal_flip_prob": 0.5,
+          "rotation_degrees": 10,
+          "translate": [
+            0.1,
+            0.1
+          ],
+          "scale": [
+            0.95,
+            1.05
+          ],
+          "brightness": 0.1,
+          "contrast": 0.1,
+          "saturation": 0.1,
+          "hue": 0.01,
+          "enable_color_jitter": false,
+          "enable_random_affine": false,
+          "enable_random_perspective": false,
+          "enable_random_grayscale": false,
+          "random_erase_prob": 0.05,
+          "random_erase_scale": [
+            0.02,
+            0.1
+          ],
+          "mixup_alpha": 0.2,
+          "mixup_prob": 0.2,
+          "cutmix_alpha": 0.1,
+          "cutmix_prob": 0.1
+        },
+        "training": {
+          "batch_size": 256,
+          "learning_rate": 0.003,
+          "weight_decay": 1e-05,
+          "lr_scheduler": "cosine",
+          "optimizer": "adamw",
+          "label_smoothing": 0.1,
+          "gradient_clip_val": 1.0,
+          "ema_decay": 0.99,
+          "enable_mixup": false,
+          "enable_cutmix": false
+        }
+      },
+      "strict_load": true
+    },
+    "small_32_24_16": {
+      "path": "experiment_data/kan_32_24-16_grid5_deg3_img224_bs256_lr0.003_wd1e-05_do0.05_mobilenetv3_small_wm0.25/models/kan_person_detector_best.pt",
+      "sha256": "05f7fb32e20bb8d1229ac4acc8a000892ca949d8f5a0f731844fe936176e07ad",
+      "epoch": 28,
+      "historical_val_acc": 85.16666666666667,
+      "config": {
+        "img_size": 224,
+        "preprocessor": {
+          "preprocessor_type": "mobilenetv3_small",
+          "width_mult": 0.25,
+          "pretrained": false,
+          "input_channels": 3,
+          "output_features": 64,
+          "conv_channels": [
+            16,
+            24,
+            32
+          ],
+          "kernel_size": [
+            3,
+            3,
+            3
+          ],
+          "pool_kernel_size": 2,
+          "final_pool_size": 4,
+          "use_batch_norm": true,
+          "dropout_rate": 0.05,
+          "l2_regularization": 1e-05,
+          "stochastic_depth_rate": 0.1
+        },
+        "kan": {
+          "feature_dim": 32,
+          "hidden_dims": [
+            24,
+            16
+          ],
+          "grid": 5,
+          "degree": 3,
+          "dropout_rate": 0.05,
+          "weight_decay": 1e-05,
+          "activation_l1": 1e-05,
+          "use_batchnorm": true,
+          "seed": 42
+        },
+        "augmentation": {
+          "horizontal_flip_prob": 0.5,
+          "rotation_degrees": 10,
+          "translate": [
+            0.1,
+            0.1
+          ],
+          "scale": [
+            0.95,
+            1.05
+          ],
+          "brightness": 0.1,
+          "contrast": 0.1,
+          "saturation": 0.1,
+          "hue": 0.01,
+          "enable_color_jitter": false,
+          "enable_random_affine": false,
+          "enable_random_perspective": false,
+          "enable_random_grayscale": false,
+          "random_erase_prob": 0.05,
+          "random_erase_scale": [
+            0.02,
+            0.1
+          ],
+          "mixup_alpha": 0.2,
+          "mixup_prob": 0.2,
+          "cutmix_alpha": 0.1,
+          "cutmix_prob": 0.1
+        },
+        "training": {
+          "batch_size": 256,
+          "learning_rate": 0.003,
+          "weight_decay": 1e-05,
+          "lr_scheduler": "cosine",
+          "optimizer": "adamw",
+          "label_smoothing": 0.1,
+          "gradient_clip_val": 1.0,
+          "ema_decay": 0.99,
+          "enable_mixup": false,
+          "enable_cutmix": false
+        }
+      },
+      "strict_load": true
+    }
+  },
+  "converter_sha256": "ab3f1190c34acc370f039e069b8c98fbf21cb442f9a63f323534c51bd53ebb40",
+  "fidelity_py_sha256": "0b63a867ce742c15f69ba109bd2175f86b70dce95466208917f7a7d1a625cdec",
+  "elapsed_seconds": 249.3813362121582,
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  9\nOn-line CPU(s) list:                     0-8\nVendor ID:                               AuthenticAMD\nModel name:                              AMD EPYC 9V74 80-Core Processor\nBIOS Model name:                           CPU @ 0.0GHz\nBIOS CPU family:                         0\nCPU family:                              25\nModel:                                   17\nThread(s) per core:                      1\nCore(s) per socket:                      9\nSocket(s):                               1\nStepping:                                1\nBogoMIPS:                                5192.27\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext cpuid_fault vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves avx512_bf16 clzero xsaveerptr arat npt nrip_save tsc_scale vmcb_clean flushbyasid pausefilter pfthreshold v_vmsave_vmload avx512vbmi umip avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid fsrm arch_capabilities\nHypervisor vendor:                       KVM\nVirtualization type:                     full\nL1d cache:                               160 KiB (5 instances)\nL1i cache:                               160 KiB (5 instances)\nL2 cache:                                5 MiB (5 instances)\nL3 cache:                                32 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-8\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Vulnerable\nVulnerability Spec store bypass:         Vulnerable\nVulnerability Spectre v1:                Vulnerable: __user pointer sanitization and usercopy barriers only; no swapgs barriers\nVulnerability Spectre v2:                Vulnerable; STIBP: disabled; PBRSB-eIBRS: Not affected; BHI: Not affected\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Vulnerable\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n"
+}

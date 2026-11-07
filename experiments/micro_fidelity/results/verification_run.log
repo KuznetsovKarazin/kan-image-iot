@@ -1,0 +1,41 @@
+/workspace/scratch/2c56db1469f6/envs/micro-pilot/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/workspace/scratch/2c56db1469f6/envs/micro-pilot/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+{
+  "status": "PASS",
+  "synthetic_rows_recalculated": 297,
+  "image_rows_recalculated": 75,
+  "synthetic_gate": [
+    {
+      "model": "small_24_16",
+      "rmse_reduction_ratios": [
+        1530.284079173097,
+        60.762434521019294,
+        152.38980672308742
+      ],
+      "passes_all_seeds": true
+    },
+    {
+      "model": "full_24_16",
+      "rmse_reduction_ratios": [
+        2652.1916950130785,
+        686.1641828674689,
+        567.4958047557188
+      ],
+      "passes_all_seeds": true
+    },
+    {
+      "model": "small_32_24_16",
+      "rmse_reduction_ratios": [
+        2161.7165308807344,
+        299.6018506519475,
+        340.02836478438303
+      ],
+      "passes_all_seeds": true
+    }
+  ],
+  "synthetic_go": true,
+  "scope": "saved-logit fidelity, class decisions, paired counts, Wilson CIs, image-ID separation",
+  "posthoc_derived_rows_recalculated": 30
+}
