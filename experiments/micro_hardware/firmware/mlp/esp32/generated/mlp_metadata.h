@@ -1,0 +1,21 @@
+#if MODEL_CASE==0
+#define MLP_INPUTS 24
+#define MLP_MODEL "mlp_small_24_16_seed101"
+#define MLP_ARTIFACT "3369c7fe451943e8c6a0b43b95604a2b755b32fa1012bf900dfa94f4dc6c0f7e"
+#define MLP_FP32_BYTES 1736
+#define MLP_INT8_BYTES 586
+#endif
+#if MODEL_CASE==1
+#define MLP_INPUTS 24
+#define MLP_MODEL "mlp_full_24_16_seed101"
+#define MLP_ARTIFACT "269690959735494049c09221dabdf879baae624319b5b6eddb1ecf2bfc2a9719"
+#define MLP_FP32_BYTES 1736
+#define MLP_INT8_BYTES 586
+#endif
+#if MODEL_CASE==2
+#define MLP_INPUTS 32
+#define MLP_MODEL "mlp_small_32_24_16_seed101"
+#define MLP_ARTIFACT "55267c3013e3052b580d1e8d8facfc4bb51fd0e4d0955704e5f8e658294c39b3"
+#define MLP_FP32_BYTES 4904
+#define MLP_INT8_BYTES 1570
+#endif

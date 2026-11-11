@@ -4,7 +4,7 @@ This extension was specified after completing the frozen image stage. The exact
 anchored additive control agreed with the FP32 classes on 1024/1024, 1024/1024
 and 1022/1024 images, despite large raw-logit errors. This means preserving
 layer composition may not be necessary to retain classification decisions on
-this particular subset. The new paper must not hide this cheaper alternative.
+this particular subset. This cheaper alternative is therefore reported as well.
 
 Using only already saved logits and original f(0), evaluate
 `d * legacy_LUT(x) - (d-1) * f(0)` for both the original [-2,2] and the

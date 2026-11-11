@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "tests": 17,
+  "physical_execution": false,
+  "scope": "Serial framing and control lines; new full parser replay in test_pilot_parser.py"
+}

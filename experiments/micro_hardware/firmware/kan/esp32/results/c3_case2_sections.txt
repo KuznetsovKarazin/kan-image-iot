@@ -1,0 +1,34 @@
+/workspace/scratch/ab71adb63089/architecture_v2_20261109/work/esp32/.pio/build/c3_case2/firmware.elf  :
+section                   size         addr
+.rtc.text                   16   1342177280
+.rtc.force_fast              0   1342177296
+.rtc_noinit                 16   1342177296
+.rtc.force_slow              0   1342177312
+.iram0.text              44852   1077411840
+.dram0.dummy             45056   1070071808
+.dram0.data               7252   1070116864
+.noinit                      0   1070124116
+.dram0.bss               11184   1070124128
+.flash.text             146872   1107296288
+.flash_rodata_dummy     196608   1006632992
+.flash.appdesc             256   1006829600
+.flash.rodata          1893592   1006829856
+.eh_frame                10104   1008723448
+.flash.rodata_noload         0   1008733552
+.iram0.text_end            204   1077456692
+.iram0.data                  0   1077456896
+.iram0.bss                   0   1077456896
+.dram0.heap_start            0   1070135312
+.debug_info            2842749            0
+.debug_abbrev           263437            0
+.debug_loc              559832            0
+.debug_aranges           25176            0
+.debug_ranges           103440            0
+.debug_line            1129881            0
+.debug_str              302851            0
+.comment                    93            0
+.riscv.attributes           55            0
+.debug_frame             68360            0
+Total                  7651886
+
+

@@ -1,0 +1,130 @@
+{
+  "status": "PASS_SYNTHETIC_AND_ANALYTIC",
+  "physical_execution": false,
+  "fixtures": [
+    {
+      "target": "s3",
+      "case": 0,
+      "variants": [
+        0,
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "s3",
+      "case": 1,
+      "variants": [
+        0,
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "s3",
+      "case": 2,
+      "variants": [
+        0,
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "c3",
+      "case": 0,
+      "variants": [
+        0,
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "c3",
+      "case": 1,
+      "variants": [
+        0,
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "c3",
+      "case": 2,
+      "variants": [
+        0,
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "mega",
+      "case": 0,
+      "variants": [
+        0
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "mega",
+      "case": 0,
+      "variants": [
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "mega",
+      "case": 1,
+      "variants": [
+        0
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "mega",
+      "case": 1,
+      "variants": [
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "mega",
+      "case": 2,
+      "variants": [
+        0
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    },
+    {
+      "target": "mega",
+      "case": 2,
+      "variants": [
+        1
+      ],
+      "raw_transport_audit": true,
+      "synthetic_rejected_as_physical": true
+    }
+  ],
+  "checks": [
+    "constant-power integral",
+    "linear-power integral",
+    "whole-board and idle-subtracted energy end-to-end analytic fixture",
+    "misaligned duration rejected",
+    "gaps rejected",
+    "uncovered intervals rejected",
+    "INT8 one-ULP corruption rejected",
+    "classification accounting"
+  ]
+}

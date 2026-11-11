@@ -1,0 +1,138 @@
+{
+  "case": 1,
+  "variant": 5,
+  "model": "full_24_16",
+  "variant_name": "edge_int8_32",
+  "source_artifact": "2e8ffd218f0bede8e11c9922d2db46b4d7c7d3196dfef602c8b7597f3eb452b5",
+  "original_source_sha256": "e8fb52473e6e5422f7c5aec3294b26097b9bf5859997c547f8d6d1e03b183659",
+  "golden_sha256": "eadb08318d16d0e2b7530e5272f10489dc509ad3de1eac0b6f1d5651bbacfbcd",
+  "parameter_bytes": 15584,
+  "actual_exported_constant_bytes": 15584,
+  "arrays": [
+    {
+      "name": "t1_0_table",
+      "type": "int8_t",
+      "elements": 12288,
+      "bytes": 12288,
+      "binary_sha256": "f39f56496e28c35b68d4f53df525be41dd02d9533035e0b842f04110e1934b76"
+    },
+    {
+      "name": "t1_0_qs",
+      "type": "float",
+      "elements": 384,
+      "bytes": 1536,
+      "binary_sha256": "43add0932d1e0e470a7c8951d577b4d2cac298e3ec0904f1177f99017b26d271"
+    },
+    {
+      "name": "t1_0_lo",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "178b011d85eb2333a9f176366b926e138b28eb6b00981c1012b9092c34154752"
+    },
+    {
+      "name": "t1_0_hi",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "cff4da9bf6776dbead7e94bc985a826ab4a8033ac72ac0e2961e8668e56dfebf"
+    },
+    {
+      "name": "d0_ss",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d0_sb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "d0_ns",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d0_nb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "t1_1_table",
+      "type": "int8_t",
+      "elements": 1024,
+      "bytes": 1024,
+      "binary_sha256": "1342e9340f3c27dc1195a9c7921335a2551d5fbac06cca887354c347ffd3ba4e"
+    },
+    {
+      "name": "t1_1_qs",
+      "type": "float",
+      "elements": 32,
+      "bytes": 128,
+      "binary_sha256": "2971fa3081413ff0e0c2132850a7b11189aaeb97a9d2b003f12d1bb046769f6c"
+    },
+    {
+      "name": "t1_1_lo",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "53ab927aefb2bc7377257d98a6b4b30260b040347ed5e0549aaa9a3d269502f3"
+    },
+    {
+      "name": "t1_1_hi",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "5eeeb1d57d0bc97f67982b19725efd953b5289bec23f4ef26be314a798e863b6"
+    },
+    {
+      "name": "d1_ss",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d1_sb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "name": "d1_ns",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d1_nb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    }
+  ],
+  "source_sha256": {
+    "src/kernel.h": "7e053b53d8bc2c6103f24de37e0327439374c687105d086e14d3ecb797288dbe",
+    "src/kernels.c": "a4a4e10a8504d1bf2dd216ac2101a5031bb146794ce5f761e2b2b56fdca89cdf",
+    "src/main.c": "7b9e27f9b93b290160223325a754f272a407bbecd1ff3afa471216c084909985",
+    "src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+    "tools/build.py": "8d2fe3a573e7dcddd3a043c1c5efdfca961068e0cbdcb3704ecb1b7c45dacd30",
+    "avr6_micro_near.x": "ee163d2e5a60f71fe6980115dad1127d55ff8f60b15b2491d4419adc73474603"
+  },
+  "model_inc_sha256": "c6c73001dc8853d8f37b0ad424fc3ad788a209c512f5fab3c3ceec565b9f9925",
+  "input_dim": 24,
+  "artifact": "3ec5ab5f75a55705a117127db1b83b292eb911a52675da59481412a480237032",
+  "parent_artifact": "27888722196b8084aa4539983ccf8bc0fa237de6734f0cc2a627dd746dbb1994",
+  "energy_protocol": 1
+}

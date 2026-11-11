@@ -1,0 +1,11 @@
+{
+  "evaluation_saturation_counts_by_tensor": [
+    0,
+    230,
+    0
+  ],
+  "calibration_count": 4096,
+  "calibration_source": "training_only",
+  "fp32_parameter_array_bytes": 1736,
+  "int8_parameter_array_bytes": 586
+}

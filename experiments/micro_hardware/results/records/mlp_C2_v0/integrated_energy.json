@@ -1,0 +1,465 @@
+{
+  "status": "POWER_TRACE_INTEGRATED_METROLOGY_NOT_CALIBRATED",
+  "physical_execution": true,
+  "windows": [
+    {
+      "seq": 2000000,
+      "repetition": 1,
+      "active_variant": 0,
+      "role": "idle_before",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.0000035,
+      "inferences": 0,
+      "throughput_per_s": null,
+      "joules": 6.4619699435502325,
+      "mean_power_w": 0.43079789571717314,
+      "max_power_w": 0.4321895625,
+      "duration_s": 15.0000035,
+      "start_s": 5.047220749999992,
+      "end_s": 20.047224249999992,
+      "device_trace_duration_difference_s": 0.0,
+      "boundary_error_bound_j": 0.864379125
+    },
+    {
+      "seq": 2000001,
+      "repetition": 1,
+      "active_variant": 0,
+      "role": "active",
+      "variant": 0,
+      "duration_ms": 60000,
+      "device_elapsed_s": 60.320449,
+      "inferences": 3264,
+      "throughput_per_s": 54.11100305304425,
+      "joules": 25.468631826463508,
+      "mean_power_w": 0.4222221858206577,
+      "max_power_w": 0.4255694156,
+      "duration_s": 60.32044900000001,
+      "start_s": 22.05477524999999,
+      "end_s": 82.37522425,
+      "device_trace_duration_difference_s": 7.105427357601002e-15,
+      "boundary_error_bound_j": 0.85619964
+    },
+    {
+      "seq": 2000002,
+      "repetition": 1,
+      "active_variant": 0,
+      "role": "idle_after",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null,
+      "joules": 6.453368951453435,
+      "mean_power_w": 0.43022439599217727,
+      "max_power_w": 0.4305800197,
+      "duration_s": 15.00000700000001,
+      "start_s": 84.39121724999998,
+      "end_s": 99.39122425,
+      "device_trace_duration_difference_s": 1.0658141036401503e-14,
+      "boundary_error_bound_j": 0.8611600394
+    },
+    {
+      "seq": 2000003,
+      "repetition": 2,
+      "active_variant": 0,
+      "role": "idle_before",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.0000035,
+      "inferences": 0,
+      "throughput_per_s": null,
+      "joules": 6.449828358875355,
+      "mean_power_w": 0.42998845692771653,
+      "max_power_w": 0.43121155999999994,
+      "duration_s": 15.00000350000002,
+      "start_s": 101.42222074999998,
+      "end_s": 116.42222425,
+      "device_trace_duration_difference_s": 1.9539925233402755e-14,
+      "boundary_error_bound_j": 0.8624231199999999
+    },
+    {
+      "seq": 2000004,
+      "repetition": 2,
+      "active_variant": 0,
+      "role": "active",
+      "variant": 0,
+      "duration_ms": 60000,
+      "device_elapsed_s": 60.3204485,
+      "inferences": 3264,
+      "throughput_per_s": 54.11100350157377,
+      "joules": 25.484650494176545,
+      "mean_power_w": 0.4224877488133489,
+      "max_power_w": 0.42605254859999997,
+      "duration_s": 60.3204485,
+      "start_s": 118.41477574999999,
+      "end_s": 178.73522425,
+      "device_trace_duration_difference_s": 0.0,
+      "boundary_error_bound_j": 0.8577708749999999
+    },
+    {
+      "seq": 2000005,
+      "repetition": 2,
+      "active_variant": 0,
+      "role": "idle_after",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null,
+      "joules": 6.446945909791314,
+      "mean_power_w": 0.42979619341453035,
+      "max_power_w": 0.43061520000000003,
+      "duration_s": 15.00000700000001,
+      "start_s": 180.76621724999998,
+      "end_s": 195.76622425,
+      "device_trace_duration_difference_s": 1.0658141036401503e-14,
+      "boundary_error_bound_j": 0.8612304000000001
+    },
+    {
+      "seq": 2000006,
+      "repetition": 3,
+      "active_variant": 0,
+      "role": "idle_before",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.0000035,
+      "inferences": 0,
+      "throughput_per_s": null,
+      "joules": 6.446771180509888,
+      "mean_power_w": 0.42978464508424224,
+      "max_power_w": 0.43101540000000005,
+      "duration_s": 15.000003499999991,
+      "start_s": 197.78222075,
+      "end_s": 212.78222424999998,
+      "device_trace_duration_difference_s": 8.881784197001252e-15,
+      "boundary_error_bound_j": 0.8620308000000001
+    },
+    {
+      "seq": 2000007,
+      "repetition": 3,
+      "active_variant": 0,
+      "role": "active",
+      "variant": 0,
+      "duration_ms": 60000,
+      "device_elapsed_s": 60.3204485,
+      "inferences": 3264,
+      "throughput_per_s": 54.11100350157377,
+      "joules": 25.463545608859334,
+      "mean_power_w": 0.42213786936380826,
+      "max_power_w": 0.4767467609,
+      "duration_s": 60.320448500000026,
+      "start_s": 214.78977574999996,
+      "end_s": 275.11022425,
+      "device_trace_duration_difference_s": 2.842170943040401e-14,
+      "boundary_error_bound_j": 0.9534935218
+    },
+    {
+      "seq": 2000008,
+      "repetition": 3,
+      "active_variant": 0,
+      "role": "idle_after",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null,
+      "joules": 6.44763290948447,
+      "mean_power_w": 0.4298419933727016,
+      "max_power_w": 0.4320471,
+      "duration_s": 15.000006999999982,
+      "start_s": 277.12521725000005,
+      "end_s": 292.12522425000003,
+      "device_trace_duration_difference_s": 1.7763568394002505e-14,
+      "boundary_error_bound_j": 0.8640942
+    }
+  ],
+  "active": [
+    {
+      "seq": 2000001,
+      "repetition": 1,
+      "variant": 0,
+      "inferences": 3264,
+      "whole_board_j_per_inference": 0.007802889652715536,
+      "incremental_j_per_inference": -0.00015318437224111386,
+      "active_mean_power_w": 0.4222221858206577,
+      "idle_mean_power_w": 0.4305111458546752,
+      "idle_relative_drift": 0.0013321367646761612,
+      "boundary_only_error_bound_j_per_inference": 0.0002623160661764706,
+      "review_required": true
+    },
+    {
+      "seq": 2000004,
+      "repetition": 2,
+      "variant": 0,
+      "inferences": 3264,
+      "whole_board_j_per_inference": 0.007807797332774677,
+      "incremental_j_per_inference": -0.0001368404922957899,
+      "active_mean_power_w": 0.4224877488133489,
+      "idle_mean_power_w": 0.4298923251711234,
+      "idle_relative_drift": 0.0004472364402171019,
+      "boundary_only_error_bound_j_per_inference": 0.0002627974494485294,
+      "review_required": true
+    },
+    {
+      "seq": 2000007,
+      "repetition": 3,
+      "variant": 0,
+      "inferences": 3264,
+      "whole_board_j_per_inference": 0.007801331375263276,
+      "incremental_j_per_inference": -0.00014184637814821638,
+      "active_mean_power_w": 0.42213786936380826,
+      "idle_mean_power_w": 0.42981331922847194,
+      "idle_relative_drift": 0.00013342603845390843,
+      "boundary_only_error_bound_j_per_inference": 0.000292124240747549,
+      "review_required": true
+    }
+  ],
+  "alignment_provenance": {
+    "physical_measurement": true,
+    "meter_model": "FNIRSI FNB-58",
+    "meter_serial": "104332",
+    "source_recording_path": "../../../inputs/MEGA-A_20261110_183910_175836/meter/mlp_C2_v0.cfn",
+    "source_recording_sha256": "b9172c2930e24d72ef131a2802bb7dd4618415f1818c7cbeba72e6cbe9f37dc9",
+    "power_csv_sha256": "d756d1dbbb27758c9bdd88bbcbc8311885daa0ff8f9cb357ab77909079b016cd",
+    "conversion_description": "Primary native CFN VBUS and IBUS doubles; exact PBUS=V*I check; accumulated Wh excluded.",
+    "alignment_method": "One median offset fitted to six negative-going/positive-going active edges. Common rule: threshold=(whole-record P50+P90)/2; active regions below threshold, gaps <=0.25 s merged, duration>30 s, recording-edge standby tails excluded. No filtering or clipping of integration samples.",
+    "analysis_rule_preregistered": false,
+    "calibration_note": "No independent meter gain, time-base or response-delay calibration supplied.",
+    "max_sample_gap_s": 0.011,
+    "boundary_uncertainty_s": 1.0,
+    "boundary_uncertainty_scope": "Numerical sensitivity allowance only, not a certified metrological bound",
+    "cfn_minus_runner_origin_s": 3.0322242499999916,
+    "edge_offsets_s": [
+      2.9024490000000007,
+      3.2819999999999965,
+      2.9424484999999976,
+      3.1219999999999857,
+      2.6674485000000345,
+      3.347000000000037
+    ],
+    "max_edge_fit_residual_s": 0.3647757499999571,
+    "reference_threshold_w": 0.4263706087,
+    "whole_record_p50_w": 0.42251600679999995,
+    "whole_record_p90_w": 0.4302252106,
+    "threshold_diagnostics": [
+      {
+        "fraction_of_p50_to_p90": 0.25,
+        "threshold_w": 0.42444330774999994,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            22.225,
+            82.325
+          ],
+          [
+            118.625,
+            178.525
+          ],
+          [
+            214.825,
+            275.025
+          ]
+        ],
+        "median_offset_s": 3.0247242500000056,
+        "median_offset_change_s": -0.007499999999986073,
+        "maximum_residual_to_reference_offset_s": 0.2102242500000031,
+        "maximum_edge_change_s": 0.4000000000000341
+      },
+      {
+        "fraction_of_p50_to_p90": 0.35,
+        "threshold_w": 0.42521422813,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            22.125,
+            82.42500000000001
+          ],
+          [
+            118.525,
+            178.625
+          ],
+          [
+            214.72500000000002,
+            275.225
+          ]
+        ],
+        "median_offset_s": 3.092224500000004,
+        "median_offset_change_s": 0.0600002500000123,
+        "maximum_residual_to_reference_offset_s": 0.11477575000005658,
+        "maximum_edge_change_s": 0.30000000000001137
+      },
+      {
+        "fraction_of_p50_to_p90": 0.45,
+        "threshold_w": 0.42598514850999997,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            22.025,
+            82.525
+          ],
+          [
+            118.42500000000001,
+            178.725
+          ],
+          [
+            214.525,
+            275.325
+          ]
+        ],
+        "median_offset_s": 3.0322242499999987,
+        "median_offset_change_s": 7.105427357601002e-15,
+        "maximum_residual_to_reference_offset_s": 0.2647757499999628,
+        "maximum_edge_change_s": 0.10000000000002274
+      },
+      {
+        "fraction_of_p50_to_p90": 0.5,
+        "threshold_w": 0.4263706087,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            21.925,
+            82.625
+          ],
+          [
+            118.325,
+            178.825
+          ],
+          [
+            214.425,
+            275.425
+          ]
+        ],
+        "median_offset_s": 3.0322242499999916,
+        "median_offset_change_s": 0.0,
+        "maximum_residual_to_reference_offset_s": 0.3647757499999571,
+        "maximum_edge_change_s": 0.0
+      },
+      {
+        "fraction_of_p50_to_p90": 0.55,
+        "threshold_w": 0.42675606889,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            21.925,
+            82.725
+          ],
+          [
+            118.225,
+            178.925
+          ],
+          [
+            214.025,
+            275.425
+          ]
+        ],
+        "median_offset_s": 3.0622245000000046,
+        "median_offset_change_s": 0.03000025000001294,
+        "maximum_residual_to_reference_offset_s": 0.7647757499999628,
+        "maximum_edge_change_s": 0.4000000000000057
+      },
+      {
+        "fraction_of_p50_to_p90": 0.65,
+        "threshold_w": 0.42752698927,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            21.725,
+            82.825
+          ],
+          [
+            118.125,
+            179.125
+          ],
+          [
+            213.425,
+            275.525
+          ]
+        ],
+        "median_offset_s": 3.082224249999996,
+        "median_offset_change_s": 0.05000000000000426,
+        "maximum_residual_to_reference_offset_s": 1.364775749999957,
+        "maximum_edge_change_s": 1.0
+      },
+      {
+        "fraction_of_p50_to_p90": 0.75,
+        "threshold_w": 0.42829790965000003,
+        "all_three_intervals_found": true,
+        "intervals_s": [
+          [
+            20.525,
+            84.125
+          ],
+          [
+            116.825,
+            180.425
+          ],
+          [
+            213.125,
+            275.925
+          ]
+        ],
+        "median_offset_s": 2.6747245000000177,
+        "median_offset_change_s": -0.3574997499999739,
+        "maximum_residual_to_reference_offset_s": 1.7497757500000048,
+        "maximum_edge_change_s": 1.6000000000000227
+      }
+    ],
+    "hardware_synchronization": false,
+    "windows": [
+      {
+        "seq": 2000000,
+        "start_s": 5.047220749999992,
+        "end_s": 20.047224249999992
+      },
+      {
+        "seq": 2000001,
+        "start_s": 22.05477524999999,
+        "end_s": 82.37522425
+      },
+      {
+        "seq": 2000002,
+        "start_s": 84.39121724999998,
+        "end_s": 99.39122425
+      },
+      {
+        "seq": 2000003,
+        "start_s": 101.42222074999998,
+        "end_s": 116.42222425
+      },
+      {
+        "seq": 2000004,
+        "start_s": 118.41477574999999,
+        "end_s": 178.73522425
+      },
+      {
+        "seq": 2000005,
+        "start_s": 180.76621724999998,
+        "end_s": 195.76622425
+      },
+      {
+        "seq": 2000006,
+        "start_s": 197.78222075,
+        "end_s": 212.78222424999998
+      },
+      {
+        "seq": 2000007,
+        "start_s": 214.78977574999996,
+        "end_s": 275.11022425
+      },
+      {
+        "seq": 2000008,
+        "start_s": 277.12521725000005,
+        "end_s": 292.12522425000003
+      }
+    ]
+  },
+  "power_csv_sha256": "d756d1dbbb27758c9bdd88bbcbc8311885daa0ff8f9cb357ab77909079b016cd",
+  "capture_sha256": "43fcc33a86a5599cb86e9cdce8acf7951afa4ed1d5c75b309db0cf3167bf17ce",
+  "limitations": [
+    "The +/-1 s boundary setting quantifies sensitivity to window placement.",
+    "Incremental energy is relative to this board/firmware idle policy; retain signed estimates.",
+    "No architecture-wide confidence claim: one physical board per architecture.",
+    "Original power recording and time alignment require scientific review before publication."
+  ]
+}

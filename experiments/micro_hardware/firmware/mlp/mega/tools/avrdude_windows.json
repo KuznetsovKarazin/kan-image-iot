@@ -1,0 +1,10 @@
+{
+  "version": "6.3.0-arduino18",
+  "url": "https://downloads.arduino.cc/tools/avrdude-6.3.0-arduino18-i686-w64-mingw32.zip",
+  "archive_sha256": "0781f4183e91a9783c2330035520144ab76b8f75c0a9f7a25877c063bc984c4d",
+  "files": {
+    "avrdude/bin/avrdude.exe": "8a2f136e5e3ad4d5731ba9e0241992ac9a961346e128ac525549f44ca8c784e9",
+    "avrdude/bin/libusb0.dll": "00caca07869b19d10b370552ac7cc2f6f2ee246fc15db11650f6cd3f4ef9b666",
+    "avrdude/etc/avrdude.conf": "b0eeae458c8074acbc0c86605adcf1bf7f970bfcbf3851ea3359037c2d0d8303"
+  }
+}

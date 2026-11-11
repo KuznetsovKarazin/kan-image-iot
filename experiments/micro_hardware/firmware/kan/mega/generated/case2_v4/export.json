@@ -1,0 +1,173 @@
+{
+  "case": 2,
+  "variant": 4,
+  "model": "small_32_24_16",
+  "variant_name": "edge_fp32_32",
+  "source_artifact": "4da1d78c67b0f077c79e4525e8e5092d51c414453e3429d302088d63544bfebc",
+  "original_source_sha256": "d37d78c42746c84d9eec8d676743d6ef107dddb56349d87519a96780b68135f9",
+  "golden_sha256": "980365cc5974e787abd265427f4bec2222704527056c13b33dbe43de316b953c",
+  "parameter_bytes": 152800,
+  "actual_exported_constant_bytes": 152800,
+  "arrays": [
+    {
+      "name": "t0_0_table",
+      "type": "float",
+      "elements": 24576,
+      "bytes": 98304,
+      "binary_sha256": "0fbf353fe564649c995e1ea7d57068ad8396029b59651435761450f9cfa997d1"
+    },
+    {
+      "name": "t0_0_lo",
+      "type": "float",
+      "elements": 32,
+      "bytes": 128,
+      "binary_sha256": "2aeecb9d25b10d55c4ec41791f3b6c530b72c8dfac98e2c76cc98d1498c4efdb"
+    },
+    {
+      "name": "t0_0_hi",
+      "type": "float",
+      "elements": 32,
+      "bytes": 128,
+      "binary_sha256": "e834e802e60902a5799768cbe9218614c22a70430692093e97aed5f6caddbc8b"
+    },
+    {
+      "name": "d0_ss",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "849203e6b4e586413022ab65a115f70a9e41cb0ee678fa1984c90f7d4a5f33ad"
+    },
+    {
+      "name": "d0_sb",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"
+    },
+    {
+      "name": "d0_ns",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "849203e6b4e586413022ab65a115f70a9e41cb0ee678fa1984c90f7d4a5f33ad"
+    },
+    {
+      "name": "d0_nb",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"
+    },
+    {
+      "name": "t0_1_table",
+      "type": "float",
+      "elements": 12288,
+      "bytes": 49152,
+      "binary_sha256": "c3563310c9b59740122097c2aaf6a503b682be91273a9206dd3ba1994d65b917"
+    },
+    {
+      "name": "t0_1_lo",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "b8e4d86a68039e7ec0764bd3430826e13f04f801ddf6b8dc9e0fa55bd6510031"
+    },
+    {
+      "name": "t0_1_hi",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "d440df4137eaaeba591a6f21e7c48eb5acb0f57b5c22d5f163f180d632cfc973"
+    },
+    {
+      "name": "d1_ss",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d1_sb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "d1_ns",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d1_nb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "t0_2_table",
+      "type": "float",
+      "elements": 1024,
+      "bytes": 4096,
+      "binary_sha256": "a923472346e71ff315ef45049f9e003a929101bd8f98fdf7bec414a819cd1948"
+    },
+    {
+      "name": "t0_2_lo",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "ddc7e8192713156af9c950aed0e14c088a82a1d73b26db58820717995336b1c4"
+    },
+    {
+      "name": "t0_2_hi",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "79100754ca0e6b08d59b97530a7a4f8d8da6f5f240464afb9780816eae42ef80"
+    },
+    {
+      "name": "d2_ss",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d2_sb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "name": "d2_ns",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d2_nb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    }
+  ],
+  "source_sha256": {
+    "src/kernel.h": "7e053b53d8bc2c6103f24de37e0327439374c687105d086e14d3ecb797288dbe",
+    "src/kernels.c": "a4a4e10a8504d1bf2dd216ac2101a5031bb146794ce5f761e2b2b56fdca89cdf",
+    "src/main.c": "7b9e27f9b93b290160223325a754f272a407bbecd1ff3afa471216c084909985",
+    "src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+    "tools/build.py": "8d2fe3a573e7dcddd3a043c1c5efdfca961068e0cbdcb3704ecb1b7c45dacd30",
+    "avr6_micro_near.x": "ee163d2e5a60f71fe6980115dad1127d55ff8f60b15b2491d4419adc73474603"
+  },
+  "model_inc_sha256": "6fc230069fd326c4446872d3b83385ed3f272277f3c5c185733432cf27dd525e",
+  "input_dim": 32,
+  "artifact": "fb868d135ec8713f530f316f5dbc48b69027643dcf1e4c6de2294fe5be772f1a",
+  "parent_artifact": "013e72efbd6a141ae81ac72ed4823350ffb71238293e2f4f4b03da888fde5012",
+  "energy_protocol": 1
+}

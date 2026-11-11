@@ -1,0 +1,347 @@
+{
+  "version": "all-boards-energy-v1",
+  "scope": "head-only long-window whole-board energy, one physical board each",
+  "status": "READY_FOR_USER_PHYSICAL_ACQUISITION",
+  "prior_accepted_mlp_s3_c0": {
+    "family": "mlp",
+    "target": "s3",
+    "board_id": "S3-A",
+    "case": 0,
+    "variants": [
+      0,
+      1
+    ],
+    "status": "ACCEPTED_ACQUISITION_AND_INTEGRATION",
+    "scope": "Three windows per format in one recording/boot, one physical board; calibration not established",
+    "usb_identity": {
+      "vid": 12346,
+      "pid": 4097,
+      "serial_number": "A0:F2:62:EB:B5:58",
+      "initial_port": "COM13"
+    },
+    "mac": "a0:f2:62:eb:b5:58",
+    "capture_zip_sha256": "bb7546e880c8eb41ca94668b2a0f81086c4807db97b8bb622701ed68ee8c2c16",
+    "native_cfn_sha256": "a99136c27a89001c081f4cf0b8e59a6646d66a2840109e56a4b3af737e8583f2"
+  },
+  "targets": {
+    "s3": [
+      {
+        "key": "kan_C0",
+        "family": "kan",
+        "case": 0,
+        "variants": [
+          0,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 2016
+      },
+      {
+        "key": "kan_C1",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          0,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 2016
+      },
+      {
+        "key": "mlp_C1",
+        "family": "mlp",
+        "case": 1,
+        "variants": [
+          0,
+          1
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 576
+      },
+      {
+        "key": "mlp_C2",
+        "family": "mlp",
+        "case": 2,
+        "variants": [
+          0,
+          1
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 576
+      },
+      {
+        "key": "kan_C2",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          0,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 2016
+      }
+    ],
+    "c3": [
+      {
+        "key": "kan_C1",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          0,
+          4,
+          5,
+          8,
+          9
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 1440
+      },
+      {
+        "key": "mlp_C1",
+        "family": "mlp",
+        "case": 1,
+        "variants": [
+          0,
+          1
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 576
+      },
+      {
+        "key": "mlp_C2",
+        "family": "mlp",
+        "case": 2,
+        "variants": [
+          0,
+          1
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 576
+      },
+      {
+        "key": "kan_C2",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          0,
+          4,
+          5,
+          8,
+          9
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 1440
+      }
+    ],
+    "mega": [
+      {
+        "key": "kan_C1_v0",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          0
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C1_v9",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          9
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "mlp_C1_v1",
+        "family": "mlp",
+        "case": 1,
+        "variants": [
+          1
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C1_v4",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          4
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "mlp_C1_v0",
+        "family": "mlp",
+        "case": 1,
+        "variants": [
+          0
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C1_v5",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          5
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C1_v8",
+        "family": "kan",
+        "case": 1,
+        "variants": [
+          8
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "mlp_C2_v0",
+        "family": "mlp",
+        "case": 2,
+        "variants": [
+          0
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C2_v0",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          0
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C2_v5",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          5
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C2_v8",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          8
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "mlp_C2_v1",
+        "family": "mlp",
+        "case": 2,
+        "variants": [
+          1
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C2_v9",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          9
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      },
+      {
+        "key": "kan_C2_v4",
+        "family": "kan",
+        "case": 2,
+        "variants": [
+          4
+        ],
+        "repetitions": 3,
+        "active_seconds": 60,
+        "baseline_seconds": 15,
+        "nominal_recording_seconds": 288
+      }
+    ]
+  },
+  "active_seconds": 60,
+  "baseline_seconds": 15,
+  "lead_seconds": 2,
+  "repetitions_within_run": 3,
+  "new_method_case_board_configurations": 53,
+  "new_active_windows": 159,
+  "new_baseline_windows": 318
+}

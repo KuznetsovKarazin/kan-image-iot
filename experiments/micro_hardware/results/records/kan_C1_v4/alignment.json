@@ -1,0 +1,239 @@
+{
+  "physical_measurement": true,
+  "meter_model": "FNIRSI FNB-58",
+  "meter_serial": "104332",
+  "source_recording_path": "../../../inputs/MEGA-A_20261110_183910_175836/meter/kan_C1_v4.cfn",
+  "source_recording_sha256": "ea7de2e0ff905fa6209c3807d610214b543526db1c42d645bf34e9b4706549ff",
+  "power_csv_sha256": "f74cc6e0adcf4b736d8a7240ea254cf72058c82b177e862f9d34e6122de8ee7e",
+  "conversion_description": "Primary native CFN VBUS and IBUS doubles; exact PBUS=V*I check; accumulated Wh excluded.",
+  "alignment_method": "One median offset fitted to six negative-going/positive-going active edges. Common rule: threshold=(whole-record P50+P90)/2; active regions below threshold, gaps <=0.25 s merged, duration>30 s, recording-edge standby tails excluded. No filtering or clipping of integration samples.",
+  "analysis_rule_preregistered": false,
+  "calibration_note": "No independent meter gain, time-base or response-delay calibration supplied.",
+  "max_sample_gap_s": 0.011,
+  "boundary_uncertainty_s": 1.0,
+  "boundary_uncertainty_scope": "Numerical sensitivity allowance only, not a certified metrological bound",
+  "cfn_minus_runner_origin_s": 5.114500000000007,
+  "edge_offsets_s": [
+    5.211665499999995,
+    5.168999999999997,
+    5.008662499999986,
+    5.0660000000000025,
+    4.905662499999977,
+    5.163000000000011
+  ],
+  "max_edge_fit_residual_s": 0.20883750000002976,
+  "reference_threshold_w": 0.42317542825,
+  "whole_record_p50_w": 0.42006856699999995,
+  "whole_record_p90_w": 0.4262822895,
+  "threshold_diagnostics": [
+    {
+      "fraction_of_p50_to_p90": 0.25,
+      "threshold_w": 0.42162199762499997,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          24.425,
+          84.525
+        ],
+        [
+          120.92500000000001,
+          181.225
+        ],
+        [
+          217.625,
+          278.025
+        ]
+      ],
+      "median_offset_s": 5.084331249999977,
+      "median_offset_change_s": -0.03016875000002983,
+      "maximum_residual_to_reference_offset_s": 0.29716549999998776,
+      "maximum_edge_change_s": 0.30000000000001137
+    },
+    {
+      "fraction_of_p50_to_p90": 0.35,
+      "threshold_w": 0.422243369875,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          24.325000000000003,
+          84.625
+        ],
+        [
+          120.825,
+          181.325
+        ],
+        [
+          217.525,
+          278.125
+        ]
+      ],
+      "median_offset_s": 5.084331249999991,
+      "median_offset_change_s": -0.03016875000001562,
+      "maximum_residual_to_reference_offset_s": 0.1971654999999899,
+      "maximum_edge_change_s": 0.20000000000001705
+    },
+    {
+      "fraction_of_p50_to_p90": 0.45,
+      "threshold_w": 0.42286474212499997,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          24.225,
+          84.725
+        ],
+        [
+          120.725,
+          181.425
+        ],
+        [
+          217.425,
+          278.125
+        ]
+      ],
+      "median_offset_s": 5.064499999999995,
+      "median_offset_change_s": -0.05000000000001137,
+      "maximum_residual_to_reference_offset_s": 0.10883750000000703,
+      "maximum_edge_change_s": 0.10000000000002274
+    },
+    {
+      "fraction_of_p50_to_p90": 0.5,
+      "threshold_w": 0.42317542825,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          24.225,
+          84.825
+        ],
+        [
+          120.725,
+          181.425
+        ],
+        [
+          217.325,
+          278.225
+        ]
+      ],
+      "median_offset_s": 5.114500000000007,
+      "median_offset_change_s": 0.0,
+      "maximum_residual_to_reference_offset_s": 0.20883750000002976,
+      "maximum_edge_change_s": 0.0
+    },
+    {
+      "fraction_of_p50_to_p90": 0.55,
+      "threshold_w": 0.423486114375,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          24.125,
+          84.825
+        ],
+        [
+          120.625,
+          181.525
+        ],
+        [
+          217.325,
+          278.225
+        ]
+      ],
+      "median_offset_s": 5.137332750000002,
+      "median_offset_change_s": 0.022832749999995627,
+      "maximum_residual_to_reference_offset_s": 0.20883750000002976,
+      "maximum_edge_change_s": 0.10000000000000142
+    },
+    {
+      "fraction_of_p50_to_p90": 0.65,
+      "threshold_w": 0.424107486625,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          24.025,
+          84.92500000000001
+        ],
+        [
+          120.525,
+          181.625
+        ],
+        [
+          217.22500000000002,
+          278.325
+        ]
+      ],
+      "median_offset_s": 5.137332749999985,
+      "median_offset_change_s": 0.022832749999977864,
+      "maximum_residual_to_reference_offset_s": 0.30883749999999566,
+      "maximum_edge_change_s": 0.20000000000000284
+    },
+    {
+      "fraction_of_p50_to_p90": 0.75,
+      "threshold_w": 0.424728858875,
+      "all_three_intervals_found": true,
+      "intervals_s": [
+        [
+          23.925,
+          85.025
+        ],
+        [
+          120.42500000000001,
+          181.725
+        ],
+        [
+          217.125,
+          278.425
+        ]
+      ],
+      "median_offset_s": 5.137332749999997,
+      "median_offset_change_s": 0.0228327499999903,
+      "maximum_residual_to_reference_offset_s": 0.4088375000000184,
+      "maximum_edge_change_s": 0.3000000000000007
+    }
+  ],
+  "hardware_synchronization": false,
+  "windows": [
+    {
+      "seq": 2000000,
+      "start_s": 7.1454965000000055,
+      "end_s": 22.145500000000006
+    },
+    {
+      "seq": 2000001,
+      "start_s": 24.127834500000013,
+      "end_s": 84.77050000000001
+    },
+    {
+      "seq": 2000002,
+      "start_s": 86.8014935,
+      "end_s": 101.8015
+    },
+    {
+      "seq": 2000003,
+      "start_s": 103.83249300000001,
+      "end_s": 118.83250000000001
+    },
+    {
+      "seq": 2000004,
+      "start_s": 120.83083750000002,
+      "end_s": 181.4735
+    },
+    {
+      "seq": 2000005,
+      "start_s": 183.50449600000002,
+      "end_s": 198.5045
+    },
+    {
+      "seq": 2000006,
+      "start_s": 200.536496,
+      "end_s": 215.5365
+    },
+    {
+      "seq": 2000007,
+      "start_s": 217.5338375,
+      "end_s": 278.17650000000003
+    },
+    {
+      "seq": 2000008,
+      "start_s": 280.223493,
+      "end_s": 295.2235
+    }
+  ]
+}

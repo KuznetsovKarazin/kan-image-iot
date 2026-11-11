@@ -1,0 +1,48 @@
+{
+  "status": "PASS_SYNTHETIC_MEGA_CONTRACT",
+  "physical_execution": false,
+  "images": [
+    {
+      "image": "case0_v0",
+      "exchanges": 1153,
+      "prediction_checks": 1024,
+      "synthetic_data_rejected_by_physical_audit": true,
+      "changed_input_dim_rejected": true
+    },
+    {
+      "image": "case0_v1",
+      "exchanges": 1153,
+      "prediction_checks": 1024,
+      "synthetic_data_rejected_by_physical_audit": true,
+      "changed_input_dim_rejected": true
+    },
+    {
+      "image": "case1_v0",
+      "exchanges": 1153,
+      "prediction_checks": 1024,
+      "synthetic_data_rejected_by_physical_audit": true,
+      "changed_input_dim_rejected": true
+    },
+    {
+      "image": "case1_v1",
+      "exchanges": 1153,
+      "prediction_checks": 1024,
+      "synthetic_data_rejected_by_physical_audit": true,
+      "changed_input_dim_rejected": true
+    },
+    {
+      "image": "case2_v0",
+      "exchanges": 1153,
+      "prediction_checks": 1024,
+      "synthetic_data_rejected_by_physical_audit": true,
+      "changed_input_dim_rejected": true
+    },
+    {
+      "image": "case2_v1",
+      "exchanges": 1153,
+      "prediction_checks": 1024,
+      "synthetic_data_rejected_by_physical_audit": true,
+      "changed_input_dim_rejected": true
+    }
+  ]
+}

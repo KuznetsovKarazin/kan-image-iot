@@ -1,4 +1,4 @@
-# IEEE Micro conversion-fidelity pilot
+# KAN conversion-fidelity pilot
 
 Protocol fixed on 2026-11-07 before running comparisons. Base: `v2b`, commit
 `330395f7a9406e73d8501a68c9b2daae2747b6af`. No training or checkpoint selection by pilot outcomes.
@@ -20,7 +20,7 @@ Use the saved `kan_person_detector_best.pt` checkpoints for:
 
 All use spline grid 5, degree 3. Load strictly and record SHA-256 and metadata.
 These are available repository checkpoints, not the missing 16–4–2 checkpoints
-underlying the old article's tables. Do not claim reproduction of those tables.
+underlying earlier published tables. This pilot does not reproduce those tables.
 
 Stage A: 4,096 calibration and 4,096 separate evaluation feature vectors per
 seed (42, 43, 44), uniform in [0, 2], consistent with the projector's nonnegative
@@ -80,10 +80,7 @@ without hiding a negative result. These are pilot gates, not journal claims.
 No MCU hardware is attached. CPU timing cannot establish MCU latency, energy,
 RAM or an advantage over an MLP. A publishable study needs exact old artifacts,
 a locked independent dataset, a matched MLP comparator and device measurements.
-The old Micro operator, accuracy and deployment tables overlap with IEEE Access
-(10.1109/ACCESS.2026.3693881) and OJIM (10.1109/OJIM.2026.3712887).
-Per-edge LUT compilation overlaps with JSA (10.1016/j.sysarc.2026.103923),
-Neurocomputing (10.1016/j.neucom.2026.133774), and the accepted IoT-J LUT-KAN
-paper. Cite and delimit all of them. The possible new contribution is a measured
-conversion-fidelity failure, its diagnosis, and a validated end-to-end remedy;
-novelty and venue suitability remain to be established after the pilot.
+Related prior work: IEEE Access (10.1109/ACCESS.2026.3693881), IEEE OJIM
+(10.1109/OJIM.2026.3712887), JSA (10.1016/j.sysarc.2026.103923) and
+Neurocomputing (10.1016/j.neucom.2026.133774). Per-edge LUT compilation is
+prior work; the pilot measures conversion fidelity and its causes.

@@ -1,0 +1,124 @@
+{
+  "case": 1,
+  "variant": 4,
+  "model": "full_24_16",
+  "variant_name": "edge_fp32_32",
+  "source_artifact": "2e8ffd218f0bede8e11c9922d2db46b4d7c7d3196dfef602c8b7597f3eb452b5",
+  "original_source_sha256": "e8fb52473e6e5422f7c5aec3294b26097b9bf5859997c547f8d6d1e03b183659",
+  "golden_sha256": "eadb08318d16d0e2b7530e5272f10489dc509ad3de1eac0b6f1d5651bbacfbcd",
+  "parameter_bytes": 53856,
+  "actual_exported_constant_bytes": 53856,
+  "arrays": [
+    {
+      "name": "t0_0_table",
+      "type": "float",
+      "elements": 12288,
+      "bytes": 49152,
+      "binary_sha256": "4518e16ee697e23f921dc3afb9ee9896c2ffc8cf48b69a0bbe7c13307ee97ce4"
+    },
+    {
+      "name": "t0_0_lo",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "178b011d85eb2333a9f176366b926e138b28eb6b00981c1012b9092c34154752"
+    },
+    {
+      "name": "t0_0_hi",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "cff4da9bf6776dbead7e94bc985a826ab4a8033ac72ac0e2961e8668e56dfebf"
+    },
+    {
+      "name": "d0_ss",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d0_sb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "d0_ns",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d0_nb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "t0_1_table",
+      "type": "float",
+      "elements": 1024,
+      "bytes": 4096,
+      "binary_sha256": "f018ca4ae88628ebff76dbff0184c827f757966a2366293d1acfde6e6edfff8d"
+    },
+    {
+      "name": "t0_1_lo",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "53ab927aefb2bc7377257d98a6b4b30260b040347ed5e0549aaa9a3d269502f3"
+    },
+    {
+      "name": "t0_1_hi",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "5eeeb1d57d0bc97f67982b19725efd953b5289bec23f4ef26be314a798e863b6"
+    },
+    {
+      "name": "d1_ss",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d1_sb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "name": "d1_ns",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d1_nb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    }
+  ],
+  "source_sha256": {
+    "src/kernel.h": "7e053b53d8bc2c6103f24de37e0327439374c687105d086e14d3ecb797288dbe",
+    "src/kernels.c": "a4a4e10a8504d1bf2dd216ac2101a5031bb146794ce5f761e2b2b56fdca89cdf",
+    "src/main.c": "7b9e27f9b93b290160223325a754f272a407bbecd1ff3afa471216c084909985",
+    "src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+    "tools/build.py": "8d2fe3a573e7dcddd3a043c1c5efdfca961068e0cbdcb3704ecb1b7c45dacd30",
+    "avr6_micro_near.x": "ee163d2e5a60f71fe6980115dad1127d55ff8f60b15b2491d4419adc73474603"
+  },
+  "model_inc_sha256": "c418bf2cfc6df2a5e61784f44aecbbcd11a06afb19b35a8c302d5d44699a68da",
+  "input_dim": 24,
+  "artifact": "3f88b92b03925634bf6c6457fe2ffc9b6be4c157dc0a3ad94cd590b3d24f27d0",
+  "parent_artifact": "bde03772d9df6953204cf6381fb7f832a255345949a8249de054256998dd5b05",
+  "energy_protocol": 1
+}

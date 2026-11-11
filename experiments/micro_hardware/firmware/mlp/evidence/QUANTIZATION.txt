@@ -1,0 +1,13 @@
+INT8 pilot export, frozen before trained checkpoints/evaluation, 2026-11-09.
+Symmetric signed INT8 weights and activations in [-127,127]. INT32 biases and
+accumulators. One weight scale per output channel; one activation scale per
+tensor. Activation max-absolute ranges use the 4096 TRAINING examples only.
+No calibration on validation or evaluation examples. Round ties away from zero.
+Hidden ReLU follows requantization. Requantization uses a positive Q31 multiplier
+and signed rounding shift with an INT64 intermediate. Verify worst-case INT32
+accumulator bounds. No floating-point operations inside integer layers.
+FP32 input quantization and output dequantization remain at the boundaries;
+include them in eventual device timing. Report all five seeds, export seed 101
+without test selection. Compare Python and native C integer outputs exactly.
+Host tests are not MCU results. Parameter-array bytes exclude dimensions,
+descriptors, pointers, executable code, alignment, stack, and runtime buffers.

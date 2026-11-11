@@ -1,0 +1,39 @@
+Frozen-feature MLP pilot, protocol version 1, 2026-11-09
+
+Freeze this protocol and the image manifest before extracting features or training.
+Scope: a new head-replacement baseline, NOT a reconstruction of historical KAN
+training and NOT an independent estimate of complete-model generalization.
+
+Use the three archived CNN/projectors C0, C1, C2, with their original checkpoint
+SHA-256 values. Load only preprocessor weights strictly. Keep all layers in eval
+mode. Use original RGB -> LANCZOS 224x224 -> JPEG quality 75 -> ImageNet tensor
+normalization. Record processed hashes and library versions. Verify representative
+saved control features before extracting new features.
+
+New training/validation pool: official COCO train2014 images, excluding ALL IDs
+in the repository minival list and all 1280 previous calibration/evaluation IDs.
+Person label: category_id==1 and annotation area / image area > 0.005.
+Within each class sort by SHA-256('micro-mlp-pilot-20261109:<image_id>').
+Select 2048 training and the next 512 validation examples per class.
+Result: 4096 training, 1024 validation. No substitutions after missing downloads.
+This small pilot intentionally has a different training budget from historical KAN.
+It cannot establish accuracy superiority under equal training conditions.
+
+MLP dimensions: C0/C1 24-16-2, C2 32-24-16-2. ReLU hidden activations, linear
+output. Train on ground-truth labels, not KAN predictions. No feature scaling,
+augmentation, dropout or hyperparameter search. Five seeds: 101,202,303,404,505.
+AdamW lr=0.003, weight_decay=1e-5, batch=256, 100 epochs, label_smoothing=0.1.
+Select the earliest epoch with lowest validation cross entropy. Do not tune using
+the existing 1024 evaluation examples. Use seed 101 for a subsequent hardware
+baseline, independent of its test result. Report every seed and mean/SD; no
+best-test-seed selection. Freeze checkpoint before loading evaluation features.
+
+Evaluation: reuse the original 1024 FP32 feature vectors and labels for paired
+head comparisons, reporting accuracy, per-class recall, disagreements versus
+the archived KAN, and paired accuracy differences. Existing minival images may
+have selected the historical backbone/KAN checkpoint, so this evaluation remains
+exploratory. New MLP validation images may also have trained that fixed backbone.
+Neither repeated seeds nor repeated hardware runs add independent test images.
+
+INT8 deployment and physical timing/energy are separate stages. FP32 host results
+must never be represented as MCU results or as integer inference results.

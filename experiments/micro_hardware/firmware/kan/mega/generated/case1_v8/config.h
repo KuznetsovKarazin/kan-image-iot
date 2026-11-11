@@ -1,0 +1,11 @@
+#define MODEL_CASE 1
+#define MEGA_INPUTS 24
+#define SELECTED_VARIANT 0
+#define WIRE_VARIANT 8
+#define MODEL_DEPTH 2
+#define MODEL_ID "full_24_16"
+#define VARIANT_NAME "direct_cubic_fp32"
+#define MODEL_ARTIFACT "1dbe6b73fd3ca5c5d25edcb063759d818ab7bea7ce8ec419728c8132659c2b9d"
+#define SOURCE_ARTIFACT "2e8ffd218f0bede8e11c9922d2db46b4d7c7d3196dfef602c8b7597f3eb452b5"
+#define PARAMETER_BYTES 21260UL
+#define OPT_CUBIC 1

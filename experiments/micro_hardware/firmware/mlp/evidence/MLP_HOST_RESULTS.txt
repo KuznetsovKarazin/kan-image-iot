@@ -1,0 +1,31 @@
+MLP pilot completed on host, 2026-11-09
+
+15 trained models: 3 frozen CNN/projectors x 5 seeds (101,202,303,404,505).
+4096 new training images, 1024 new validation images; zero overlap with the 1024 evaluation IDs.
+Training: 100 epochs, AdamW, lr .003, wd 1e-5, batch 256, label smoothing .1.
+Checkpoint selection: minimum validation CE; hardware seed predeclared as 101.
+Original checkpoint hashes verified; all original processed control-image hashes match.
+Feature compatibility: max differences 1.07e-6 / 7.15e-7 / 6.56e-7.
+
+Accuracy (%) on the same exploratory 1024-image evaluation cohort:
+C0: KAN 83.0078; MLP fp32 83.3203 +/- 0.1605 (seed SD); MLP int8 83.2031 +/- 0.1544 (seed SD)
+C1: KAN 87.7930; MLP fp32 87.2266 +/- 0.1605 (seed SD); MLP int8 87.2070 +/- 0.0977 (seed SD)
+C2: KAN 83.5938; MLP fp32 84.1992 +/- 0.2332 (seed SD); MLP int8 84.0625 +/- 0.3340 (seed SD)
+
+FP32 parameter arrays: 1736 B for C0/C1, 4904 B for C2.
+INT8 arrays incl. biases and requantization: 586 B for C0/C1, 1570 B for C2.
+These are not linked firmware sizes or peak SRAM; dimensions/descriptors/code/alignment excluded.
+INT8 layers use INT8 weights/activations, INT32 accumulation, Q31 requantization with INT64 intermediate.
+FP32 operations remain at input quantization/output dequantization boundaries.
+
+Native checks: 36,126 vectors per format across the three selected models.
+Per case: 1024 evaluation + 10000 stress + 1018 input-boundary vectors.
+INT8 native outputs match Python exactly; FP32 passes atol=rtol=2e-5.
+No FP32 evaluation decision changes in the C export.
+
+Interpretation: the new MLP is a competitive small baseline on frozen features.
+Historical KAN training IDs are unavailable; this is a different training budget.
+The reused minival cohort may have selected the original backbone/KAN.
+Therefore this is not an equal-budget architecture contest or independent generalization estimate.
+MCU latency, linked flash/SRAM, and energy of these MLPs have NOT been measured.
+A native C host export is NOT a ready-to-flash firmware image.

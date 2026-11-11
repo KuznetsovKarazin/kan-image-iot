@@ -1,0 +1,11 @@
+{
+  "case": 1,
+  "variant": 0,
+  "input_dim": 24,
+  "model": "mlp_full_24_16_seed101",
+  "variant_name": "mlp_fp32",
+  "artifact": "bdf149f0d8842bf6e7d90840b0359f5024e0b6e9813602c13a33b3e9aff9ca88",
+  "source_artifact": "269690959735494049c09221dabdf879baae624319b5b6eddb1ecf2bfc2a9719",
+  "parameter_bytes": 1736,
+  "golden_sha256": "f76f59b171e3c029ced64da22e1116ee278b7d93812e5c1d05c42480e7112951"
+}

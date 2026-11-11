@@ -1,0 +1,38 @@
+{
+  "status": "PASS_PREPARED_PACKAGE",
+  "release": "mlp-v2",
+  "physical_execution": false,
+  "new_mlp_latency_available": false,
+  "new_mlp_energy_available": false,
+  "trained_hardware_seed": 101,
+  "firmware_images": 12,
+  "source_and_linked_weight_checks": "PASS_LINKED_MODEL_BYTES",
+  "synthetic_energy_fixtures": 12,
+  "reports": {
+    "linked_models.json": {
+      "status": "PASS_LINKED_MODEL_BYTES",
+      "sha256": "2722906892bae6cf982b47a3a31c5113f4cdda0322ee70f7c19700245ac4f21c"
+    },
+    "contract_tests.json": {
+      "status": "PASS_SYNTHETIC_CONTRACT_TESTS",
+      "sha256": "120d4ed4f83338d6a7e1bec399bd435a12d663bb8b4cd88e2e548ee9ba7116b4"
+    },
+    "mega_contract_tests.json": {
+      "status": "PASS_SYNTHETIC_MEGA_CONTRACT",
+      "sha256": "76a4c5d3f1eac5176763002a8bfe8094480bc6b20d485b619906ab49ad23f853"
+    },
+    "energy_contract_tests.json": {
+      "status": "PASS_SYNTHETIC_AND_ANALYTIC",
+      "sha256": "7bd349fb01a71436b3f89f5633482bae4c17cfe92ee8db30828e1e3dc340bcfc"
+    },
+    "v2_lineage.json": {
+      "status": "PASS",
+      "sha256": "c3a4df0bc0df0e65daa147d9c991ed6147a06dbbda53ba6a899e7e63a7f90621"
+    }
+  },
+  "notes": [
+    "Cross-compiled binaries are not physical runs.",
+    "Host quality is seed-101 expectation; device fidelity must pass on every capture.",
+    "Power CSV integration requires the native recording and explicit alignment; no meter data is included."
+  ]
+}

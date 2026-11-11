@@ -1,0 +1,55 @@
+{
+  "status": "PASS_SYNTHETIC_CONTRACT_TESTS",
+  "physical_execution": false,
+  "protocol": {
+    "accepted_test_fixtures": [
+      {
+        "target": "s3",
+        "case": 0,
+        "raw_frames": 2216
+      },
+      {
+        "target": "s3",
+        "case": 1,
+        "raw_frames": 2216
+      },
+      {
+        "target": "s3",
+        "case": 2,
+        "raw_frames": 2216
+      },
+      {
+        "target": "c3",
+        "case": 0,
+        "raw_frames": 2216
+      },
+      {
+        "target": "c3",
+        "case": 1,
+        "raw_frames": 2216
+      },
+      {
+        "target": "c3",
+        "case": 2,
+        "raw_frames": 2216
+      }
+    ],
+    "rejected_mutations": [
+      "backwards_monotonic_clock",
+      "truncated_raw_trace",
+      "saved_timing_changed",
+      "wrong_firmware"
+    ],
+    "physical_execution": false
+  },
+  "resume": {
+    "status": "PASS",
+    "completed_slots_skipped": true,
+    "failed_attempt_preserved": true,
+    "changed_capture_blocks_resume": true,
+    "wrong_usb_identity_blocks_flashing": true,
+    "complete_resume_accesses_no_hardware": true,
+    "windows_api_flags_and_cleanup_mocked": true,
+    "physical_execution": false
+  }
+}

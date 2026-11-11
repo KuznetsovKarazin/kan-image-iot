@@ -1,0 +1,52 @@
+{
+  "annotation_archive_sha256": "031296bbc80c45a1d1f76bf9a90ead27e94e99ec629208449507a4917a3bf009",
+  "annotation_member_sha256": "777ef504abfeba349930485bb32ecd5b6529129a3e010f7852e1437cb049b732",
+  "selection_sha256": "96da3ef584ddcf5c7b23ee2b792b9dd57ce3ef95dc234d429951440247476e10",
+  "protocol_sha256": "0788619d76feaaa0703846e021bca717ec89eaf74f29c24de2013ce4a42876f8",
+  "old_manifest_sha256": "f2501b1088322533e97ba00f84bf2b8bd55fbc0b2865f3f3b750b3c31f2630cf",
+  "excluded_ids": 8059,
+  "train": 4096,
+  "validation": 1024,
+  "licenses": [
+    {
+      "url": "http://creativecommons.org/licenses/by-nc-sa/2.0/",
+      "id": 1,
+      "name": "Attribution-NonCommercial-ShareAlike License"
+    },
+    {
+      "url": "http://creativecommons.org/licenses/by-nc/2.0/",
+      "id": 2,
+      "name": "Attribution-NonCommercial License"
+    },
+    {
+      "url": "http://creativecommons.org/licenses/by-nc-nd/2.0/",
+      "id": 3,
+      "name": "Attribution-NonCommercial-NoDerivs License"
+    },
+    {
+      "url": "http://creativecommons.org/licenses/by/2.0/",
+      "id": 4,
+      "name": "Attribution License"
+    },
+    {
+      "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+      "id": 5,
+      "name": "Attribution-ShareAlike License"
+    },
+    {
+      "url": "http://creativecommons.org/licenses/by-nd/2.0/",
+      "id": 6,
+      "name": "Attribution-NoDerivs License"
+    },
+    {
+      "url": "http://flickr.com/commons/usage/",
+      "id": 7,
+      "name": "No known copyright restrictions"
+    },
+    {
+      "url": "http://www.usa.gov/copyright.shtml",
+      "id": 8,
+      "name": "United States Government Work"
+    }
+  ]
+}

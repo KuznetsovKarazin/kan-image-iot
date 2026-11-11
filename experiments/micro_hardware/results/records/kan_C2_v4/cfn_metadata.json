@@ -1,0 +1,66 @@
+{
+  "status": "CFN_PRIMARY_CHANNELS_VALIDATED",
+  "source_sha256": "b1670e6845bce7ea51f0a6101853c01f7954d4b85bd0ddb575f727afeb062c05",
+  "sample_count": 30800,
+  "data_offset_bytes": 109,
+  "record_bytes": 48,
+  "nominal_rate_hz": 100.0,
+  "start_current_ma": 0,
+  "stop_current_ma": 0,
+  "stop_time_condition_s": 5,
+  "channels": [
+    {
+      "code": 0,
+      "name": "voltage_v",
+      "argb": "ffffff00",
+      "saved_max": 5.01501,
+      "saved_min": 4.98248
+    },
+    {
+      "code": 1,
+      "name": "current_a",
+      "argb": "ff00ff00",
+      "saved_max": 0.08658,
+      "saved_min": 0.08124
+    },
+    {
+      "code": 4,
+      "name": "power_w",
+      "argb": "ffff55ff",
+      "saved_max": 0.43345722500000006,
+      "saved_min": 0.4059675904
+    },
+    {
+      "code": 5,
+      "name": "accumulated_capacity_ah",
+      "argb": "ffff5500"
+    },
+    {
+      "code": 6,
+      "name": "accumulated_energy_wh",
+      "argb": "ffffaa00"
+    }
+  ],
+  "first_time_s": 0.0,
+  "last_time_s": 307.99,
+  "max_time_grid_error_s": 5.684341886080802e-14,
+  "min_gap_s": 0.009999999999990905,
+  "max_gap_s": 0.010000000000047748,
+  "nominal_timestamps_are_not_an_independently_calibrated_clock": true,
+  "v_times_i_vs_p_max_abs_error_w": 0.0,
+  "integrated_vi_energy_j": 130.683018148044,
+  "integrated_vi_energy_wh": 0.03630083837445667,
+  "saved_channel6_energy_delta_wh": 0.009075205773466417,
+  "integrated_vi_over_saved_energy_ratio": 4.000001683773501,
+  "integrated_current_charge_ah": 0.007265899097222222,
+  "saved_channel5_charge_delta_ah": 0.007265899097222052,
+  "cumulative_energy_channel_used": false,
+  "cumulative_energy_review": "Accumulated Wh is reported for reference only; in all recordings it equals one quarter of the integrated VBUS*IBUS energy. Energy is computed from the V and I samples.",
+  "meter_model": "FNIRSI FNB-58",
+  "meter_serial": "104332",
+  "meter_firmware_version": null,
+  "pc_software_version": null,
+  "independent_calibration_available": false,
+  "format_reference": "https://github.com/didim99/usbmeter-utils/blob/master/cfn2csv.py",
+  "meter_identity_scope": "Same user-reported FNB58 setup; CFN does not contain a serial-number field"
+}

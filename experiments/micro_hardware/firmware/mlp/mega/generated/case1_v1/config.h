@@ -1,0 +1,8 @@
+#define MODEL_CASE 1
+#define MEGA_INPUTS 24
+#define WIRE_VARIANT 1
+#define MODEL_ID "mlp_full_24_16_seed101"
+#define VARIANT_NAME "mlp_int8"
+#define MODEL_ARTIFACT "cc24b92707a19d0e66cd5a0bad42009ea5d9cd1e589b6b7018ca15439da1fffa"
+#define SOURCE_ARTIFACT "269690959735494049c09221dabdf879baae624319b5b6eddb1ecf2bfc2a9719"
+#define PARAMETER_BYTES 586UL

@@ -142,17 +142,16 @@ def main():
         "- No physical MCU, fully INT8 activation path, TFLite graph, energy measurement or matched "
         "MLP comparison was run. Symbolic edges, multiplication nodes and remapped inputs are "
         "explicitly rejected by this pilot implementation.", "",
-        "## Decision for the article", "",
-        "Proceed to a bounded hardware validation, subject to obtaining the exact old checkpoints "
-        "and locked data. The defensible candidate result is that a small executable conversion "
+        "## Next steps", "",
+        "Proceed to hardware validation, subject to obtaining the exact old checkpoints "
+        "and locked data. The main observation is that a small executable conversion "
         "can silently change the learned function, and that separating structural approximation, "
         "clipping, table precision and runtime arithmetic exposes the cause. Per-edge LUT "
-        "compilation itself is prior work. See PRIOR_WORK.md for six related publications and "
-        "the proposed boundary of the revised article.", "",
+        "compilation itself is prior work. Related publications are cited in the hardware study.", "",
         "Next experiment: carry identical model parameters and golden feature vectors to ESP32-S3; "
         "compare original-converter and layer-preserving paths at common memory budgets; measure "
         "head-only and full CNN+head latency, Flash, peak SRAM/PSRAM and energy, with a matched "
-        "MLP. Use the exact old 16–4–2 model as the bridge to the rejection, plus these two topologies.", "",
+        "MLP. Include the earlier 16–4–2 model together with these two topologies.", "",
         "## Complete image sweep", "",
         "| Model | Points | Old accuracy | Edge FP32 accuracy | Edge INT8 accuracy | FP32 disagreement | INT8 disagreement | INT8 bytes |",
         "|---|---:|---:|---:|---:|---:|---:|---:|"]

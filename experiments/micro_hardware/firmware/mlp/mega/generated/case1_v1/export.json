@@ -1,0 +1,11 @@
+{
+  "case": 1,
+  "variant": 1,
+  "input_dim": 24,
+  "model": "mlp_full_24_16_seed101",
+  "variant_name": "mlp_int8",
+  "artifact": "cc24b92707a19d0e66cd5a0bad42009ea5d9cd1e589b6b7018ca15439da1fffa",
+  "source_artifact": "269690959735494049c09221dabdf879baae624319b5b6eddb1ecf2bfc2a9719",
+  "parameter_bytes": 586,
+  "golden_sha256": "f76f59b171e3c029ced64da22e1116ee278b7d93812e5c1d05c42480e7112951"
+}

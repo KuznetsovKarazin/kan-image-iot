@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "physical_execution": false,
+  "scope": "Actual upstream and patched driver C code with modeled USB completion edges and short-packet delivery",
+  "old_driver_stall_reproduced": true,
+  "patched_idle_restarts": 1300,
+  "outputs": {
+    "old": "old_driver: first reply delivered; second queued but stalled",
+    "patched": "patched_driver: 1300 idle restarts, packet boundaries, short FIFO writes, wrap, enqueue race, RX PASS"
+  },
+  "source_sha256": {
+    "usb_serial_jtag_4_4_7.c": "e1d9dbc5d19dd2ab3674298e780d672bb1adb8890a3c9ed27779c465206531b6",
+    "usb_serial_jtag_compat.c": "ff0a7c57b490dc952281551fb00bc761974083d0850b5488865327f59c033d6d"
+  }
+}
