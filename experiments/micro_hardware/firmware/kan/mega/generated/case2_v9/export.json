@@ -1,0 +1,194 @@
+{
+  "case": 2,
+  "variant": 9,
+  "model": "small_32_24_16",
+  "variant_name": "edge_int8_32_factored",
+  "source_artifact": "4da1d78c67b0f077c79e4525e8e5092d51c414453e3429d302088d63544bfebc",
+  "original_source_sha256": "d37d78c42746c84d9eec8d676743d6ef107dddb56349d87519a96780b68135f9",
+  "golden_sha256": "980365cc5974e787abd265427f4bec2222704527056c13b33dbe43de316b953c",
+  "parameter_bytes": 43872,
+  "actual_exported_constant_bytes": 43872,
+  "arrays": [
+    {
+      "name": "t1_0_table",
+      "type": "int8_t",
+      "elements": 24576,
+      "bytes": 24576,
+      "binary_sha256": "242b36c04559cdcd2233fe327d3bfac84891256794674399c7d5abcc81052813"
+    },
+    {
+      "name": "t1_0_qs",
+      "type": "float",
+      "elements": 768,
+      "bytes": 3072,
+      "binary_sha256": "844545e64a84626117353e97d48d046f07dcae3ee2f3f0e77af58a517bd30756"
+    },
+    {
+      "name": "t1_0_lo",
+      "type": "float",
+      "elements": 32,
+      "bytes": 128,
+      "binary_sha256": "2aeecb9d25b10d55c4ec41791f3b6c530b72c8dfac98e2c76cc98d1498c4efdb"
+    },
+    {
+      "name": "t1_0_hi",
+      "type": "float",
+      "elements": 32,
+      "bytes": 128,
+      "binary_sha256": "e834e802e60902a5799768cbe9218614c22a70430692093e97aed5f6caddbc8b"
+    },
+    {
+      "name": "d0_ss",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "849203e6b4e586413022ab65a115f70a9e41cb0ee678fa1984c90f7d4a5f33ad"
+    },
+    {
+      "name": "d0_sb",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"
+    },
+    {
+      "name": "d0_ns",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "849203e6b4e586413022ab65a115f70a9e41cb0ee678fa1984c90f7d4a5f33ad"
+    },
+    {
+      "name": "d0_nb",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"
+    },
+    {
+      "name": "t1_1_table",
+      "type": "int8_t",
+      "elements": 12288,
+      "bytes": 12288,
+      "binary_sha256": "a1a06ee2b0c8f52810788b65a1c2c48f1694f32519f065743151cc9c3853c9c4"
+    },
+    {
+      "name": "t1_1_qs",
+      "type": "float",
+      "elements": 384,
+      "bytes": 1536,
+      "binary_sha256": "97f1f9f84a850286293508d20d615a1d2b43f29294dce1dea5fcb3f9751fa250"
+    },
+    {
+      "name": "t1_1_lo",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "b8e4d86a68039e7ec0764bd3430826e13f04f801ddf6b8dc9e0fa55bd6510031"
+    },
+    {
+      "name": "t1_1_hi",
+      "type": "float",
+      "elements": 24,
+      "bytes": 96,
+      "binary_sha256": "d440df4137eaaeba591a6f21e7c48eb5acb0f57b5c22d5f163f180d632cfc973"
+    },
+    {
+      "name": "d1_ss",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d1_sb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "d1_ns",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    },
+    {
+      "name": "d1_nb",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    {
+      "name": "t1_2_table",
+      "type": "int8_t",
+      "elements": 1024,
+      "bytes": 1024,
+      "binary_sha256": "ff23eab19b3de799ceb83d61687e57902a1105f46994be770688a02e57b229c6"
+    },
+    {
+      "name": "t1_2_qs",
+      "type": "float",
+      "elements": 32,
+      "bytes": 128,
+      "binary_sha256": "a118e08239365c3e62f3118942f807e114d355a07642779e49fc4ffaa79cbdd3"
+    },
+    {
+      "name": "t1_2_lo",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "ddc7e8192713156af9c950aed0e14c088a82a1d73b26db58820717995336b1c4"
+    },
+    {
+      "name": "t1_2_hi",
+      "type": "float",
+      "elements": 16,
+      "bytes": 64,
+      "binary_sha256": "79100754ca0e6b08d59b97530a7a4f8d8da6f5f240464afb9780816eae42ef80"
+    },
+    {
+      "name": "d2_ss",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d2_sb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "name": "d2_ns",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "80b8fd6d60fa85fd14a38b5295cb92abd80dfec5ca406c9f969609a79d36809d"
+    },
+    {
+      "name": "d2_nb",
+      "type": "float",
+      "elements": 2,
+      "bytes": 8,
+      "binary_sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    }
+  ],
+  "source_sha256": {
+    "src/kernel.h": "7e053b53d8bc2c6103f24de37e0327439374c687105d086e14d3ecb797288dbe",
+    "src/kernels.c": "a4a4e10a8504d1bf2dd216ac2101a5031bb146794ce5f761e2b2b56fdca89cdf",
+    "src/main.c": "7b9e27f9b93b290160223325a754f272a407bbecd1ff3afa471216c084909985",
+    "src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+    "tools/build.py": "8d2fe3a573e7dcddd3a043c1c5efdfca961068e0cbdcb3704ecb1b7c45dacd30",
+    "avr6_micro_near.x": "ee163d2e5a60f71fe6980115dad1127d55ff8f60b15b2491d4419adc73474603"
+  },
+  "model_inc_sha256": "27a1f4383e92ce995761e269fef1ca4f90bb806b3e2d9c75bc54e87d806c17c6",
+  "input_dim": 32,
+  "artifact": "b42deaf0e64d3ea1f7822b322662bd25912a169d4540e03cb7c58bbce857e012",
+  "parent_artifact": "d6c5e80e4213be4adc2e2ad16475a611ee13a988b44593a516105b3890ce79a0",
+  "energy_protocol": 1
+}

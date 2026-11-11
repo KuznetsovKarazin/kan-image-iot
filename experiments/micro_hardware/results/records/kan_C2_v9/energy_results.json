@@ -1,0 +1,266 @@
+{
+  "status": "WHOLE_BOARD_ENERGY_INTEGRATED_SIGNED_POLLING_DIFFERENCE_RETAINED",
+  "target": "mega",
+  "board_id": "MEGA-A",
+  "family": "kan",
+  "case": 2,
+  "variant": 9,
+  "windows": 9,
+  "active_windows_count": 3,
+  "prediction_checks": 1024,
+  "continuous_recordings": 1,
+  "reset_sessions": 1,
+  "temporal_windows_per_variant": 3,
+  "aggregate": {
+    "family": "kan",
+    "case": 2,
+    "variant": 9,
+    "name": "edge_int8_32_factored",
+    "total_inferences": 1632,
+    "whole_board_uj_per_inference": {
+      "n": 3,
+      "mean": 47962.227773239116,
+      "sample_sd": 11.370034870036454,
+      "minimum": 47950.725614941606,
+      "maximum": 47973.46091028798
+    },
+    "signed_polling_difference_uj_per_inference": {
+      "n": 3,
+      "mean": -1050.5525089964297,
+      "sample_sd": 7.123889090778804,
+      "minimum": -1055.5983824364132,
+      "maximum": -1042.4033686986718
+    },
+    "active_mean_power_w": {
+      "n": 3,
+      "mean": 0.4214157926464565,
+      "sample_sd": 9.991207446930656e-05,
+      "minimum": 0.4213147174917863,
+      "maximum": 0.42151449953410486
+    },
+    "idle_mean_power_w": {
+      "n": 3,
+      "mean": 0.4306463776067011,
+      "sample_sd": 0.00015470610429070558,
+      "minimum": 0.43047370049284683,
+      "maximum": 0.4307723512423846
+    },
+    "cycle_us_per_inference": {
+      "n": 3,
+      "mean": 113812.12714460783,
+      "sample_sd": 0.0029545498546268804,
+      "minimum": 113812.125,
+      "maximum": 113812.13051470586
+    }
+  },
+  "active_windows": [
+    {
+      "seq": 2000001,
+      "repetition": 1,
+      "variant": 9,
+      "inferences": 544,
+      "whole_board_j_per_inference": 0.04797346091028798,
+      "incremental_j_per_inference": -0.0010536557758542041,
+      "active_mean_power_w": 0.42151449953410486,
+      "idle_mean_power_w": 0.4307723512423846,
+      "idle_relative_drift": 0.0017133384810947008,
+      "boundary_only_error_bound_j_per_inference": 0.0017408491985294117,
+      "review_required": true,
+      "active_duration_s": 61.913796,
+      "total_j": 26.09756273519666,
+      "whole_board_uj_per_inference": 47973.46091028798,
+      "signed_polling_difference_uj_per_inference": -1053.6557758542042,
+      "cycle_us_per_inference": 113812.125,
+      "common_offset_sensitivity": [
+        {
+          "offset_shift_s": -1.0,
+          "whole_board_uj": 47982.54792201368,
+          "signed_polling_difference_uj": -1035.1530831401396
+        },
+        {
+          "offset_shift_s": -0.5,
+          "whole_board_uj": 47976.08560163493,
+          "signed_polling_difference_uj": -1046.997643257487
+        },
+        {
+          "offset_shift_s": -0.1,
+          "whole_board_uj": 47973.64772890545,
+          "signed_polling_difference_uj": -1053.1478076974051
+        },
+        {
+          "offset_shift_s": 0.0,
+          "whole_board_uj": 47973.46091028798,
+          "signed_polling_difference_uj": -1053.6557758542042
+        },
+        {
+          "offset_shift_s": 0.1,
+          "whole_board_uj": 47973.57869593067,
+          "signed_polling_difference_uj": -1053.5606915663752
+        },
+        {
+          "offset_shift_s": 0.5,
+          "whole_board_uj": 47976.88407419653,
+          "signed_polling_difference_uj": -1047.2544231210813
+        },
+        {
+          "offset_shift_s": 1.0,
+          "whole_board_uj": 47984.35708721624,
+          "signed_polling_difference_uj": -1030.5733057131856
+        }
+      ],
+      "review_interpretation": "Original integrator review flag retained. Negative difference is relative to an active polling baseline; it is not negative inference energy.",
+      "whole_board_review_required": false,
+      "whole_board_boundary_only_allowance_uj": 1740.8491985294118
+    },
+    {
+      "seq": 2000004,
+      "repetition": 2,
+      "variant": 9,
+      "inferences": 544,
+      "whole_board_j_per_inference": 0.047950725614941604,
+      "incremental_j_per_inference": -0.0010424033686986718,
+      "active_mean_power_w": 0.4213147174917863,
+      "idle_mean_power_w": 0.43047370049284683,
+      "idle_relative_drift": 0.002276584139856579,
+      "boundary_only_error_bound_j_per_inference": 0.0015780051066176474,
+      "review_required": true,
+      "active_duration_s": 61.91379899999998,
+      "total_j": 26.085194734528233,
+      "whole_board_uj_per_inference": 47950.725614941606,
+      "signed_polling_difference_uj_per_inference": -1042.4033686986718,
+      "cycle_us_per_inference": 113812.13051470586,
+      "common_offset_sensitivity": [
+        {
+          "offset_shift_s": -1.0,
+          "whole_board_uj": 47959.5420706275,
+          "signed_polling_difference_uj": -1017.690446004076
+        },
+        {
+          "offset_shift_s": -0.5,
+          "whole_board_uj": 47953.660566214,
+          "signed_polling_difference_uj": -1032.6415229184413
+        },
+        {
+          "offset_shift_s": -0.1,
+          "whole_board_uj": 47950.80070313469,
+          "signed_polling_difference_uj": -1041.6408843886936
+        },
+        {
+          "offset_shift_s": 0.0,
+          "whole_board_uj": 47950.725614941606,
+          "signed_polling_difference_uj": -1042.4033686986718
+        },
+        {
+          "offset_shift_s": 0.1,
+          "whole_board_uj": 47950.90339684143,
+          "signed_polling_difference_uj": -1042.5355592560088
+        },
+        {
+          "offset_shift_s": 0.5,
+          "whole_board_uj": 47954.29751772982,
+          "signed_polling_difference_uj": -1036.7782422763978
+        },
+        {
+          "offset_shift_s": 1.0,
+          "whole_board_uj": 47961.972818651906,
+          "signed_polling_difference_uj": -1020.2840765660103
+        }
+      ],
+      "review_interpretation": "Original integrator review flag retained. Negative difference is relative to an active polling baseline; it is not negative inference energy.",
+      "whole_board_review_required": false,
+      "whole_board_boundary_only_allowance_uj": 1578.0051066176475
+    },
+    {
+      "seq": 2000007,
+      "repetition": 3,
+      "variant": 9,
+      "inferences": 544,
+      "whole_board_j_per_inference": 0.047962496794487774,
+      "incremental_j_per_inference": -0.0010555983824364133,
+      "active_mean_power_w": 0.42141816091347833,
+      "idle_mean_power_w": 0.4306930810848719,
+      "idle_relative_drift": 0.00042545020305377737,
+      "boundary_only_error_bound_j_per_inference": 0.0015768422536764706,
+      "review_required": true,
+      "active_duration_s": 61.91379649999999,
+      "total_j": 26.091598256201348,
+      "whole_board_uj_per_inference": 47962.49679448777,
+      "signed_polling_difference_uj_per_inference": -1055.5983824364132,
+      "cycle_us_per_inference": 113812.12591911764,
+      "common_offset_sensitivity": [
+        {
+          "offset_shift_s": -1.0,
+          "whole_board_uj": 47970.98579549858,
+          "signed_polling_difference_uj": -1046.7517326734278
+        },
+        {
+          "offset_shift_s": -0.5,
+          "whole_board_uj": 47965.180088608526,
+          "signed_polling_difference_uj": -1060.4723756332191
+        },
+        {
+          "offset_shift_s": -0.1,
+          "whole_board_uj": 47962.51040745816,
+          "signed_polling_difference_uj": -1059.2181905632767
+        },
+        {
+          "offset_shift_s": 0.0,
+          "whole_board_uj": 47962.49679448777,
+          "signed_polling_difference_uj": -1055.5983824364134
+        },
+        {
+          "offset_shift_s": 0.1,
+          "whole_board_uj": 47962.730344351796,
+          "signed_polling_difference_uj": -1050.6096251042425
+        },
+        {
+          "offset_shift_s": 0.5,
+          "whole_board_uj": 47966.05244050262,
+          "signed_polling_difference_uj": -1017.0723378793662
+        },
+        {
+          "offset_shift_s": 1.0,
+          "whole_board_uj": 47972.85732569504,
+          "signed_polling_difference_uj": -956.9529381877019
+        }
+      ],
+      "review_interpretation": "Original integrator review flag retained. Negative difference is relative to an active polling baseline; it is not negative inference energy.",
+      "whole_board_review_required": false,
+      "whole_board_boundary_only_allowance_uj": 1576.8422536764706
+    }
+  ],
+  "recording_samples": 30456,
+  "recording_seconds": 304.55,
+  "cfn_before_first_window_s": 6.848890999999984,
+  "cfn_after_last_window_s": 5.826101999999992,
+  "requested_5s_padding_met": true,
+  "max_idle_pair_relative_drift": 0.002276584139856579,
+  "original_integrator_review_flagged_windows": [
+    2000001,
+    2000004,
+    2000007
+  ],
+  "whole_board_review_flagged_windows": [],
+  "signed_polling_difference_interpretation": "Descriptive active-minus-polling contrast only; not isolated incremental inference energy",
+  "max_alignment_residual_s": 0.2011020000000343,
+  "accumulated_vi_over_wh_ratio": 4.000001151307861,
+  "maximum_whole_board_offset_sensitivity_percent": 0.023455752892287407,
+  "minimum_signed_difference_across_offsets_uj": -1060.4723756332191,
+  "maximum_signed_difference_across_offsets_uj": -956.9529381877019,
+  "source_summary_sha256": "31d8d7d87538baacda04afa8623b472f1814276ea5ca98f34e8576485c409525",
+  "source_native_cfn_sha256": "e2b9aef570d8ba699b37fbfe424e8eebb4f3c4ec06d30ac33f32c05022f86b27",
+  "publication_metrology_complete": false,
+  "instrument_metadata": {
+    "meter_model": "FNIRSI FNB-58",
+    "meter_serial": "104332",
+    "meter_identity_source": "User-supplied instrument_info.png, manually transcribed from visible Model and SN fields.",
+    "meter_uptime_shown": "0 days 00:35:27",
+    "meter_firmware_version": null,
+    "pc_software_version_in_supplied_changelog": "V0.0.7",
+    "pc_software_changelog_release_date": "2025-09-23",
+    "installed_pc_software_version_confirmed": false,
+    "independent_calibration_provided": false,
+    "power_wiring_confirmation": "Experiment instruction requires all board input power through the meter; no separate wiring description/photo supplied.",
+    "note": "A changelog alone does not verify the running software version. The v0.0.5 NRG item describes a displayed-unit label correction; it does not establish the cause of the fourfold accumulated-Wh discrepancy."
+  }
+}

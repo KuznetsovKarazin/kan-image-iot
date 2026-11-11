@@ -1,0 +1,34 @@
+/workspace/scratch/ab71adb63089/mlp_hardware_20261109/runpack/esp32/.pio/build/c3_case0/firmware.elf  :
+section                   size         addr
+.rtc.text                   16   1342177280
+.rtc.force_fast              0   1342177296
+.rtc_noinit                 16   1342177296
+.rtc.force_slow              0   1342177312
+.iram0.text              44852   1077411840
+.dram0.dummy             45056   1070071808
+.dram0.data               7252   1070116864
+.noinit                      0   1070124116
+.dram0.bss               10896   1070124128
+.flash.text             141096   1107296288
+.flash_rodata_dummy     196608   1006632992
+.flash.appdesc             256   1006829600
+.flash.rodata            43736   1006829856
+.eh_frame                10104   1006873592
+.flash.rodata_noload         0   1006883696
+.iram0.text_end            204   1077456692
+.iram0.data                  0   1077456896
+.iram0.bss                   0   1077456896
+.dram0.heap_start            0   1070135024
+.debug_info            2828695            0
+.debug_abbrev           261258            0
+.debug_loc              555408            0
+.debug_aranges           25056            0
+.debug_ranges           102200            0
+.debug_line            1118784            0
+.debug_str              301766            0
+.comment                    93            0
+.riscv.attributes           55            0
+.debug_frame             68032            0
+Total                  5761439
+
+

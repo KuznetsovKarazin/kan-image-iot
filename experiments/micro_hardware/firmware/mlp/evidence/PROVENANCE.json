@@ -1,0 +1,15 @@
+{
+  "status": "CROSS_BUILD_ONLY",
+  "physical_execution": false,
+  "hardware_seed": 101,
+  "source_repository": "https://github.com/KuznetsovKarazin/kan-image-iot",
+  "source_commit": "7769e084a047fd755642846348924b8052757642",
+  "acquisition_base": "Audited architecture v2 with monotonic clock logger and persistent USB identity",
+  "arithmetic": "Portable scalar FP32 and INT8 MLP; no ESP DSP library; int64 requantization intermediate",
+  "scope": "New MLP physical runs remain pending. Prepared firmware, host expectations and synthetic protocol tests are not MCU measurement results.",
+  "release": "mlp-v2",
+  "prepared_energy_windows": true,
+  "energy_measurements_available": false,
+  "model_checkpoints_changed": false,
+  "exact_int8_output_fidelity": true
+}

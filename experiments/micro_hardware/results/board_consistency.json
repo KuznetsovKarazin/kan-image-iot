@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "root_release_sha256": "215cb2015d67b721fb9522d310195f070399418fb2722258872232c66be9b331",
+  "release_dependencies": 248,
+  "checkpoint_file_hashes": 126,
+  "nested_capture_zip_members": 84,
+  "records": [
+    {
+      "key": "kan_C1_v0",
+      "firmware_sha256": "b04608789671532dd5300e1507fa4dee4cf2907779d8b122d10e08029a7ada08",
+      "summary_sha256": "44b94e242dd9e92292a191c8a23116775656d958c6cf71c4ce5badeb69490ce4"
+    },
+    {
+      "key": "kan_C1_v9",
+      "firmware_sha256": "3e5648677da9e0ae0da7559a292894e1dc13a10c8d884215c55f8157d6d96073",
+      "summary_sha256": "2ba44342f097215bd384bbaa878afb3a446d96522b61d4138003361f84128900"
+    },
+    {
+      "key": "mlp_C1_v1",
+      "firmware_sha256": "2514a9926ccbea56b4ed0e14dbea0d82c5925a2ddca3a8e0477ac458aaecf4ad",
+      "summary_sha256": "e4ffff4e95279b2e7670a058a45fae289756dc3e61b733e883476303b6f26476"
+    },
+    {
+      "key": "kan_C1_v4",
+      "firmware_sha256": "5839409f27fd0f9e63db0e51b2a59e22ce1475efc2c6141931a58c0884f2baf5",
+      "summary_sha256": "52e4dd19ebd5583be649a3e44236d240d781abf6e9a38e59b1c9ef20ee932668"
+    },
+    {
+      "key": "mlp_C1_v0",
+      "firmware_sha256": "0a11a6d413dc5aed77ecc628c0e3ee38f59c0e377998af71a67d8dd694259056",
+      "summary_sha256": "5e0742358f36cbefcecdea82ec58dd6716cbb7104669dd9cb656bda8a7a4c7ff"
+    },
+    {
+      "key": "kan_C1_v5",
+      "firmware_sha256": "dc24ba428c985932b80741b4f4c08d206716c419e31062d3b2f18fe5e90a964b",
+      "summary_sha256": "5807a3e999deb046cf9d8a023539d867a0d69c69fc5b6b5d953ada1a0ed208ea"
+    },
+    {
+      "key": "kan_C1_v8",
+      "firmware_sha256": "50e42efb90a53bfb79245185150925514fd56d62084ea343289a314a3384608c",
+      "summary_sha256": "c79666a872f3488aea865dc8804eb8bb724156bbcaa6af5cfbcd6414db1e85f4"
+    },
+    {
+      "key": "mlp_C2_v0",
+      "firmware_sha256": "1f3a3eb8d150d1f83ad57415a2173b43b0a195c609e4a013d4c9defe90925ab9",
+      "summary_sha256": "43fcc33a86a5599cb86e9cdce8acf7951afa4ed1d5c75b309db0cf3167bf17ce"
+    },
+    {
+      "key": "kan_C2_v0",
+      "firmware_sha256": "be5660bdff87f09a9fe5a8ed9476ac866a1f8be0f67232dc4e37e07dac89ad97",
+      "summary_sha256": "cdc8142840824f286e27366adeca07fbab34330837bea428b6e67ee7a894d2a7"
+    },
+    {
+      "key": "kan_C2_v5",
+      "firmware_sha256": "7f6c66f77b4068df39f360bd9e7fdc7e4e621d9c98b4b909eb1d33c69b9d7ef1",
+      "summary_sha256": "ebce64f9e5d8e516c23b8014b46e688b5aa039244a35f0a2f8c2870b03b7db1c"
+    },
+    {
+      "key": "kan_C2_v8",
+      "firmware_sha256": "9f139f60b69f2245023186de11d2a3c45d0c65ae3b0a9e906d3f50a0b7478c5c",
+      "summary_sha256": "aa8dd55901e5a588c0ab46f3f241d9339ac00735d8e550528f7a16bf959e94dc"
+    },
+    {
+      "key": "mlp_C2_v1",
+      "firmware_sha256": "817ddc986b2b987f7df5d48a01498167cbe2adad39ad24557bf597d229e062e7",
+      "summary_sha256": "e3fbba0f83c0bb5842443df5af2746e46186c79b191887a5939a851aa40ce8b2"
+    },
+    {
+      "key": "kan_C2_v9",
+      "firmware_sha256": "0bbb0d47bab55c150e1867be86c4226053ffb5e5e8cc58a86ad5c2bb20a46fda",
+      "summary_sha256": "31d8d7d87538baacda04afa8623b472f1814276ea5ca98f34e8576485c409525"
+    },
+    {
+      "key": "kan_C2_v4",
+      "firmware_sha256": "0a7d14405a4741f70f6e76fd3538716c892255096102abe8f105ad23b5b19126",
+      "summary_sha256": "c3bc3e845528a529163a531aa9a6c9751859b73b9e2b6ac7f995e1bac55a438e"
+    }
+  ],
+  "datasets": [
+    {
+      "case": 1,
+      "common_evaluation_inputs_labels_and_batch": true
+    },
+    {
+      "case": 2,
+      "common_evaluation_inputs_labels_and_batch": true
+    }
+  ],
+  "prior_energy_references": [
+    {
+      "target": "s3",
+      "archive_sha256": "cf0a4e63568ae1a68d9881e7a9166547fa2da3c1eb3712eeebaa2e076086dd53",
+      "reference_summary_sha256": "e7b38e1111212215b1e4f74e36285a6bce93a31cb559c146b35d9c75acc0a786"
+    },
+    {
+      "target": "c3",
+      "archive_sha256": "e86c34d85b7d34e44479bd79068463577b72c4e98f0c2494c919ac9daa45954e",
+      "reference_summary_sha256": "bc71ef6902b7429e0295819ddede95e0f06845cc11b7eb5ab4d30a3d6524c8ad"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "status": "DEVICE_COUNTS_AUDITED",
+  "physical_execution": true,
+  "windows": [
+    {
+      "seq": 2000000,
+      "repetition": 1,
+      "active_variant": 0,
+      "role": "idle_before",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null
+    },
+    {
+      "seq": 2000001,
+      "repetition": 1,
+      "active_variant": 0,
+      "role": "active",
+      "variant": 0,
+      "duration_ms": 60000,
+      "device_elapsed_s": 60.0027985,
+      "inferences": 9216,
+      "throughput_per_s": 153.5928361741328
+    },
+    {
+      "seq": 2000002,
+      "repetition": 1,
+      "active_variant": 0,
+      "role": "idle_after",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null
+    },
+    {
+      "seq": 2000003,
+      "repetition": 2,
+      "active_variant": 0,
+      "role": "idle_before",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null
+    },
+    {
+      "seq": 2000004,
+      "repetition": 2,
+      "active_variant": 0,
+      "role": "active",
+      "variant": 0,
+      "duration_ms": 60000,
+      "device_elapsed_s": 60.002801,
+      "inferences": 9216,
+      "throughput_per_s": 153.59282977473003
+    },
+    {
+      "seq": 2000005,
+      "repetition": 2,
+      "active_variant": 0,
+      "role": "idle_after",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.000007,
+      "inferences": 0,
+      "throughput_per_s": null
+    },
+    {
+      "seq": 2000006,
+      "repetition": 3,
+      "active_variant": 0,
+      "role": "idle_before",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.0000035,
+      "inferences": 0,
+      "throughput_per_s": null
+    },
+    {
+      "seq": 2000007,
+      "repetition": 3,
+      "active_variant": 0,
+      "role": "active",
+      "variant": 0,
+      "duration_ms": 60000,
+      "device_elapsed_s": 60.0027985,
+      "inferences": 9216,
+      "throughput_per_s": 153.5928361741328
+    },
+    {
+      "seq": 2000008,
+      "repetition": 3,
+      "active_variant": 0,
+      "role": "idle_after",
+      "variant": 2,
+      "duration_ms": 15000,
+      "device_elapsed_s": 15.0000035,
+      "inferences": 0,
+      "throughput_per_s": null
+    }
+  ],
+  "prediction_checks": 1024,
+  "host_clock": {
+    "method": "monotonic_ns_and_event_index_and_protocol_sequence",
+    "utc_backward_steps": [],
+    "utc_envelope_valid": true,
+    "utc_is_adjustable": true,
+    "utc_order_warning": false,
+    "host_duration_seconds": 373.844,
+    "host_duration_basis": "monotonic_ns",
+    "utc_endpoint_difference_seconds": 373.841142,
+    "utc_endpoint_difference_is_elapsed_time": false,
+    "device_timing_unchanged": true,
+    "scope": "UTC retained verbatim; raw protocol order and all device timing checks remain mandatory. Legacy traces cannot establish monotonic host duration."
+  },
+  "energy_measurement_status": "EXTERNAL_POWER_TRACE_REQUIRED"
+}

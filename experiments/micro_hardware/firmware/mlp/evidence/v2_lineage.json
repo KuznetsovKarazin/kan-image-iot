@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "hardware_execution": false,
+  "checks": [
+    {
+      "case": 0,
+      "export_identical_to_audited_host_study": true,
+      "artifact": "3369c7fe451943e8c6a0b43b95604a2b755b32fa1012bf900dfa94f4dc6c0f7e",
+      "bindings": {
+        "mlp_export_sha256": "23588b49d2c118d980f8e9ad128ed00bb16e10da02888050c1aeba78e59d3930",
+        "firmware_sources": {
+          "esp32/src/mlp_core.inc": "dff82a96053342f3813478e8b42ac516ef9a5d40e26cfb35b329940b53126093",
+          "esp32/src/kernels.c": "b5d57c381e097dab27a8e5dcbd87d5e9eebba76252ed4968dd3cd2db27c41664",
+          "esp32/src/main.cpp": "c4b35d396dde4749a578e33ae1c0ea5b12c2d7a8707ed462cad4c5df16233dd7",
+          "esp32/include/micro_model.h": "8fe315e427d438ac91cc48fd96a1b667af46256645e9e554f7a82802f742f8d2",
+          "esp32/include/usb_transport.h": "5b8c32af3115e9ce4940b627f14d4543c51d97cc1432bc9f734963839d4691c9",
+          "esp32/src/usb_serial_jtag_compat.c": "ff0a7c57b490dc952281551fb00bc761974083d0850b5488865327f59c033d6d",
+          "esp32/platformio.ini": "1db55b2d1082aab11e89cb861021b1ad478dfbe591f7438bff8a68941e53779f",
+          "mega/src/mlp_core.inc": "dff82a96053342f3813478e8b42ac516ef9a5d40e26cfb35b329940b53126093",
+          "mega/src/kernels.c": "64755d68706f7df05381f4f8848a560b4bbd8697622f6a4aa8828d7a8016d472",
+          "mega/src/main.c": "a04b4245f19efb108aec2a7e8662fe14ee77e4a7165bba8639b3b6413b83e38b",
+          "mega/src/kernel.h": "d188b36c6ccdcd928465d3587481bc8d7b077dfd794eb28303bb478d1bb19235",
+          "mega/src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+          "mega/tools/build.py": "e3794f721500a15638c6e6f99c265952138ce4c6b0492c76df3f695df6c0d252"
+        }
+      }
+    },
+    {
+      "case": 1,
+      "export_identical_to_audited_host_study": true,
+      "artifact": "269690959735494049c09221dabdf879baae624319b5b6eddb1ecf2bfc2a9719",
+      "bindings": {
+        "mlp_export_sha256": "dbcd7f279bd3e67a7e7b9a91f519a9c436a085f693b9d8efdfc9c1d845dbdc93",
+        "firmware_sources": {
+          "esp32/src/mlp_core.inc": "dff82a96053342f3813478e8b42ac516ef9a5d40e26cfb35b329940b53126093",
+          "esp32/src/kernels.c": "b5d57c381e097dab27a8e5dcbd87d5e9eebba76252ed4968dd3cd2db27c41664",
+          "esp32/src/main.cpp": "c4b35d396dde4749a578e33ae1c0ea5b12c2d7a8707ed462cad4c5df16233dd7",
+          "esp32/include/micro_model.h": "8fe315e427d438ac91cc48fd96a1b667af46256645e9e554f7a82802f742f8d2",
+          "esp32/include/usb_transport.h": "5b8c32af3115e9ce4940b627f14d4543c51d97cc1432bc9f734963839d4691c9",
+          "esp32/src/usb_serial_jtag_compat.c": "ff0a7c57b490dc952281551fb00bc761974083d0850b5488865327f59c033d6d",
+          "esp32/platformio.ini": "1db55b2d1082aab11e89cb861021b1ad478dfbe591f7438bff8a68941e53779f",
+          "mega/src/mlp_core.inc": "dff82a96053342f3813478e8b42ac516ef9a5d40e26cfb35b329940b53126093",
+          "mega/src/kernels.c": "64755d68706f7df05381f4f8848a560b4bbd8697622f6a4aa8828d7a8016d472",
+          "mega/src/main.c": "a04b4245f19efb108aec2a7e8662fe14ee77e4a7165bba8639b3b6413b83e38b",
+          "mega/src/kernel.h": "d188b36c6ccdcd928465d3587481bc8d7b077dfd794eb28303bb478d1bb19235",
+          "mega/src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+          "mega/tools/build.py": "e3794f721500a15638c6e6f99c265952138ce4c6b0492c76df3f695df6c0d252"
+        }
+      }
+    },
+    {
+      "case": 2,
+      "export_identical_to_audited_host_study": true,
+      "artifact": "55267c3013e3052b580d1e8d8facfc4bb51fd0e4d0955704e5f8e658294c39b3",
+      "bindings": {
+        "mlp_export_sha256": "51e52f62f987f350f82373d94b26c81059f399ed946ef76252e3edeb4d76bae7",
+        "firmware_sources": {
+          "esp32/src/mlp_core.inc": "dff82a96053342f3813478e8b42ac516ef9a5d40e26cfb35b329940b53126093",
+          "esp32/src/kernels.c": "b5d57c381e097dab27a8e5dcbd87d5e9eebba76252ed4968dd3cd2db27c41664",
+          "esp32/src/main.cpp": "c4b35d396dde4749a578e33ae1c0ea5b12c2d7a8707ed462cad4c5df16233dd7",
+          "esp32/include/micro_model.h": "8fe315e427d438ac91cc48fd96a1b667af46256645e9e554f7a82802f742f8d2",
+          "esp32/include/usb_transport.h": "5b8c32af3115e9ce4940b627f14d4543c51d97cc1432bc9f734963839d4691c9",
+          "esp32/src/usb_serial_jtag_compat.c": "ff0a7c57b490dc952281551fb00bc761974083d0850b5488865327f59c033d6d",
+          "esp32/platformio.ini": "1db55b2d1082aab11e89cb861021b1ad478dfbe591f7438bff8a68941e53779f",
+          "mega/src/mlp_core.inc": "dff82a96053342f3813478e8b42ac516ef9a5d40e26cfb35b329940b53126093",
+          "mega/src/kernels.c": "64755d68706f7df05381f4f8848a560b4bbd8697622f6a4aa8828d7a8016d472",
+          "mega/src/main.c": "a04b4245f19efb108aec2a7e8662fe14ee77e4a7165bba8639b3b6413b83e38b",
+          "mega/src/kernel.h": "d188b36c6ccdcd928465d3587481bc8d7b077dfd794eb28303bb478d1bb19235",
+          "mega/src/startup.c": "4ac1aad1359c41302bf3ef9e7743853aa1b475efc0c68b73f85a200e9c26ebfa",
+          "mega/tools/build.py": "e3794f721500a15638c6e6f99c265952138ce4c6b0492c76df3f695df6c0d252"
+        }
+      }
+    }
+  ]
+}

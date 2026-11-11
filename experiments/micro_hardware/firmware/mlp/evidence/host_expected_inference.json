@@ -1,0 +1,279 @@
+{
+  "status": "HOST_EXPECTED_ONLY",
+  "physical_execution": false,
+  "cases": [
+    {
+      "case": 0,
+      "model": "mlp_small_24_16_seed101",
+      "hardware_seed": 101,
+      "scope": "Single predetermined seed on reused 1024-image evaluation set; KAN historical training budget/split unavailable",
+      "methods": {
+        "kan_original_fp32": {
+          "n": 1024,
+          "correct": 850,
+          "accuracy": 0.830078125,
+          "balanced_accuracy": 0.830078125,
+          "macro_f1": 0.8299847328244274,
+          "recall_class0": 0.853515625,
+          "recall_class1": 0.806640625,
+          "confusion_rows_true_columns_predicted": [
+            [
+              437,
+              75
+            ],
+            [
+              99,
+              413
+            ]
+          ]
+        },
+        "mlp_fp32": {
+          "n": 1024,
+          "correct": 854,
+          "accuracy": 0.833984375,
+          "balanced_accuracy": 0.833984375,
+          "macro_f1": 0.833943833943834,
+          "recall_class0": 0.849609375,
+          "recall_class1": 0.818359375,
+          "confusion_rows_true_columns_predicted": [
+            [
+              435,
+              77
+            ],
+            [
+              93,
+              419
+            ]
+          ]
+        },
+        "mlp_int8": {
+          "n": 1024,
+          "correct": 853,
+          "accuracy": 0.8330078125,
+          "balanced_accuracy": 0.8330078125,
+          "macro_f1": 0.832961774781143,
+          "recall_class0": 0.849609375,
+          "recall_class1": 0.81640625,
+          "confusion_rows_true_columns_predicted": [
+            [
+              435,
+              77
+            ],
+            [
+              94,
+              418
+            ]
+          ]
+        }
+      },
+      "paired_vs_kan": {
+        "mlp_fp32": {
+          "n": 1024,
+          "changed_decisions": 8,
+          "candidate_only_correct": 6,
+          "baseline_only_correct": 2,
+          "both_correct": 848,
+          "both_wrong": 168
+        },
+        "mlp_int8": {
+          "n": 1024,
+          "changed_decisions": 7,
+          "candidate_only_correct": 5,
+          "baseline_only_correct": 2,
+          "both_correct": 848,
+          "both_wrong": 169
+        }
+      },
+      "int8_vs_fp32": {
+        "n": 1024,
+        "changed_decisions": 1,
+        "candidate_only_correct": 0,
+        "baseline_only_correct": 1,
+        "both_correct": 853,
+        "both_wrong": 170
+      }
+    },
+    {
+      "case": 1,
+      "model": "mlp_full_24_16_seed101",
+      "hardware_seed": 101,
+      "scope": "Single predetermined seed on reused 1024-image evaluation set; KAN historical training budget/split unavailable",
+      "methods": {
+        "kan_original_fp32": {
+          "n": 1024,
+          "correct": 899,
+          "accuracy": 0.8779296875,
+          "balanced_accuracy": 0.8779296875,
+          "macro_f1": 0.8778027794139689,
+          "recall_class0": 0.91015625,
+          "recall_class1": 0.845703125,
+          "confusion_rows_true_columns_predicted": [
+            [
+              466,
+              46
+            ],
+            [
+              79,
+              433
+            ]
+          ]
+        },
+        "mlp_fp32": {
+          "n": 1024,
+          "correct": 892,
+          "accuracy": 0.87109375,
+          "balanced_accuracy": 0.87109375,
+          "macro_f1": 0.87109375,
+          "recall_class0": 0.87109375,
+          "recall_class1": 0.87109375,
+          "confusion_rows_true_columns_predicted": [
+            [
+              446,
+              66
+            ],
+            [
+              66,
+              446
+            ]
+          ]
+        },
+        "mlp_int8": {
+          "n": 1024,
+          "correct": 893,
+          "accuracy": 0.8720703125,
+          "balanced_accuracy": 0.8720703125,
+          "macro_f1": 0.8720701904966264,
+          "recall_class0": 0.873046875,
+          "recall_class1": 0.87109375,
+          "confusion_rows_true_columns_predicted": [
+            [
+              447,
+              65
+            ],
+            [
+              66,
+              446
+            ]
+          ]
+        }
+      },
+      "paired_vs_kan": {
+        "mlp_fp32": {
+          "n": 1024,
+          "changed_decisions": 33,
+          "candidate_only_correct": 13,
+          "baseline_only_correct": 20,
+          "both_correct": 879,
+          "both_wrong": 112
+        },
+        "mlp_int8": {
+          "n": 1024,
+          "changed_decisions": 32,
+          "candidate_only_correct": 13,
+          "baseline_only_correct": 19,
+          "both_correct": 880,
+          "both_wrong": 112
+        }
+      },
+      "int8_vs_fp32": {
+        "n": 1024,
+        "changed_decisions": 1,
+        "candidate_only_correct": 1,
+        "baseline_only_correct": 0,
+        "both_correct": 892,
+        "both_wrong": 131
+      }
+    },
+    {
+      "case": 2,
+      "model": "mlp_small_32_24_16_seed101",
+      "hardware_seed": 101,
+      "scope": "Single predetermined seed on reused 1024-image evaluation set; KAN historical training budget/split unavailable",
+      "methods": {
+        "kan_original_fp32": {
+          "n": 1024,
+          "correct": 856,
+          "accuracy": 0.8359375,
+          "balanced_accuracy": 0.8359375,
+          "macro_f1": 0.8356057565506565,
+          "recall_class0": 0.880859375,
+          "recall_class1": 0.791015625,
+          "confusion_rows_true_columns_predicted": [
+            [
+              451,
+              61
+            ],
+            [
+              107,
+              405
+            ]
+          ]
+        },
+        "mlp_fp32": {
+          "n": 1024,
+          "correct": 859,
+          "accuracy": 0.8388671875,
+          "balanced_accuracy": 0.8388671875,
+          "macro_f1": 0.8388633457027841,
+          "recall_class0": 0.84375,
+          "recall_class1": 0.833984375,
+          "confusion_rows_true_columns_predicted": [
+            [
+              432,
+              80
+            ],
+            [
+              85,
+              427
+            ]
+          ]
+        },
+        "mlp_int8": {
+          "n": 1024,
+          "correct": 856,
+          "accuracy": 0.8359375,
+          "balanced_accuracy": 0.8359375,
+          "macro_f1": 0.83592748580846,
+          "recall_class0": 0.84375,
+          "recall_class1": 0.828125,
+          "confusion_rows_true_columns_predicted": [
+            [
+              432,
+              80
+            ],
+            [
+              88,
+              424
+            ]
+          ]
+        }
+      },
+      "paired_vs_kan": {
+        "mlp_fp32": {
+          "n": 1024,
+          "changed_decisions": 41,
+          "candidate_only_correct": 22,
+          "baseline_only_correct": 19,
+          "both_correct": 837,
+          "both_wrong": 146
+        },
+        "mlp_int8": {
+          "n": 1024,
+          "changed_decisions": 38,
+          "candidate_only_correct": 19,
+          "baseline_only_correct": 19,
+          "both_correct": 837,
+          "both_wrong": 149
+        }
+      },
+      "int8_vs_fp32": {
+        "n": 1024,
+        "changed_decisions": 5,
+        "candidate_only_correct": 1,
+        "baseline_only_correct": 4,
+        "both_correct": 855,
+        "both_wrong": 164
+      }
+    }
+  ]
+}

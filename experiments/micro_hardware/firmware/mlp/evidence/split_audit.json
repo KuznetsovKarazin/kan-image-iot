@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "unique_train_val_ids": 5120,
+  "evaluation_overlaps": {
+    "C0": 0,
+    "C1": 0,
+    "C2": 0
+  },
+  "train": 4096,
+  "validation": 1024,
+  "historical_kan_training_ids": "not recovered; new MLP split"
+}

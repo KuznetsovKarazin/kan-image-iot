@@ -1,0 +1,3008 @@
+{
+  "status": "THREE_BOARD_ACQUISITION_AND_WHOLE_BOARD_ENERGY_AUDIT_COMPLETE_WITH_NOTES",
+  "date": "2026-11-10",
+  "independent_physical_boards": 3,
+  "continuous_energy_recordings": 24,
+  "configurations": 55,
+  "active_windows": 165,
+  "idle_windows": 330,
+  "total_windows": 495,
+  "energy_prediction_checks": 56320,
+  "prior_latency_prediction_checks": 168960,
+  "prior_latency_measured_blocks": 7110,
+  "aggregate": [
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 192000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 306.41809732448576,
+        "sample_sd": 2.999910909720675,
+        "minimum": 302.95817524722827,
+        "maximum": 308.293557094177
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 115.79030280016285,
+        "sample_sd": 0.15351942687559175,
+        "minimum": 115.61518347406482,
+        "maximum": 115.90169795457325
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3268441326903739,
+        "sample_sd": 0.0031981927860342033,
+        "minimum": 0.32315537615853096,
+        "maximum": 0.32884096925626904
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.2033351670180825,
+        "sample_sd": 0.0030386547804477112,
+        "minimum": 0.19983251789695708,
+        "maximum": 0.20526540419823158
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 937.505239583332,
+        "sample_sd": 0.009021097956875548,
+        "minimum": 937.5000312499964,
+        "maximum": 937.5156562499996
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 850,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 908.21875,
+      "parameter_array_bytes": 20512,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 822912,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 69.2021711235803,
+        "sample_sd": 0.2249222672597508,
+        "minimum": 68.99282487529081,
+        "maximum": 69.43996313276621
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 24.421499007821645,
+        "sample_sd": 0.0152547586365394,
+        "minimum": 24.403906736322813,
+        "maximum": 24.431064330604627
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3163474996281576,
+        "sample_sd": 0.0010281989091248842,
+        "minimum": 0.3153905041881637,
+        "maximum": 0.31743453066079963
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.2047082255582806,
+        "sample_sd": 0.001026429208994794,
+        "minimum": 0.20370750365860502,
+        "maximum": 0.2057585625809706
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 218.75365288147424,
+        "sample_sd": 2.6254850544756925e-13,
+        "minimum": 218.7536528814741,
+        "maximum": 218.75365288147455
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 850,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 212.796875,
+      "parameter_array_bytes": 53856,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 1440000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 40.49997028985385,
+        "sample_sd": 0.03477814598861499,
+        "minimum": 40.46457219261103,
+        "maximum": 40.534093420553
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 14.874836263668895,
+        "sample_sd": 0.016954985267545783,
+        "minimum": 14.862594091005107,
+        "maximum": 14.894188692781293
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3239997515188399,
+        "sample_sd": 0.00027822515863538234,
+        "minimum": 0.32371656675033605,
+        "maximum": 0.32427273655533406
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20500106537611132,
+        "sample_sd": 0.0003238141554517283,
+        "minimum": 0.20477476265730055,
+        "maximum": 0.20537198779065102
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 125.00000416666634,
+        "sample_sd": 2.707531462428058e-13,
+        "minimum": 125.00000416666619,
+        "maximum": 125.00000416666666
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 849,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 1,
+      "isolated_latency_median_us": 112.96484375,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 606336,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 99.64899530290504,
+        "sample_sd": 0.3257725447170603,
+        "minimum": 99.31748212758704,
+        "maximum": 99.96870646774303
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 38.92805737994942,
+        "sample_sd": 0.0741064476242575,
+        "minimum": 38.84269683710409,
+        "maximum": 38.97592888179941
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3356578394201004,
+        "sample_sd": 0.001094509574048724,
+        "minimum": 0.3345430865418602,
+        "maximum": 0.3367309151155955
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20453250553284705,
+        "sample_sd": 0.0011144653859888462,
+        "minimum": 0.2032907240251897,
+        "maximum": 0.20544582937645428
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 296.8767053250996,
+        "sample_sd": 0.002936570202253085,
+        "minimum": 296.8750098955021,
+        "maximum": 296.8800961842931
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 850,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 292.921875,
+      "parameter_array_bytes": 21260,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 1570944,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 37.97408407093913,
+        "sample_sd": 0.2754240688948324,
+        "minimum": 37.66737493240602,
+        "maximum": 38.200277819098595
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 14.580524834835003,
+        "sample_sd": 0.009903064517651165,
+        "minimum": 14.569090926718324,
+        "maximum": 14.586383195135278
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.33141304753518563,
+        "sample_sd": 0.002403718639262292,
+        "minimum": 0.3287362938087516,
+        "maximum": 0.3333871172587944
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.204163732940125,
+        "sample_sd": 0.002465086209790407,
+        "minimum": 0.20143831805334486,
+        "maximum": 0.20623759106578063
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 114.58234475576452,
+        "sample_sd": 1.1025539963899393e-06,
+        "minimum": 114.58234348264483,
+        "maximum": 114.58234539232458
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 849,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 1,
+      "isolated_latency_median_us": 107.534375,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 10,
+      "name": "edge_fp32_32_dram",
+      "total_inferences": 1772352,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 33.32144991068498,
+        "sample_sd": 0.038317970296200245,
+        "minimum": 33.2775985029013,
+        "maximum": 33.348480256989596
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 12.491508252903788,
+        "sample_sd": 0.015488778236554913,
+        "minimum": 12.4761476684756,
+        "maximum": 12.507122118447697
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32809098198574643,
+        "sample_sd": 0.0003772879192204249,
+        "minimum": 0.32765921051482294,
+        "maximum": 0.32835712925383603
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20509659788290863,
+        "sample_sd": 0.0005076389927062832,
+        "minimum": 0.20451108854965883,
+        "maximum": 0.20541346608149963
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 101.56161473567292,
+        "sample_sd": 2.707531462428058e-13,
+        "minimum": 101.56161473567276,
+        "maximum": 101.56161473567323
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 850,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 93.4296875,
+      "parameter_array_bytes": 53856,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 0,
+      "variant": 11,
+      "name": "edge_int8_32_factored_dram",
+      "total_inferences": 1570944,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 37.832645472665995,
+        "sample_sd": 0.22763182677179003,
+        "minimum": 37.58296513966125,
+        "maximum": 38.02862667544449
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 14.386229860554792,
+        "sample_sd": 0.01651430769524324,
+        "minimum": 14.376579881514575,
+        "maximum": 14.405298472754742
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3301786398330995,
+        "sample_sd": 0.001986622029922371,
+        "minimum": 0.32799959282978686,
+        "maximum": 0.3318890358722291
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.2046250141656535,
+        "sample_sd": 0.001961255909492052,
+        "minimum": 0.20253018588175942,
+        "maximum": 0.20641760988833474
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 114.58235303104358,
+        "sample_sd": 2.7224081208981967e-13,
+        "minimum": 114.58235303104327,
+        "maximum": 114.58235303104377
+      },
+      "record": "kan_C0",
+      "correct_of_1024": 849,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 1,
+      "isolated_latency_median_us": 106.56875,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 0,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 7200000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 8.216170357700342,
+        "sample_sd": 0.03155575859281948,
+        "minimum": 8.180572297047254,
+        "maximum": 8.240703588697539
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 3.148655710660219,
+        "sample_sd": 0.0025601902059992783,
+        "minimum": 3.145794689434153,
+        "maximum": 3.1507308080004615
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32864680335312024,
+        "sample_sd": 0.0012622303016384538,
+        "minimum": 0.3272228809744608,
+        "maximum": 0.3296281325602971
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20270057912491896,
+        "sample_sd": 0.0011718237130778316,
+        "minimum": 0.20139109759148746,
+        "maximum": 0.2036504713777108
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 25.00000083333333,
+        "sample_sd": 0.0,
+        "minimum": 25.00000083333333,
+        "maximum": 25.00000083333333
+      },
+      "record": "mlp_C0",
+      "correct_of_1024": 854,
+      "target": "s3",
+      "board_id": "S3-A",
+      "isolated_latency_median_us": 22.014508928571427,
+      "parameter_array_bytes": 1736,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 0,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 3840000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 15.240959822727511,
+        "sample_sd": 0.02406416902121124,
+        "minimum": 15.214531090144812,
+        "maximum": 15.261605595429193
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 5.719572822463788,
+        "sample_sd": 0.0030378598034636536,
+        "minimum": 5.716460339489832,
+        "maximum": 5.722530109805878
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3251404653801714,
+        "sample_sd": 0.0005133689220068642,
+        "minimum": 0.3245766524372009,
+        "maximum": 0.32558090851645916
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20312291590152892,
+        "sample_sd": 0.0005568226260383402,
+        "minimum": 0.20249601416403015,
+        "maximum": 0.20356004819778056
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 46.875001562499996,
+        "sample_sd": 0.0,
+        "minimum": 46.875001562499996,
+        "maximum": 46.875001562499996
+      },
+      "record": "mlp_C0",
+      "correct_of_1024": 853,
+      "target": "s3",
+      "board_id": "S3-A",
+      "isolated_latency_median_us": 43.575892857142854,
+      "parameter_array_bytes": 586,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 192000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 297.91488154371586,
+        "sample_sd": 6.678413144419541,
+        "minimum": 291.98316878822214,
+        "maximum": 305.1483238863017
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 106.74971334263167,
+        "sample_sd": 6.435111406030237,
+        "minimum": 100.73934045877395,
+        "maximum": 113.53871031836918
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.31777586835036614,
+        "sample_sd": 0.00712364056865354,
+        "minimum": 0.31144870818329246,
+        "maximum": 0.3254915400538634
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20390950934933155,
+        "sample_sd": 0.0005211179466363767,
+        "minimum": 0.2033515301637378,
+        "maximum": 0.20438358439940194
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 937.5000156249987,
+        "sample_sd": 1.050194021790277e-12,
+        "minimum": 937.5000156249981,
+        "maximum": 937.500015625
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 920.859375,
+      "parameter_array_bytes": 20512,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 822912,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 69.21993539583328,
+        "sample_sd": 0.04473974790963461,
+        "minimum": 69.16837319757849,
+        "maximum": 69.24848232690934
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 24.616226525580053,
+        "sample_sd": 0.01431717296378924,
+        "minimum": 24.600581306205452,
+        "maximum": 24.62867534048497
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3164287116471951,
+        "sample_sd": 0.0002045211500055502,
+        "minimum": 0.31619300267303674,
+        "maximum": 0.31655920972654494
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20389926762847554,
+        "sample_sd": 0.00014244608267792344,
+        "minimum": 0.20373507846406322,
+        "maximum": 0.20398986663232427
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 218.75364923588424,
+        "sample_sd": 0.0,
+        "minimum": 218.75364923588424,
+        "maximum": 218.75364923588424
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 214.359375,
+      "parameter_array_bytes": 53856,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 1440000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 40.42000914091619,
+        "sample_sd": 0.030460823010182155,
+        "minimum": 40.38489499708392,
+        "maximum": 40.439329566356875
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 14.898864929637757,
+        "sample_sd": 0.02728191346202538,
+        "minimum": 14.876125905462152,
+        "maximum": 14.929115791963437
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32336006773799547,
+        "sample_sd": 0.00024368658001982897,
+        "minimum": 0.32307915459201936,
+        "maximum": 0.32351463113894446
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20416915028740854,
+        "sample_sd": 0.00016156900450659285,
+        "minimum": 0.20407014933180534,
+        "maximum": 0.20435559473663456
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 125.00000208333317,
+        "sample_sd": 1.3947889351902117e-13,
+        "minimum": 125.00000208333309,
+        "maximum": 125.00000208333333
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 114.4921875,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 606336,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 97.60002999367308,
+        "sample_sd": 0.015149143686698258,
+        "minimum": 97.58273572359391,
+        "maximum": 97.61095258938293
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 37.03621534718287,
+        "sample_sd": 0.022131929183032504,
+        "minimum": 37.01344734104514,
+        "maximum": 37.05765100244165
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3287525112632491,
+        "sample_sd": 5.10278432376103e-05,
+        "minimum": 0.3286942578516531,
+        "maximum": 0.32878930255080696
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.2040010249792577,
+        "sample_sd": 4.448653057413264e-05,
+        "minimum": 0.20395028399539364,
+        "maximum": 0.20403332842293503
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 296.87995269949346,
+        "sample_sd": 1.3127425272378462e-13,
+        "minimum": 296.8799526994933,
+        "maximum": 296.8799526994935
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 281.515625,
+      "parameter_array_bytes": 21260,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 1570944,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 38.04824483539156,
+        "sample_sd": 0.014480184893781313,
+        "minimum": 38.036427183012066,
+        "maximum": 38.06439734615943
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 14.64211140372,
+        "sample_sd": 0.010930637101043637,
+        "minimum": 14.629658778174308,
+        "maximum": 14.650120387297791
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3320584228216515,
+        "sample_sd": 0.0001286510440878177,
+        "minimum": 0.33195159775794586,
+        "maximum": 0.33220123555187153
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20427233393978378,
+        "sample_sd": 0.00022284389499272402,
+        "minimum": 0.20409703227757542,
+        "maximum": 0.2045231147710589
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 114.58298386193269,
+        "sample_sd": 0.0011025541380102234,
+        "minimum": 114.58234730200415,
+        "maximum": 114.58425698178944
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 107.95,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 10,
+      "name": "edge_fp32_32_dram",
+      "total_inferences": 1772352,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 33.191436408968,
+        "sample_sd": 0.10631685677258744,
+        "minimum": 33.06930252728381,
+        "maximum": 33.2632625432077
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 12.50784375446427,
+        "sample_sd": 0.005647343546456658,
+        "minimum": 12.503117249651893,
+        "maximum": 12.51409771417449
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3268108269939357,
+        "sample_sd": 0.0010468212178929913,
+        "minimum": 0.3256082675630816,
+        "maximum": 0.3275180443026846
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20365560373270483,
+        "sample_sd": 0.0011015172510484004,
+        "minimum": 0.20239146631770755,
+        "maximum": 0.20440935933908838
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 101.56161812100521,
+        "sample_sd": 8.204640795236539e-14,
+        "minimum": 101.56161812100517,
+        "maximum": 101.56161812100531
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 93.46354166666667,
+      "parameter_array_bytes": 53856,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 11,
+      "name": "edge_int8_32_factored_dram",
+      "total_inferences": 1570944,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 37.82007667891187,
+        "sample_sd": 0.038065215547236575,
+        "minimum": 37.77859076279386,
+        "maximum": 37.853395395697284
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 14.411645228864792,
+        "sample_sd": 0.018136712847126646,
+        "minimum": 14.398909676327348,
+        "maximum": 14.43241073513076
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3300689366015494,
+        "sample_sd": 0.00033220834859357953,
+        "minimum": 0.3297068746117427,
+        "maximum": 0.33035972060792934
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20429350637820023,
+        "sample_sd": 0.00025547507207663043,
+        "minimum": 0.20400152458179543,
+        "maximum": 0.2044759319491572
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 114.58235685040327,
+        "sample_sd": 0.0,
+        "minimum": 114.58235685040327,
+        "maximum": 114.58235685040327
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 106.596875,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 1,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 7200000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 8.228235042410267,
+        "sample_sd": 0.02794521751839383,
+        "minimum": 8.196881298291851,
+        "maximum": 8.250518141037494
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 3.1439039547063925,
+        "sample_sd": 0.004093580739681365,
+        "minimum": 3.140490654769972,
+        "maximum": 3.148442466417399
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32912939621092074,
+        "sample_sd": 0.0011178086821056021,
+        "minimum": 0.3278752464670866,
+        "maximum": 0.3300207201411544
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.203373240118601,
+        "sample_sd": 0.0012623951366922117,
+        "minimum": 0.20193754990935225,
+        "maximum": 0.20430957251906795
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 25.000000416666666,
+        "sample_sd": 0.0,
+        "minimum": 25.000000416666666,
+        "maximum": 25.000000416666666
+      },
+      "record": "mlp_C1",
+      "correct_of_1024": 892,
+      "target": "s3",
+      "board_id": "S3-A",
+      "isolated_latency_median_us": 22.001116071428573,
+      "parameter_array_bytes": 1736,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 1,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 3840000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 15.355678095953007,
+        "sample_sd": 0.02382781524055978,
+        "minimum": 15.328172118924845,
+        "maximum": 15.370006149622508
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 5.799915844885503,
+        "sample_sd": 0.007317218534949587,
+        "minimum": 5.79301785998027,
+        "maximum": 5.807590359823398
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32758779392053416,
+        "sample_sd": 0.0005083267166597456,
+        "minimum": 0.3270009997537134,
+        "maximum": 0.3278934590603889
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20385625795850237,
+        "sample_sd": 0.0006521264488787738,
+        "minimum": 0.20310574080906857,
+        "maximum": 0.20428454399432733
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 46.875000781250016,
+        "sample_sd": 2.4613922385709617e-14,
+        "minimum": 46.87500078125,
+        "maximum": 46.875000781250044
+      },
+      "record": "mlp_C1",
+      "correct_of_1024": 893,
+      "target": "s3",
+      "board_id": "S3-A",
+      "isolated_latency_median_us": 43.85044642857143,
+      "parameter_array_bytes": 586,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 36000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 1603.876941430485,
+        "sample_sd": 2.591398558589666,
+        "minimum": 1601.2578474799573,
+        "maximum": 1606.4397268699656
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 585.5628844390216,
+        "sample_sd": 2.881321934377051,
+        "minimum": 582.429419209057,
+        "maximum": 588.0981534905794
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.320775377593584,
+        "sample_sd": 0.0005182796944419163,
+        "minimum": 0.32025155882093953,
+        "maximum": 0.3212879346643953
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.2036628046095323,
+        "sample_sd": 0.00010573336006104502,
+        "minimum": 0.20355442707967236,
+        "maximum": 0.20376567886199082
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 5000.000166666672,
+        "sample_sd": 1.1027037228797909e-11,
+        "minimum": 5000.000166666666,
+        "maximum": 5000.000166666685
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 4975.5625,
+      "parameter_array_bytes": 56224,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 303168,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 191.30188821296508,
+        "sample_sd": 0.2960520658064692,
+        "minimum": 190.96811583893017,
+        "maximum": 191.5327574244234
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 70.48369262688487,
+        "sample_sd": 0.012831167914998543,
+        "minimum": 70.46943266376725,
+        "maximum": 70.4943052739424
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32218727348424003,
+        "sample_sd": 0.0004986056791316637,
+        "minimum": 0.32162513992581443,
+        "maximum": 0.32257609934720527
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20347987877584733,
+        "sample_sd": 0.0005086926488383198,
+        "minimum": 0.202911602471901,
+        "maximum": 0.2038927210177398
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 593.75991529449,
+        "sample_sd": 5.372630342040576e-13,
+        "minimum": 593.7599152944895,
+        "maximum": 593.7599152944905
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 2,
+      "isolated_latency_median_us": 581.4375,
+      "parameter_array_bytes": 152800,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 606336,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 100.60349043319707,
+        "sample_sd": 0.08122787180434758,
+        "minimum": 100.51018589372259,
+        "maximum": 100.65842909798621
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 40.11541607818943,
+        "sample_sd": 0.04420699777950347,
+        "minimum": 40.065881201083876,
+        "maximum": 40.150859687182965
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3388707090936912,
+        "sample_sd": 0.0002762700705960056,
+        "minimum": 0.33855368040684425,
+        "maximum": 0.33905996039685693
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20374677575038605,
+        "sample_sd": 0.00035899951420667283,
+        "minimum": 0.20338337618146551,
+        "maximum": 0.20410120716536576
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 296.8786860750477,
+        "sample_sd": 0.003233676574557169,
+        "minimum": 296.8750098955043,
+        "maximum": 296.8810906823941
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 851,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 11,
+      "isolated_latency_median_us": 323.25,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 49248,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 1160.5425424843534,
+        "sample_sd": 2.6448036333787264,
+        "minimum": 1157.4927755509927,
+        "maximum": 1162.2059087957045
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 417.5074172601261,
+        "sample_sd": 0.2285401539875933,
+        "minimum": 417.25571894937747,
+        "maximum": 417.70194372077214
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3174133343762431,
+        "sample_sd": 0.0007233650722051473,
+        "minimum": 0.31657921011457113,
+        "maximum": 0.31786827215564145
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20322327534087023,
+        "sample_sd": 0.0007362785399757281,
+        "minimum": 0.20237351433439216,
+        "maximum": 0.20367130238447345
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 3656.250121832357,
+        "sample_sd": 1.837839538132985e-12,
+        "minimum": 3656.250121832356,
+        "maximum": 3656.250121832359
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 3630.875,
+      "parameter_array_bytes": 56972,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 606336,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 96.93256292039757,
+        "sample_sd": 0.008510207469434549,
+        "minimum": 96.92557176379773,
+        "maximum": 96.94203900270804
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 36.43949306914354,
+        "sample_sd": 0.02086814347003229,
+        "minimum": 36.42169283513159,
+        "maximum": 36.46245885939062
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32650604699304114,
+        "sample_sd": 2.803630161215852e-05,
+        "minimum": 0.32648068442183464,
+        "maximum": 0.32653615208977843
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.2037638595651242,
+        "sample_sd": 8.841306368011754e-05,
+        "minimum": 0.2036618213757963,
+        "maximum": 0.20381771163848922
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 296.8783083966647,
+        "sample_sd": 0.002856585799984466,
+        "minimum": 296.8750098955035,
+        "maximum": 296.8799576472458
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 851,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 11,
+      "isolated_latency_median_us": 291.34375,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 10,
+      "name": "edge_fp32_32_dram",
+      "total_inferences": 822912,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 72.92779165885119,
+        "sample_sd": 0.059631646570670827,
+        "minimum": 72.88848041536286,
+        "maximum": 72.99640545533953
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 28.316830835159642,
+        "sample_sd": 0.02711276783736655,
+        "minimum": 28.296190144006015,
+        "maximum": 28.347536802662912
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3333841793283978,
+        "sample_sd": 0.0002726018038096754,
+        "minimum": 0.33320447079272564,
+        "maximum": 0.33369784238760547
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20393581411089715,
+        "sample_sd": 0.00015008166717969036,
+        "minimum": 0.20384787227771223,
+        "maximum": 0.20410910703762514
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 218.75000729118037,
+        "sample_sd": 8.601970165740088e-13,
+        "minimum": 218.7500072911794,
+        "maximum": 218.75000729118105
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 2,
+      "isolated_latency_median_us": 208.125,
+      "parameter_array_bytes": 152800,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 11,
+      "name": "edge_int8_32_factored_dram",
+      "total_inferences": 677664,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 86.46456147009009,
+        "sample_sd": 0.42773393488160005,
+        "minimum": 85.97175017843588,
+        "maximum": 86.73941166131483
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 32.554223271260454,
+        "sample_sd": 0.03321544619095917,
+        "minimum": 32.51604933487403,
+        "maximum": 32.57652408469552
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3255169959227541,
+        "sample_sd": 0.0016103090464983925,
+        "minimum": 0.3236616872449729,
+        "maximum": 0.3265517367119869
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20295865775868413,
+        "sample_sd": 0.0014853238467717265,
+        "minimum": 0.20124706420399785,
+        "maximum": 0.20390944167966274
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 265.6222641308976,
+        "sample_sd": 7.220083899808155e-13,
+        "minimum": 265.6222641308967,
+        "maximum": 265.622264130898
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 851,
+      "target": "s3",
+      "board_id": "S3-A",
+      "changed_decisions_vs_original_kan": 11,
+      "isolated_latency_median_us": 246.34375,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 2,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 2658528,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 22.349127551191817,
+        "sample_sd": 0.03803927783894045,
+        "minimum": 22.30573249920972,
+        "maximum": 22.37671054709712
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 8.557502154442052,
+        "sample_sd": 0.0065804950805825385,
+        "minimum": 8.55002566953899,
+        "maximum": 8.562414937495811
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.3300834712172158,
+        "sample_sd": 0.0005618177641571509,
+        "minimum": 0.3294425518185014,
+        "maximum": 0.3304908558461745
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20369419675373,
+        "sample_sd": 0.0006143230682269028,
+        "minimum": 0.20301541298632175,
+        "maximum": 0.20421200466805645
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 67.70750279854116,
+        "sample_sd": 0.0,
+        "minimum": 67.70750279854116,
+        "maximum": 67.70750279854116
+      },
+      "record": "mlp_C2",
+      "correct_of_1024": 859,
+      "target": "s3",
+      "board_id": "S3-A",
+      "isolated_latency_median_us": 60.009375,
+      "parameter_array_bytes": 4904,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 2,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 1920000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 30.03769298651107,
+        "sample_sd": 0.11873513336582907,
+        "minimum": 29.90163298329015,
+        "maximum": 30.120344497552637
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 10.9772184658259,
+        "sample_sd": 0.03633748245582574,
+        "minimum": 10.94642912978344,
+        "maximum": 11.01729967310997
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.32040204784271636,
+        "sample_sd": 0.0012665080470184824,
+        "minimum": 0.3189507411900702,
+        "maximum": 0.32128366393110575
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.20331172144358434,
+        "sample_sd": 0.001649473071267679,
+        "minimum": 0.2014328819274925,
+        "maximum": 0.20452175710547937
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 93.75000312500002,
+        "sample_sd": 4.568150662953938e-14,
+        "minimum": 93.75000312499999,
+        "maximum": 93.75000312500008
+      },
+      "record": "mlp_C2",
+      "correct_of_1024": 856,
+      "target": "s3",
+      "board_id": "S3-A",
+      "isolated_latency_median_us": 86.40178571428571,
+      "parameter_array_bytes": 1570,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 12864,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 2134.207651956851,
+        "sample_sd": 1.6838364592877415,
+        "minimum": 2132.272824670236,
+        "maximum": 2135.3413116523034
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 727.9682937893864,
+        "sample_sd": 0.7122262114829352,
+        "minimum": 727.2987304094197,
+        "maximum": 728.7166330164538
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15176586488825286,
+        "sample_sd": 0.00011973947162060462,
+        "minimum": 0.15162827718150226,
+        "maximum": 0.15184648068213372
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.09999923495565356,
+        "sample_sd": 8.81560263441574e-05,
+        "minimum": 0.09990926064086364,
+        "maximum": 0.100085452587086
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 14062.501166044785,
+        "sample_sd": 7.35135815253194e-12,
+        "minimum": 14062.501166044776,
+        "maximum": 14062.501166044789
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 14041.53125,
+      "parameter_array_bytes": 20512,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 84768,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 327.1060256887434,
+        "sample_sd": 0.22504056070767753,
+        "minimum": 326.88641047901007,
+        "maximum": 327.33612512086347
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 114.51782016763417,
+        "sample_sd": 0.09537658358432378,
+        "minimum": 114.41532014280058,
+        "maximum": 114.60395572688705
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.153932234564652,
+        "sample_sd": 0.0001059014315143614,
+        "minimum": 0.1538288862392659,
+        "maximum": 0.15404051664133867
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10004150014983951,
+        "sample_sd": 6.239724012571078e-05,
+        "minimum": 0.0999863871262408,
+        "maximum": 0.10010924784907668
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 2125.0001769535666,
+        "sample_sd": 0.0,
+        "minimum": 2125.0001769535666,
+        "maximum": 2125.0001769535666
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 2099.1875,
+      "parameter_array_bytes": 53856,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 60672,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 450.766212928797,
+        "sample_sd": 0.1358975307881147,
+        "minimum": 450.66613084983675,
+        "maximum": 450.9209240307475
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 153.72225321942045,
+        "sample_sd": 0.09518765907237972,
+        "minimum": 153.61995637480118,
+        "maximum": 153.80821840673468
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.1518345061974814,
+        "sample_sd": 4.577524643329085e-05,
+        "minimum": 0.15180079490190887,
+        "maximum": 0.1518866185410735
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.1000552429348603,
+        "sample_sd": 3.4143973108976165e-05,
+        "minimum": 0.10001603054126584,
+        "maximum": 0.10007839906702475
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 2968.7995450949365,
+        "sample_sd": 2.958771391898932e-12,
+        "minimum": 2968.7995450949334,
+        "maximum": 2968.7995450949393
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 2969.84375,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 31392,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 914.7382699269982,
+        "sample_sd": 0.4824947118910367,
+        "minimum": 914.2199016864685,
+        "maximum": 915.1742927376291
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 339.3572690427227,
+        "sample_sd": 0.05715033450791851,
+        "minimum": 339.2938638091882,
+        "maximum": 339.40481441823636
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.1590849032889841,
+        "sample_sd": 8.39121168340056e-05,
+        "minimum": 0.15899475229812265,
+        "maximum": 0.15916073333670533
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10006625270778148,
+        "sample_sd": 7.627819190717265e-05,
+        "minimum": 0.09998712871314014,
+        "maximum": 0.10013932451955442
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 5750.000477828746,
+        "sample_sd": 5.250970108951385e-13,
+        "minimum": 5750.000477828746,
+        "maximum": 5750.000477828747
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 5732.96875,
+      "parameter_array_bytes": 21260,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 91488,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 299.6836409005112,
+        "sample_sd": 0.11760891461194911,
+        "minimum": 299.60894254892804,
+        "maximum": 299.81920908667894
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 102.6722415167435,
+        "sample_sd": 0.1883813533644083,
+        "minimum": 102.454782912134,
+        "maximum": 102.78559150691603
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15222025697399155,
+        "sample_sd": 5.973785940023501e-05,
+        "minimum": 0.15218231495540369,
+        "maximum": 0.15228911700276704
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10006927889319982,
+        "sample_sd": 7.876457907277738e-05,
+        "minimum": 0.09998548031871052,
+        "maximum": 0.1001417920351786
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 1968.750065582371,
+        "sample_sd": 0.0,
+        "minimum": 1968.750065582371,
+        "maximum": 1968.750065582371
+      },
+      "record": "kan_C1",
+      "correct_of_1024": 899,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 1957.46875,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 1,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 338880,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 80.69834362562962,
+        "sample_sd": 0.07527055670004631,
+        "minimum": 80.62522678684212,
+        "maximum": 80.77559728577984
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 27.731530908711225,
+        "sample_sd": 0.026558453675172927,
+        "minimum": 27.71396629547555,
+        "maximum": 27.762083946438217
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15190276194048263,
+        "sample_sd": 0.0001416857514272801,
+        "minimum": 0.1517651302462349,
+        "maximum": 0.15204818059245975
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.09970223404100766,
+        "sample_sd": 9.731372023731938e-05,
+        "minimum": 0.09959766514759377,
+        "maximum": 0.09979014109351589
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 531.250008852691,
+        "sample_sd": 1.1368683772161603e-13,
+        "minimum": 531.2500088526909,
+        "maximum": 531.2500088526912
+      },
+      "record": "mlp_C1",
+      "correct_of_1024": 892,
+      "target": "c3",
+      "board_id": "C3-A",
+      "isolated_latency_median_us": 529.375,
+      "parameter_array_bytes": 1736,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 1,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 1570944,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 17.365108267322988,
+        "sample_sd": 0.002388224096878761,
+        "minimum": 17.36281090440525,
+        "maximum": 17.367578011632393
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 5.933367645990971,
+        "sample_sd": 0.0025778047698965236,
+        "minimum": 5.930689639378864,
+        "maximum": 5.9358319438677185
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15155163041204334,
+        "sample_sd": 2.0842902336239034e-05,
+        "minimum": 0.1515315804883415,
+        "maximum": 0.15157318477099302
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.09976896791772985,
+        "sample_sd": 2.1543215857504753e-05,
+        "minimum": 0.09974595665653582,
+        "maximum": 0.09978865716263707
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 114.58212768882912,
+        "sample_sd": 1.0666033033807501e-13,
+        "minimum": 114.582127688829,
+        "maximum": 114.58212768882922
+      },
+      "record": "mlp_C1",
+      "correct_of_1024": 893,
+      "target": "c3",
+      "board_id": "C3-A",
+      "isolated_latency_median_us": 104.71875,
+      "parameter_array_bytes": 586,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 5664,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 4885.827712045863,
+        "sample_sd": 0.5129556829988909,
+        "minimum": 4885.23540309425,
+        "maximum": 4886.124921082887
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 1697.0344872764565,
+        "sample_sd": 1.1217563360774137,
+        "minimum": 1695.7485225853402,
+        "maximum": 1697.8118511216023
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15343382669234537,
+        "sample_sd": 1.8721448772241257e-05,
+        "minimum": 0.1534126738935351,
+        "maximum": 0.15344826469387926
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10014040093271143,
+        "sample_sd": 1.8684722017965346e-05,
+        "minimum": 0.10012359064550855,
+        "maximum": 0.10016051844242763
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 31843.224046610172,
+        "sample_sd": 0.9173997921310045,
+        "minimum": 31842.16472457629,
+        "maximum": 31843.75370762713
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 31816.203125,
+      "parameter_array_bytes": 56224,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 32256,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 868.9322283320337,
+        "sample_sd": 0.5678395139490706,
+        "minimum": 868.581036652582,
+        "maximum": 869.5873447832194
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 308.664689207784,
+        "sample_sd": 0.3843130086207531,
+        "minimum": 308.3875095224008,
+        "maximum": 309.1034041162454
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15533982162222792,
+        "sample_sd": 0.00010151319738276556,
+        "minimum": 0.1552770387594652,
+        "maximum": 0.15545693739875324
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10015954840960185,
+        "sample_sd": 3.405625762744724e-05,
+        "minimum": 0.10013409329772116,
+        "maximum": 0.10019823471441311
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 5593.750651041665,
+        "sample_sd": 1.0462483822106997e-11,
+        "minimum": 5593.750651041655,
+        "maximum": 5593.750651041676
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 2,
+      "isolated_latency_median_us": 5570.015625,
+      "parameter_array_bytes": 152800,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 22080,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 1248.809718498401,
+        "sample_sd": 0.4030677247961004,
+        "minimum": 1248.427079999871,
+        "maximum": 1249.2305032687239
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 428.7657127753104,
+        "sample_sd": 0.19376734133587334,
+        "minimum": 428.5703234386513,
+        "maximum": 428.9578163304479
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.1525398585850557,
+        "sample_sd": 3.5465925693439254e-05,
+        "minimum": 0.15250746470890494,
+        "maximum": 0.15257775366766557
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10016689698996666,
+        "sample_sd": 5.393481907279051e-05,
+        "minimum": 0.10010611097054205,
+        "maximum": 0.10020902710282659
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 8186.776313405792,
+        "sample_sd": 0.7483112156728664,
+        "minimum": 8186.006385869551,
+        "maximum": 8187.50095108696
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 851,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 11,
+      "isolated_latency_median_us": 8162.171875,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 12288,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 2345.904933210813,
+        "sample_sd": 0.411076512669018,
+        "minimum": 2345.432286723445,
+        "maximum": 2346.179175747108
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 871.7550060236305,
+        "sample_sd": 0.5899783984996069,
+        "minimum": 871.1618134238173,
+        "maximum": 872.3417168101477
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.1594631725450021,
+        "sample_sd": 3.403237196342275e-05,
+        "minimum": 0.1594239882252124,
+        "maximum": 0.1594853423304361
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.1002055195822484,
+        "sample_sd": 2.253506635775089e-05,
+        "minimum": 0.10018134120571127,
+        "maximum": 0.100225938464195
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 14711.264729817713,
+        "sample_sd": 0.5638186222712468,
+        "minimum": 14710.939208984364,
+        "maximum": 14711.915771484397
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 856,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 0,
+      "isolated_latency_median_us": 14689.03125,
+      "parameter_array_bytes": 56972,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 33888,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 814.8579037573038,
+        "sample_sd": 0.09360081247784562,
+        "minimum": 814.7592050748264,
+        "maximum": 814.9453980805772
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 282.7751083620831,
+        "sample_sd": 0.19417294950964156,
+        "minimum": 282.55818712262123,
+        "maximum": 282.9326812636183
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15338499928591087,
+        "sample_sd": 1.761897441101293e-05,
+        "minimum": 0.15336642071255316,
+        "maximum": 0.1534014688036647
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10015674980315223,
+        "sample_sd": 1.93824858872878e-05,
+        "minimum": 0.10014355854290048,
+        "maximum": 0.10017900345834191
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 5312.500619688383,
+        "sample_sd": 1.0541248927568151e-11,
+        "minimum": 5312.500619688372,
+        "maximum": 5312.500619688393
+      },
+      "record": "kan_C2",
+      "correct_of_1024": 851,
+      "target": "c3",
+      "board_id": "C3-A",
+      "changed_decisions_vs_original_kan": 11,
+      "isolated_latency_median_us": 5310.390625,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 2,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 117600,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 232.5987115682091,
+        "sample_sd": 0.10155662725494981,
+        "minimum": 232.489917320328,
+        "maximum": 232.69101129444013
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 79.19725123397939,
+        "sample_sd": 0.11474851213408746,
+        "minimum": 79.08977647643293,
+        "maximum": 79.31810123008151
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15190119433021926,
+        "sample_sd": 6.632269314037374e-05,
+        "minimum": 0.15183014502784786,
+        "maximum": 0.15196147170044338
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10018054218643437,
+        "sample_sd": 6.858542568984235e-05,
+        "minimum": 0.10011239167477726,
+        "maximum": 0.10024955440603645
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 1531.2500510204077,
+        "sample_sd": 3.9382275817135387e-13,
+        "minimum": 1531.2500510204075,
+        "maximum": 1531.2500510204081
+      },
+      "record": "mlp_C2",
+      "correct_of_1024": 859,
+      "target": "c3",
+      "board_id": "C3-A",
+      "isolated_latency_median_us": 1509.734375,
+      "parameter_array_bytes": 4904,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 2,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 960000,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 29.927433169993236,
+        "sample_sd": 0.014658011904429457,
+        "minimum": 29.91103045268519,
+        "maximum": 29.939249837994275
+      },
+      "incremental_uj_per_inference": {
+        "n": 3,
+        "mean": 11.153031429326822,
+        "sample_sd": 0.03096496014686349,
+        "minimum": 11.124979013021385,
+        "maximum": 11.186257252357622
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.15961297158619822,
+        "sample_sd": 7.817606088442534e-05,
+        "minimum": 0.159525490430138,
+        "maximum": 0.15967599381343636
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.10013013927921624,
+        "sample_sd": 0.00013304580634965137,
+        "minimum": 0.09997739382444751,
+        "maximum": 0.10022075300806994
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 187.50000624999998,
+        "sample_sd": 1.6409281590473078e-14,
+        "minimum": 187.50000624999998,
+        "maximum": 187.50000625
+      },
+      "record": "mlp_C2",
+      "correct_of_1024": 856,
+      "target": "c3",
+      "board_id": "C3-A",
+      "isolated_latency_median_us": 185.94270833333331,
+      "parameter_array_bytes": 1570,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 672,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 117180.37393259202,
+        "sample_sd": 108.05628894780699,
+        "minimum": 117103.82778552538,
+        "maximum": 117303.97974959531
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -1648.7067528244006,
+        "sample_sd": 14.477906299711446,
+        "minimum": -1659.9459368280081,
+        "maximum": -1632.3694032202336
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4207435367237451,
+        "sample_sd": 0.00038798219804219824,
+        "minimum": 0.4204686918232316,
+        "maximum": 0.42118735009503894
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4266633224944338,
+        "sample_sd": 0.0004291527131029199,
+        "minimum": 0.4263298172921731,
+        "maximum": 0.4271474908500761
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 278507.8407738095,
+        "sample_sd": 0.0012887283706579863,
+        "minimum": 278507.8392857142,
+        "maximum": 278507.84151785733
+      },
+      "record": "kan_C1_v0",
+      "correct_of_1024": 899,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 278509.359375,
+      "parameter_array_bytes": 20512,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 4320,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 17524.30241656779,
+        "sample_sd": 12.134263590349073,
+        "minimum": 17510.563429547594,
+        "maximum": 17533.553197465888
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -269.4578086713156,
+        "sample_sd": 13.295787437074328,
+        "minimum": -279.1690764402678,
+        "maximum": -254.30429042588236
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.419659493026398,
+        "sample_sd": 0.00029057470823951764,
+        "minimum": 0.41933048854334,
+        "maximum": 0.4198810101665438
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.42611227640424654,
+        "sample_sd": 0.00031490020840211627,
+        "minimum": 0.42585687820566487,
+        "maximum": 0.42646412045969884
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 41758.384374999994,
+        "sample_sd": 0.0012028130647324447,
+        "minimum": 41758.38368055555,
+        "maximum": 41758.38576388889
+      },
+      "record": "kan_C1_v9",
+      "correct_of_1024": 899,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 41759.96875,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 1,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 46752,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 1615.7497656486967,
+        "sample_sd": 1.458980845613979,
+        "minimum": 1614.6274865845405,
+        "maximum": 1617.3990193220698
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -28.143940142669944,
+        "sample_sd": 0.41051175263711576,
+        "minimum": -28.58350217673654,
+        "maximum": -27.770507530433004
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.41882771307661676,
+        "sample_sd": 0.00037818940727733915,
+        "minimum": 0.41853680304023366,
+        "maximum": 0.41925522436725315
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.42612306433527924,
+        "sample_sd": 0.00039952178594143163,
+        "minimum": 0.42573535474157903,
+        "maximum": 0.42653343382136877
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 3857.7909608145105,
+        "sample_sd": 1.8523815222430142e-05,
+        "minimum": 3857.790939425051,
+        "maximum": 3857.7909715092405
+      },
+      "record": "mlp_C1_v1",
+      "correct_of_1024": 893,
+      "changed_decisions_vs_original_kan": null,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 3857.9375,
+      "parameter_array_bytes": 586,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 4800,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 15908.74656725879,
+        "sample_sd": 6.824044571660653,
+        "minimum": 15901.86518750738,
+        "maximum": 15915.511793771933
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -231.52818573415706,
+        "sample_sd": 22.248771438702427,
+        "minimum": -251.7585027520708,
+        "maximum": -207.69958361873674
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.41973740990838204,
+        "sample_sd": 0.00018003574424552506,
+        "minimum": 0.4195558580563941,
+        "maximum": 0.4199158902412542
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4258460646946431,
+        "sample_sd": 0.0006731234328537867,
+        "minimum": 0.42522044091624855,
+        "maximum": 0.42655830282457496
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 37901.66468750001,
+        "sample_sd": 0.0010825317515379587,
+        "minimum": 37901.66406249999,
+        "maximum": 37901.6659375
+      },
+      "record": "kan_C1_v4",
+      "correct_of_1024": 899,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 37903.234375,
+      "parameter_array_bytes": 53856,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 1,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 27648,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 2732.058286605467,
+        "sample_sd": 3.74851684601359,
+        "minimum": 2729.347750382684,
+        "maximum": 2736.3360747909696
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -40.08581431852904,
+        "sample_sd": 4.769529650336261,
+        "minimum": -45.01487337314758,
+        "maximum": -35.49368151229323
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.41962457501071015,
+        "sample_sd": 0.0005757516487444431,
+        "minimum": 0.41920824442056986,
+        "maximum": 0.4202816184527389
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4257814688262199,
+        "sample_sd": 0.0008298971028686773,
+        "minimum": 0.4248354373685561,
+        "maximum": 0.42638676290620087
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 6510.72041377315,
+        "sample_sd": 0.00015661628381399915,
+        "minimum": 6510.720323350695,
+        "maximum": 6510.720594618057
+      },
+      "record": "mlp_C1_v0",
+      "correct_of_1024": 892,
+      "changed_decisions_vs_original_kan": null,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 6510.8125,
+      "parameter_array_bytes": 1736,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 3552,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 21453.139783789415,
+        "sample_sd": 17.221513950523534,
+        "minimum": 21438.989805875335,
+        "maximum": 21472.314943675883
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -395.8202504641436,
+        "sample_sd": 6.355939471802892,
+        "minimum": -403.13669035961397,
+        "maximum": -391.6617835661935
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4182521389165474,
+        "sample_sd": 0.00033576161067258375,
+        "minimum": 0.41797626406835287,
+        "maximum": 0.4186259908597012
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.42596908235846037,
+        "sample_sd": 0.00027141448197009907,
+        "minimum": 0.4257900313544185,
+        "maximum": 0.42628136641696524
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 51292.36120495495,
+        "sample_sd": 0.0012190672830752125,
+        "minimum": 51292.3597972973,
+        "maximum": 51292.36190878378
+      },
+      "record": "kan_C1_v5",
+      "correct_of_1024": 899,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 51293.921875,
+      "parameter_array_bytes": 15584,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 1,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 1920,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 39876.15427329787,
+        "sample_sd": 47.296364997561355,
+        "minimum": 39826.2247641996,
+        "maximum": 39920.28225390336
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -731.5476045805069,
+        "sample_sd": 31.476107492332947,
+        "minimum": -765.2945399286293,
+        "maximum": -702.9863822535565
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.42076576798449566,
+        "sample_sd": 0.0004990624523288454,
+        "minimum": 0.420238921085047,
+        "maximum": 0.42123139823363703
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4284849223329544,
+        "sample_sd": 0.00035754768539374805,
+        "minimum": 0.42824476627403274,
+        "maximum": 0.4288958339021812
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 94770.43359374999,
+        "sample_sd": 8.401552174322216e-12,
+        "minimum": 94770.43359374999,
+        "maximum": 94770.43359375
+      },
+      "record": "kan_C1_v8",
+      "correct_of_1024": 899,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 94772.03125,
+      "parameter_array_bytes": 21260,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 2,
+      "variant": 0,
+      "name": "mlp_fp32",
+      "total_inferences": 9792,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 7804.006120251162,
+        "sample_sd": 3.3744668398715474,
+        "minimum": 7801.331375263276,
+        "maximum": 7807.797332774677
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -143.95708089504006,
+        "sample_sd": 8.373882163063755,
+        "minimum": -153.18437224111386,
+        "maximum": -136.84049229578991
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4222826013326049,
+        "sample_sd": 0.00018259636597040978,
+        "minimum": 0.42213786936380826,
+        "maximum": 0.4224877488133489
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4300722634180902,
+        "sample_sd": 0.00038213064467622197,
+        "minimum": 0.42981331922847194,
+        "maximum": 0.4305111458546752
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 18480.529616013075,
+        "sample_sd": 8.844213680379933e-05,
+        "minimum": 18480.52956495098,
+        "maximum": 18480.52971813726
+      },
+      "record": "mlp_C2_v0",
+      "correct_of_1024": 859,
+      "changed_decisions_vs_original_kan": null,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 18480.640625,
+      "parameter_array_bytes": 4904,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 0,
+      "name": "direct_spline_fp32",
+      "total_inferences": 384,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 261982.36389272273,
+        "sample_sd": 111.36663071667738,
+        "minimum": 261898.28029830632,
+        "maximum": 262108.66711823415
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -4935.521415290929,
+        "sample_sd": 106.2027596055301,
+        "minimum": -5040.780018347568,
+        "maximum": -4828.399031543362
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4225826226495901,
+        "sample_sd": 0.00017962847432983367,
+        "minimum": 0.4224469977359915,
+        "maximum": 0.42278634243105806
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.43054371420141424,
+        "sample_sd": 0.0002722098025115059,
+        "minimum": 0.43023529887498163,
+        "maximum": 0.4307504401128825
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 619955.3645833333,
+        "sample_sd": 0.01255683697666307,
+        "minimum": 619955.35546875,
+        "maximum": 619955.37890625
+      },
+      "record": "kan_C2_v0",
+      "correct_of_1024": 856,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 619956.828125,
+      "parameter_array_bytes": 56224,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 5,
+      "name": "edge_int8_32",
+      "total_inferences": 1344,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 59376.47166267453,
+        "sample_sd": 76.037608637924,
+        "minimum": 59316.11142435832,
+        "maximum": 59461.87133588898
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -1296.659805981656,
+        "sample_sd": 41.85506614499439,
+        "minimum": -1340.9369366322626,
+        "maximum": -1257.7433284497135
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.42098142145273165,
+        "sample_sd": 0.0005391113823695843,
+        "minimum": 0.42055346397776244,
+        "maximum": 0.4215869105761755
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4301747883364346,
+        "sample_sd": 0.0005199310490004659,
+        "minimum": 0.4297213373724271,
+        "maximum": 0.43074227027567025
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 141042.97395833334,
+        "sample_sd": 0.0006443641517227825,
+        "minimum": 141042.9732142857,
+        "maximum": 141042.9743303572
+      },
+      "record": "kan_C2_v5",
+      "correct_of_1024": 851,
+      "changed_decisions_vs_original_kan": 11,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 141044.546875,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 8,
+      "name": "direct_cubic_fp32",
+      "total_inferences": 768,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 104090.88272694788,
+        "sample_sd": 21.323255329768664,
+        "minimum": 104066.52632777837,
+        "maximum": 104106.18431931616
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -1565.4727689764502,
+        "sample_sd": 58.286575910072365,
+        "minimum": -1617.6248859118975,
+        "maximum": -1502.5532245758754
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.42373662992749683,
+        "sample_sd": 8.681375238094416e-05,
+        "minimum": 0.4236374667353301,
+        "maximum": 0.4237989246503371
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.43010940857734736,
+        "sample_sd": 0.00016865222269928836,
+        "minimum": 0.42991556839219214,
+        "maximum": 0.4302225477693342
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 245649.9518229167,
+        "sample_sd": 0.006278418443062635,
+        "minimum": 245649.94726562506,
+        "maximum": 245649.958984375
+      },
+      "record": "kan_C2_v8",
+      "correct_of_1024": 856,
+      "changed_decisions_vs_original_kan": 0,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 245651.484375,
+      "parameter_array_bytes": 56972,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "mlp",
+      "case": 2,
+      "variant": 1,
+      "name": "mlp_int8",
+      "total_inferences": 19872,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 3810.917659156931,
+        "sample_sd": 1.343572395076289,
+        "minimum": 3809.4693134879813,
+        "maximum": 3812.123400157128
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -89.42063185082512,
+        "sample_sd": 4.123072183769294,
+        "minimum": -93.77046768365133,
+        "maximum": -85.56973052066118
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4204319286648406,
+        "sample_sd": 0.0001482156377665542,
+        "minimum": 0.42027215680485863,
+        "maximum": 0.4205649426462449
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.430297082442654,
+        "sample_sd": 0.0003069514091861952,
+        "minimum": 0.430005253211006,
+        "maximum": 0.4306171979260654
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 9064.291742149759,
+        "sample_sd": 0.0002614810997959559,
+        "minimum": 9064.291440217392,
+        "maximum": 9064.291893115944
+      },
+      "record": "mlp_C2_v1",
+      "correct_of_1024": 856,
+      "changed_decisions_vs_original_kan": null,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 9064.421875,
+      "parameter_array_bytes": 1570,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 9,
+      "name": "edge_int8_32_factored",
+      "total_inferences": 1632,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 47962.227773239116,
+        "sample_sd": 11.370034870036454,
+        "minimum": 47950.725614941606,
+        "maximum": 47973.46091028798
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -1050.5525089964297,
+        "sample_sd": 7.123889090778804,
+        "minimum": -1055.5983824364132,
+        "maximum": -1042.4033686986718
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4214157926464565,
+        "sample_sd": 9.991207446930656e-05,
+        "minimum": 0.4213147174917863,
+        "maximum": 0.42151449953410486
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.4306463776067011,
+        "sample_sd": 0.00015470610429070558,
+        "minimum": 0.43047370049284683,
+        "maximum": 0.4307723512423846
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 113812.12714460783,
+        "sample_sd": 0.0029545498546268804,
+        "minimum": 113812.125,
+        "maximum": 113812.13051470586
+      },
+      "record": "kan_C2_v9",
+      "correct_of_1024": 851,
+      "changed_decisions_vs_original_kan": 11,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 113813.671875,
+      "parameter_array_bytes": 43872,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    },
+    {
+      "family": "kan",
+      "case": 2,
+      "variant": 4,
+      "name": "edge_fp32_32",
+      "total_inferences": 1824,
+      "whole_board_uj_per_inference": {
+        "n": 3,
+        "mean": 43527.60812128723,
+        "sample_sd": 33.2147513613456,
+        "minimum": 43491.855956866144,
+        "maximum": 43557.507379550785
+      },
+      "signed_polling_difference_uj_per_inference": {
+        "n": 3,
+        "mean": -1025.800406836758,
+        "sample_sd": 48.44057622300606,
+        "minimum": -1074.274803133461,
+        "maximum": -977.3937216733808
+      },
+      "active_mean_power_w": {
+        "n": 3,
+        "mean": 0.4213003733165849,
+        "sample_sd": 0.00032148302542047113,
+        "minimum": 0.4209543308651939,
+        "maximum": 0.4215897659391526
+      },
+      "idle_mean_power_w": {
+        "n": 3,
+        "mean": 0.43122901660762936,
+        "sample_sd": 0.00015872379198410524,
+        "minimum": 0.4310498846452136,
+        "maximum": 0.4313521541120768
+      },
+      "cycle_us_per_inference": {
+        "n": 3,
+        "mean": 103317.27878289473,
+        "sample_sd": 2.2228417680190567e-11,
+        "minimum": 103317.27878289472,
+        "maximum": 103317.27878289476
+      },
+      "record": "kan_C2_v4",
+      "correct_of_1024": 856,
+      "changed_decisions_vs_original_kan": 2,
+      "target": "mega",
+      "board_id": "MEGA-A",
+      "isolated_latency_median_us": 103318.84375,
+      "parameter_array_bytes": 152800,
+      "latency_reset_sessions": 3,
+      "energy_temporal_windows": 3,
+      "energy_independent_sessions_for_this_configuration": 1
+    }
+  ],
+  "best_observed_methods": [
+    {
+      "target": "s3",
+      "case": 0,
+      "kan_variant": 10,
+      "kan_name": "edge_fp32_32_dram",
+      "kan_energy_uj": 33.32144991068498,
+      "kan_latency_us": 93.4296875,
+      "kan_correct": 850,
+      "original_kan_correct": 850,
+      "mlp_variant": 0,
+      "mlp_name": "mlp_fp32",
+      "mlp_energy_uj": 8.216170357700342,
+      "mlp_latency_us": 22.014508928571427,
+      "mlp_correct": 854,
+      "original_kan_over_best_kan_energy": 9.195821254651603,
+      "best_kan_over_best_mlp_energy": 4.055593842386133,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    },
+    {
+      "target": "s3",
+      "case": 1,
+      "kan_variant": 10,
+      "kan_name": "edge_fp32_32_dram",
+      "kan_energy_uj": 33.191436408968,
+      "kan_latency_us": 93.46354166666667,
+      "kan_correct": 899,
+      "original_kan_correct": 899,
+      "mlp_variant": 0,
+      "mlp_name": "mlp_fp32",
+      "mlp_energy_uj": 8.228235042410267,
+      "mlp_latency_us": 22.001116071428573,
+      "mlp_correct": 892,
+      "original_kan_over_best_kan_energy": 8.975654981392193,
+      "best_kan_over_best_mlp_energy": 4.033846412735112,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    },
+    {
+      "target": "s3",
+      "case": 2,
+      "kan_variant": 10,
+      "kan_name": "edge_fp32_32_dram",
+      "kan_energy_uj": 72.92779165885119,
+      "kan_latency_us": 208.125,
+      "kan_correct": 856,
+      "original_kan_correct": 856,
+      "mlp_variant": 0,
+      "mlp_name": "mlp_fp32",
+      "mlp_energy_uj": 22.349127551191817,
+      "mlp_latency_us": 60.009375,
+      "mlp_correct": 859,
+      "original_kan_over_best_kan_energy": 21.992671174430434,
+      "best_kan_over_best_mlp_energy": 3.2631158192554213,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    },
+    {
+      "target": "c3",
+      "case": 1,
+      "kan_variant": 9,
+      "kan_name": "edge_int8_32_factored",
+      "kan_energy_uj": 299.6836409005112,
+      "kan_latency_us": 1957.46875,
+      "kan_correct": 899,
+      "original_kan_correct": 899,
+      "mlp_variant": 1,
+      "mlp_name": "mlp_int8",
+      "mlp_energy_uj": 17.365108267322988,
+      "mlp_latency_us": 104.71875,
+      "mlp_correct": 893,
+      "original_kan_over_best_kan_energy": 7.121535381590495,
+      "best_kan_over_best_mlp_energy": 17.257804344614694,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    },
+    {
+      "target": "c3",
+      "case": 2,
+      "kan_variant": 9,
+      "kan_name": "edge_int8_32_factored",
+      "kan_energy_uj": 814.8579037573038,
+      "kan_latency_us": 5310.390625,
+      "kan_correct": 851,
+      "original_kan_correct": 856,
+      "mlp_variant": 1,
+      "mlp_name": "mlp_int8",
+      "mlp_energy_uj": 29.927433169993236,
+      "mlp_latency_us": 185.94270833333331,
+      "mlp_correct": 856,
+      "original_kan_over_best_kan_energy": 5.995926025282872,
+      "best_kan_over_best_mlp_energy": 27.227791275274544,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    },
+    {
+      "target": "mega",
+      "case": 1,
+      "kan_variant": 4,
+      "kan_name": "edge_fp32_32",
+      "kan_energy_uj": 15908.74656725879,
+      "kan_latency_us": 37903.234375,
+      "kan_correct": 899,
+      "original_kan_correct": 899,
+      "mlp_variant": 1,
+      "mlp_name": "mlp_int8",
+      "mlp_energy_uj": 1615.7497656486967,
+      "mlp_latency_us": 3857.9375,
+      "mlp_correct": 893,
+      "original_kan_over_best_kan_energy": 7.365782931871997,
+      "best_kan_over_best_mlp_energy": 9.846046031064526,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    },
+    {
+      "target": "mega",
+      "case": 2,
+      "kan_variant": 4,
+      "kan_name": "edge_fp32_32",
+      "kan_energy_uj": 43527.60812128723,
+      "kan_latency_us": 103318.84375,
+      "kan_correct": 856,
+      "original_kan_correct": 856,
+      "mlp_variant": 1,
+      "mlp_name": "mlp_int8",
+      "mlp_energy_uj": 3810.917659156931,
+      "mlp_latency_us": 9064.421875,
+      "mlp_correct": 856,
+      "original_kan_over_best_kan_energy": 6.018763152864352,
+      "best_kan_over_best_mlp_energy": 11.421818053900594,
+      "selection_scope": "Lowest observed mean among tested variants; no architecture-wide optimum or statistical winner claim"
+    }
+  ],
+  "physical_scope": "Whole powered development board during frozen-feature head inference, including loop and scheduler; no camera, CNN feature extraction, training or update energy",
+  "publication_metrology_complete": false,
+  "additional_hardware_runs_required_for_missing_windows": false,
+  "limitations": [
+    "One physical development board per platform. Board-level consumption is not isolated MCU/core energy.",
+    "Energy: three temporal windows in one recording/boot per configuration. Latency: three earlier reset/reflash sessions. They are distinct experiments.",
+    "S3/C3 share firmware recordings across variants; Mega uses one firmware/recording per variant. Mega variant comparisons are not paired session replicates.",
+    "No independent meter gain, time-base or response calibration and no hardware synchronization trigger. Numerical boundary sensitivity is not calibrated uncertainty.",
+    "Accumulated Wh differs from integrated VBUS*IBUS by approximately four throughout the series; Wh is excluded, and its discrepancy remains unexplained.",
+    "Mega polling baseline consumes more power than inference. All 42 active-minus-polling contrasts are negative and retained as signed diagnostics, not isolated inference energy.",
+    "Mega mlp_C1_v1 and kan_C2_v4 have about 3.9 s final padding instead of requested 5 s; all windows and +/-1 s sensitivity integrations are covered.",
+    "Mega alignment uses a common relative threshold rule chosen after waveform inspection, with all tested thresholds retained. No amplitude floor or sample clipping is applied.",
+    "KAN INT8 LUT interpolation remains floating point; MLP INT8 uses integer internal layers. Historical training budgets were not established equal.",
+    "C2 KAN INT8 changes 11 decisions versus original FP32 and loses five correct predictions (851 vs 856). FP32 LUT keeps 856 correct but changes two decisions; equal accuracy does not imply identical outputs."
+  ]
+}

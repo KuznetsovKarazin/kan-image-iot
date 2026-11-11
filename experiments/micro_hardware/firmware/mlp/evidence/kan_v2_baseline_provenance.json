@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-09",
+  "timezone": "Europe/Rome",
+  "source_archives": [
+    {
+      "name": "MEGA-A_v2_20261109_135409_077(1).zip",
+      "size_bytes": 7127811,
+      "sha256": "6b72ab84c23a80e1ea5fb5ef927f3be88637caa9df79bbf5bb6a0d1a80c2bbf3"
+    },
+    {
+      "name": "IEEE_Micro_Architecture_v2_Run_Pack_2026-11-09.zip",
+      "size_bytes": 46625163,
+      "sha256": "6b413c22b2855fa7854143275fb645a6b0742201ce4148442d6aa078fcd100fb"
+    },
+    {
+      "name": "IEEE_Micro_Mega_C2_v4_Fix_2026-11-09.zip",
+      "size_bytes": 1072778,
+      "sha256": "8079eb8a0c9265a62adf0f89eac3957778c8a826b2ac71260b974d05bffc1837"
+    },
+    {
+      "name": "IEEE_Micro_V2_Clock_Fix_and_ESP_Audit_2026-11-09.zip",
+      "size_bytes": 13472310,
+      "sha256": "23097bdbc0106cb6c7f330cc112915074e5a872b70c0a3d42f62c4fcd0bf23e8"
+    }
+  ],
+  "nested_esp_archives": [
+    {
+      "name": "C3-A_v2_20261109_131235_304.zip",
+      "sha256": "ec332230e9d517cdacf3e220d9811522e3d5b9feac2011fc71b70add205e0ef7"
+    },
+    {
+      "name": "S3-A_v2_20261109_130230_610.zip",
+      "sha256": "225233585c30c4f114c54201dcb56dd30e20c21e965e625818fbbe78d63e8baa"
+    }
+  ],
+  "scope": "Derived audit and analysis; original archives and raw captures unchanged. No simulator measurements."
+}
