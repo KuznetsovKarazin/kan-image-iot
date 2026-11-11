@@ -64,7 +64,7 @@ def load_model_and_config(model_path, device):
     """Load trained model and its configuration from checkpoint"""
     model_path = Path(model_path)
 
-    # ВАЖНО: всегда грузим на CPU, чтобы не падать на чужих CUDA-чекпоинтах
+    # Always load on CPU so that checkpoints saved on another CUDA device still load
     checkpoint = torch.load(model_path, map_location=torch.device("cpu"))
     
     # Extract model configuration from checkpoint
@@ -103,7 +103,7 @@ def load_model_and_config(model_path, device):
     state_dict = checkpoint.get('model_state_dict', checkpoint)
     model.load_state_dict(state_dict)
 
-    # Переносим модель на нужное устройство (cuda / cpu / mps)
+    # Move the model to the target device (cuda / cpu / mps)
     model = model.to(device)
     
     # Extract additional info

@@ -1,8 +1,8 @@
-# IEEE Micro: conversion-fidelity pilot
+# KAN conversion-fidelity pilot
 
 Start with [REPORT.md](REPORT.md), [PLAN.md](PLAN.md), and
-[IMAGE_PROTOCOL.md](IMAGE_PROTOCOL.md). Publication boundaries are recorded in
-[PRIOR_WORK.md](PRIOR_WORK.md).
+[IMAGE_PROTOCOL.md](IMAGE_PROTOCOL.md). Hardware latency and energy
+measurements are in [../micro_hardware](../micro_hardware).
 
 This directory is an isolated experiment. It does not change the production
 converter or claim a complete MCU deployment. INT8 means **table storage**;
@@ -64,8 +64,8 @@ checkpoint weights load strictly, with automatic KAN checkpoint-writing disabled
 
 Expected limitations: original test manifests and 16–4–2 checkpoints are absent;
 minival may have participated in checkpoint selection; there is no MCU hardware,
-no new MLP training, and no fully integer CNN+KAN export in this pilot. Results
-cannot replace the hardware experiment requested by the reviewers.
+no new MLP training, and no fully integer CNN+KAN export in this pilot. The
+hardware experiment is documented separately in ../micro_hardware.
 
 ## Prepare a later device check
 

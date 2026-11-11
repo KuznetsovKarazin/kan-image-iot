@@ -8,8 +8,8 @@
     },
     {
       "path": "FOLLOWUP_PROTOCOL.md",
-      "bytes": 1242,
-      "sha256": "1db975f3e2c3dd52e57e8fa271cd4f4866311356a80ef238064f8ef9376eaf6b"
+      "bytes": 1244,
+      "sha256": "28ca422b0c5e1a620feecacc3fa053e81260bef13da2b7c38b07468ea526e2c5"
     },
     {
       "path": "IMAGE_PROTOCOL.md",
@@ -18,23 +18,18 @@
     },
     {
       "path": "PLAN.md",
-      "bytes": 4999,
-      "sha256": "7b36a3a70320796a668a9bab189946fa0bd2f1dfdfc850f634442c5928cd44bb"
-    },
-    {
-      "path": "PRIOR_WORK.md",
-      "bytes": 5417,
-      "sha256": "b7f8afc310e92fb58585fd54e3ee3adcd95c08ec9e14c758c29e5125d24123c6"
+      "bytes": 4743,
+      "sha256": "a3007d37e6dfa9dcf1aa0d1034f65daa91894e1a6366747f937c57812afb8b59"
     },
     {
       "path": "README.md",
-      "bytes": 4507,
-      "sha256": "183ab5433e24607533644c44ecc9c5a09406f2bbd8d55ebb68f6ec403bc475a7"
+      "bytes": 4512,
+      "sha256": "8d004cdab5c134029c7a17b724eec194a029820caa3b2225d97f61c01eed2024"
     },
     {
       "path": "REPORT.md",
-      "bytes": 10481,
-      "sha256": "f88883d2f72721cae8fcede6106844017020417f1776d933c9cad10bef432d96"
+      "bytes": 10382,
+      "sha256": "1d44112fa58cbe775c7ae2b7dec5f492a69ed41abc043e0c529b7a48192630bf"
     },
     {
       "path": "environment.freeze.txt",
@@ -323,8 +318,8 @@
     },
     {
       "path": "summarize.py",
-      "bytes": 14873,
-      "sha256": "1cd4817794741b296971f140d5867624b4eee4c0b321ae149a007c889cd04848"
+      "bytes": 14763,
+      "sha256": "90b809cc2087065c2f458a02b2fd979148b341ae05413298e3c8e65ee805ae16"
     },
     {
       "path": "test_fidelity.py",
